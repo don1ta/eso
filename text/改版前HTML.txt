@@ -1,0 +1,183 @@
+
+    <p><em class="em2">安安工程師們：</em><br><br>
+    &emsp;&emsp;   歡迎進入鐵支核心工廠！小編見你相貌堂堂，頗有大將之勢，今天就來指點你一二！！！<br>
+    這裡是<em><a href="http://192.168.1.242/manage/staff/chart/orgchartjpg.asp" target="black">網路事業群</a></em>之之之<em>技術中心</em>下下下的<em>工程部</em>。
+    老實說！第一天通常都沒什麼事情，所以請您先自行打掃自己的環境，如果好了請測試開機沒問題後，電話直播<em class="em2">2721 </em>找工程小秘書-小薰
+    </p>
+    <br>
+    <p>STEP<em>1</em>:<br>
+    &emsp;  &emsp; 請拿出紙筆記住你腳下的位址：192.168._____._____(螢幕右下角有個VNC可以查看)，螢幕型號M_________(請參照您螢幕後方貼紙)待會我們要開始填寫戶口名冊。</p>
+    <p>STEP<em>2</em>:<br>
+    &emsp; <a href="http://192.168.1.242/manage/staff/no_paper/addNewTrans.asp" target="black">【戶口申報】</a>填畢。請等待戶政事務所(MIS)設定完成。(等待過程您電話會響起，敢漏接你就死定了!!!)
+    <p>STEP<em>3</em>:<br>
+    &emsp; 取得自然人憑證過程中，我們先了解部門組織圖，若要了解各區兄弟分布圖: <a href="https://docs.google.com/spreadsheets/d/14vsF6nHDwHr33vLFF73FMhLMcNv69nSMYTFaaITpmNE/edit#gid=1218101508" target="black">【請按我】</a><br> <br><br><img class="img003"  src="img\003.jpg"> 
+    <br>
+    <p>STEP<em>4</em>:<br>
+    <!-- 坐位圖按鈕窗  起 -->
+    &emsp;<em class="em2">走起(.verb)</em> 跟老大拜碼頭、並加入幫口的社群：
+    <br><img src="img\006.jpg">(APP/MIS/ESO)
+    <img src="img\007.jpg">(MIS/ESO)  
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"> 工程部 / MIS 坐位圖</button>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div style="background-color: rgb(240, 216, 156);">
+          <div class="modal-header"> <h5 class="modal-title" id="exampleModalCenterTitle">工程部 / MIS 坐位圖</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> 
+          </div>
+          <div class="modal-body"><img   src="img\004.jpg">
+          </div>
+          <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button> 
+          </div>
+      </div>
+    </div>
+  </div>
+    <!-- 坐位圖按鈕窗  末 -->
+
+
+
+<p><em class="em2">P.S.</em><br></p> 
+  <p> 戶政事務所流程非常漫長，層層關卡弄一弄就已經中午拉，我們提供您幾個薪水小偷方案:</p></li>
+  <li>無限閱讀我們的官方影片<a href="http://192.168.1.242/manage/staff/video3.asp" target="black" >【請點擊】</a> 
+  <li>跟助理借書來看 【這樣O那樣X一看就懂的UI設計與資訊編排】  ㄟ!我只有這本能看</li>
+  <li>你可以亂翻我們的網站 <a href=" https://www.1111.com.tw/news/ " target="black">【產經新聞】</a><a href=" https://university.1111.com.tw/index.asp" target="black"  >【大學網】</a> (但其實我們有這麼多<a href="https://www.1111.com.tw/webmap.asp">【網站指引】</a></li>
+  <li>「九大職能星」是一款剖析台灣職場最常評估的15項職能表現測驗... <a href=" https://assessment.1111.com.tw/cstar/?utm_source=201404cstar_2020OCT&utm_medium=btnOnintro&agent=201404cstar" target="black">【自命不凡之人】</a></li>
+  <br>
+
+
+
+
+
+
+
+
+  </div>
+
+  <div id="Jane" class="w3-container person">
+  <br>
+  <h3 class="w3-opacity">我的權益</h3>
+  <h5>以下只是幽默性質介紹、正規規範還請參照1111人事總管處</h5>
+  <!-- <a class="w3-button w3-light-grey" >Reply<i class="w3-margin-left fa fa-mail-reply" ></i></a>
+  <a class="w3-button w3-light-grey">Forward<i class="w3-margin-left fa fa-arrow-right"></i></a> -->
+  <hr>
+  <p>STEP<em>1</em>:<br>
+  加入SKYPE工作群組：<br><br>
+  <button class="button2" onclick="ShowMeDate()">進入付費頻道=)</button>
+  
+  <br>
+  <br>
+  <p>STEP<em>2</em>:  <br>  <br>
+  了解鐵支堂的強大<a  href="http://192.168.1.242/manage/staff/index.asp" target="black" ><em class="em2">【管家系統】</em></a> <br> 
+  <li> (程式設計申請單)<a href="http://192.168.1.242/manage/engineer/programask/index.aspx?chme=1"><strong>派單</strong></a>、(請假單)<a href="http://192.168.1.242/manage/engineer/leaveask/defalit.aspx?chme=1"><strong>裝病單</strong></a>、(員工資料)<a href="http://192.168.1.242/manage/staff/employee.asp"><strong>找小弟</strong></a>功能。</ol>
+  <li> 鐵支堂有收福利金所以您享有: <strong>三節禮品</strong>、<a href="http://192.168.1.242/manage/staff/main.asp" target="black" ><strong>鐵飯碗</strong></a>、<a href="http://192.168.1.242/manage/staff/Massage/Bookinginquiry.asp"target="black"  ><strong>專屬醫生</strong></a>、當月<a href="http://192.168.1.242/manage/staff/main.asp" target="black" ><strong>2次抓龍</strong></a>服務。</li>
+  <li> 本分部<strong>另</strong>收保護費2個月100元: 入會即贈衛生紙、洗碗精無限暢飲。<br>  （第1個月免月費、附贈１個月１次的<strong>下午茶</strong>或不定期<strong>鴻門宴</strong>）</li>
+  <li> 當小弟的總有一天會輪到<strong>抬飯</strong>給兄弟們吃，<strong class="strong2">如果忘記請再抬一週</strong>。</li>
+  <li> 亦不例外總有一天要在家無料值勤、有問題請在社群回報大哥們。</li>
+  <br>
+  <p><em class="em2">P.S.</em><br>
+  <p>因疫情管制調整項目:<br></p>
+  <p>*10/15恢復正常上班,例行項目取消</p>
+  <li>1.<a href="https://docs.google.com/spreadsheets/d/1G-2kn1dY80fBIyvwyZewroErRKG5qBAgYKGpOwIcrX0/edit#gid=0" target="black">【WFH分流表】</a></li>
+  <li>2.<a href="https://docs.google.com/spreadsheets/d/1os9BST1EXuyUYbInLfY4t5cDjUToyT1iZ_TMfS4IW5k/edit#gid=1337831679" target="black">【便當排班表】</a></li>
+  <li>3.<a href="https://docs.google.com/spreadsheets/d/1kQqM7_bX72ZveiWJpmBaokJpQ-Ie8pJILoGOrbeufzw/edit#gid=2147018743" target="black">【駐點出勤班表】</a></li>
+  
+
+</div>
+
+  <div id="John" class="w3-container person">
+  <br>
+  <h3 class="w3-opacity">我的義務</h3>
+  <h5> 以下只是幽默性質介紹、正規規範還請參照1111人事總管處</h5>
+  <!-- <a class="w3-button w3-light-grey">Reply<i class="w3-margin-left fa fa-mail-reply"></i></a>
+  <a class="w3-button w3-light-grey">Forward<i class="w3-margin-left fa fa-arrow-right"></i></a> -->
+  <hr>
+  你需要了解的事情:<br><br>
+<ol>
+<li><strong class="strong2">每日15點</strong>要加班晚餐、隔日晚餐請回報群組 </li>
+
+<li><strong class="strong2">每日17點</strong>要回報<a href="https://docs.google.com/spreadsheets/d/1LFGJc1vbKGHOCOBzvrbKf0ja7diYa7A0sxlHx52eDtc/edit#gid=1316445406" target="black" >工作進度</a>，(大哥可以惹，助理姊姊惹不起^.＜)</li>
+  <li><strong class="strong2">每月25號前</strong>要交業績<a href="http://192.168.1.242/manage/engineer/monthReport/report.aspx" target="black" >考核表</a>給老大，可能會影響你的年終考核</li>
+    <li><strong class="strong2">每月１０號前</strong>提供<a href="https://docs.google.com/spreadsheets/d/1Iv-xhDBAXHvHRfgNtoqx9K_Luop2sdV40PwGFO4ac1Q/edit#gid=86180606" target="black">武器商城</a>申請（只有特定武器，其他請自費，申請等待時間約1個月）</li>
+      <li>電腦壞掉找<a href="http://192.168.1.242/manage/onlineService/index.asp?adminDept=ESA" target="black">【MIS線上報修系統】</a>；水、電找總務<a href="http://192.168.1.242/manage/onlineservice/index.asp?admindept=eoob2&chme=1" target="black" >【總務線上報修系統】</a> 這是生活常識不會分就等被罵。</li>
+        <li><strong>裝病</strong>要報備老大<strong class="strong2">(請私密俊傑副總)</strong>、告知大哥們<strong class="strong2">(工程群告休)</strong>、上班沒有緩衝時間；1分鐘1塊錢。</li>
+          <li><strong>不明曠職</strong><strong class="strong2">3日內</strong>請至63號3樓找人事陳怡廷#2383補卡<a href="http://192.168.1.242/manage/staff/attandance/index.asp" target="black">【考勤查詢】</a></li>
+            <li>非討債組不會有費用請款、若有老大指示費用請回報助理協助。</li>
+              <li><strong class="strong2">年假與補休</strong>是用到職日當週期:年假單日可請假時數為3.5小時、4小時、4.5小時、8小時</li>
+                <li><strong class="strong2">任務完成-</strong>想怎麼請特、補休就怎麼請、湊不滿時數請不了假、剩餘1小時換1分錢</li>
+                  <li> <strong>生理假</strong>不扣全勤扣半薪/1day、出示<strong>疫苗假</strong>不扣全勤不給薪/2day、<strong>颱風假</strong>不扣全勤不給薪</li>
+                    <li>我知道你要問的都在這裡啦<a href="http://192.168.1.242/manage/staff/meetingRecord/worksCouncil/%E7%A6%8F%E5%A7%94%E6%9C%83%E7%A6%8F%E5%88%A9%E4%BA%8B%E9%A0%85%E4%B8%80%E8%A6%BD%E8%A1%A8_1020917.htm" target="black">【按我前往】</a></li>
+
+<li><strong class="strong2">*</strong>特休=年假、不要問我為什麼要提醒，有人就是不知道我鞋子穿幾號!!!</li>
+<li><strong class="strong2">*</strong>你敢問我產假我就打死你!!!私人假別請自行問人事=(</li>
+
+</ol>
+<br>
+關於下午茶:<br><br>
+
+
+<strong class="strong2">兌換金由來：</strong><br>
+工程部每個月有一筆ＢＵＧ獎金，我們領多少錢，就要給多少發票出去。 但我們不一定每個月都會有這麼多的支出，不足的部分，就看大家誰可以給發票來補，<strong>所以我們的下午茶就是拿獎金來當部門福利。</strong>（獎金也不一定每個月會有，也有可能某一天會消失，現在有穩定給的就是ＢＵＧ獎金）<br>
+<br><strong class="strong2">兌換金用途：</strong><br>
+助理每次下午茶會宣布一個上限金額，如果您超額點餐，就可以拿兌換金來折抵超額部分。<br>
+<br><strong class="strong2">兌換金方法：</strong><br>
+一、 <strong>捐發票</strong>（發票的項目範疇不限，只要是開<strong class="strong2">１６７７６３８７</strong>皆可）<br>
+二、 再你的薪資單多一個<strong>虛擬獎金</strong>，但你級距會被調高。＊參考說明<br>
+<br><strong class="strong2">兌換金換算：</strong><br>
+１０００元*０.０５=５０、即５０元就是兌換金，以此類推。<br>
+(兩種兌換金換算皆一樣)<br>
+<br><strong class="strong2">說明：</strong><br>
+
+<li> 看你當月報多少數字給我，我就給多少數字出去，你會在你的薪資單看到獎金多了多少錢但是實際上你並沒有拿到這筆錢。（跟發票無關、單純口頭數字交易）。</li> 
+<li> 你報的數字只會在你的薪資單出現一次，例如你8月給我2000，那你9/5應該會看到你薪資單多了一筆2000的獎金，然後就結束了，不會再有其他的了，所以須說明清楚要報幾個月。</li> 
+<li>這個金額可能會影響到你要多繳稅，所以請自行換算，有些人會想把級距提高，就是看個人需求。</li> 
+<li> 公司一年會提報兩次薪資級距，所以你哪個月提報也有差(每年2月及8月申報、3月、9月生效、所屬員工最近3個月之平均月薪資總額)。</li> 
+
+
+<!-- <img width="80%" src="img\011.jpg">  -->
+
+
+
+
+
+  
+  </div>  
+
+
+
+
+
+
+
+
+
+
+
+  <div id="Doni" class="w3-container person">
+  <br>
+  <h3 class="w3-opacity">初級任務</h3>
+  <h5> 以下只是幽默性質介紹、正規規範還請參照1111人事總管處</h5> 
+  <hr>
+  <P>
+  <br>
+  設備基本申請:<br><br>
+  1.申請手機可以連測試機WIFI<br>
+  2.vscode<br>
+  3.postman：API測試<br>
+  4.FTP帳號密碼<br>
+  5.google的擴充功能<br>
+  </P>
+  <P>
+  <br>
+  <strong class="strong2">上正式需求分兩種:(CB轉OB任務)</strong><br><br> 
+  
+  1.<strong style="color: blue;">修改</strong>(沒特別註明 都是修改)<br>
+  2.<strong style="color: red;">新增</strong>(圖片檔)<br><br>   
+  需求單:<br>
+  企劃某<strong style="color: purple;">A檔案</strong>要從<strong style="color: blue;">測試機</strong>(192.168.<strong style="color: blue;">1.234</strong> )上傳至<br>
+  <strong style="color: red;">正式機</strong>(192.168.<strong style="color: red;">8.101</strong> )or(192.168.<strong style="color: red;">8.102</strong> )<br>
+  <br>
+  <p>STEP<em>1</em>:<br><strong style="color:green;">本機</strong>建立一個資料夾名為<strong style="color:green;">20211014</strong> 和子資料夾 <strong style="color:green;">backup</strong><br>
+  <p>STEP<em>2</em>:<br>收尋企劃給的<strong style="color: blue;">測試機</strong>路徑找到<strong style="color: purple;">A檔案</strong>，將<strong style="color: blue;">測試機</strong><strong style="color: purple;">A檔案</strong>丟進<strong style="color:green;">本機</strong><strong style="color:rgb(230, 21, 177);">待傳</strong><br>
+  <p>STEP<em>3</em>:<br>開啟<strong style="color: red;">正式機</strong>找到<strong style="color: purple;">A檔案</strong>並<em style="font-size: x-large;"> "備份" </em>到<strong style="color:green;">本機</strong>的子資料夾<strong style="color:green;">backup</strong>內<br>
+  <p>STEP<em>4</em>:<br>再把<strong style="color:green;">本機</strong><strong style="color:rgb(230, 21, 177);">待傳</strong>的<strong style="color: purple;">A檔案</strong>覆蓋至<strong style="color: red;">正式機</strong><strong style="color: purple;">A檔案</strong>即完成</p><br><br>
+</div>  
+
