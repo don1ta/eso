@@ -1,0 +1,311 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>1111SOP</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+</style>
+</head>
+<body class="w3-light-grey w3-content" style="max-width:1600px">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+
+  <table border="0" cellpadding="0" cellspacing="0" width="99%" align="center"><tr><td width="100%">
+    <table border="0" cellpadding="3" cellspacing="0" width="100%" align="center">
+        <tr bgcolor="#666699">
+     
+            <td id="logout" align="right"><a href="logout.asp" target="mainFrame" style="color:yellow" title="192.168.8.75">小菜雞登出</a></td>
+        </tr>
+        <tr>
+            <td id="menucontent" colspan="2" width="90%"><table bgcolor="#FFFFFF" width="100%" cellpadding="3" cellspacing="0">
+        
+                <tr>
+                    <td style="">
+                        <a href="/manage/staff/board.asp" target="mainFrame" style="font-size:13px">公告事項</a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="">
+                        <a href="/manage/staff/pwd_mod.asp" target="mainFrame" style="font-size:13px">變更密碼</a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="">
+                        <a href="/manage/staff/meeting.asp" target="mainFrame" style="font-size:13px">視訊會議系統</a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="">
+                        <a href="menuAlu.asp?m_No=E" target="mainFrame" style="font-size:13px">員工資訊系統</a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="">
+                        <a href="menuAlu.asp?m_No=F" target="mainFrame" style="font-size:13px">員工報表系統</a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="">
+                        <a href="menuAlu.asp?m_No=G" target="mainFrame" style="font-size:13px">網站管理系統</a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="">
+                        <a href="menuAlu.asp?m_No=H" target="mainFrame" style="font-size:13px">活動管理系統</a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="">
+                        <a href="menuAlu.asp?m_No=B" target="mainFrame" style="font-size:13px">行銷管理系統</a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="">
+                        <a href="menuAlu.asp?m_No=C" target="mainFrame" style="font-size:13px">快報管理系統</a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="">
+                        <a href="menuAlu.asp?m_No=D" target="mainFrame" style="font-size:13px">統計查詢系統</a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="">
+                        <a href="/mnd/go234.asp?ref=185/login.asp" target="_blank" style="font-size:13px">求職客服系統</a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="">
+                        <a href="/mnd/go234.asp?ref=180/login.asp" target="_blank" style="font-size:13px">求才客服系統</a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="">
+                        <a href="http://192.168.1.100/admin/login.asp" target="_blank" style="font-size:13px">旅遊客服系統</a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="">
+                        <a href="/manage/staff/etraining/" target="_blank" style="font-size:13px">人才搜尋系統</a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="">
+                        <a href="http://docs.1111.com.tw/synoProxy.php?u=20200715&l=sheet" target="_blank" style="font-size:13px">線上文件系統</a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="">
+                        <a href="/manage/staff/fileServer.asp" target="_blank" style="font-size:13px">檔案伺服器</a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="">
+                        <a href="/manage/staff/menuSearch.asp" target="mainFrame" style="font-size:13px">找不到系統？</a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="">
+                        <a href="/manage/staff/advice_complaint/" target="_blank" style="font-size:13px"><i class="fa fa-envelope"></i>建議&申訴</a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td style="">
+                        <a href="menuAlu.asp?m_No=A" target="mainFrame" style="font-size:13px">總管設定</a>
+                    </td>
+                </tr>
+                
+            </table></td>
+        </tr>
+    </table>
+</td></tr></table>
+
+
+</nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px">
+
+<!-- Header -->
+<header id="portfolio">
+    <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="w3-container">
+    <h1><b>1111 SOP非正式教學網</b></h1>
+    <!-- <div class="w3-section w3-bottombar w3-padding-16">
+    <span class="w3-margin-right">Filter:</span> 
+    <button class="w3-button w3-black">如果</button>
+    <button class="w3-button w3-white"><i class="fa fa-diamond w3-margin-right"></i>你不會</button>
+    <button class="w3-button w3-white w3-hide-small"><i class="fa fa-photo w3-margin-right"></i>就學阿</button>
+    <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>董?</button>
+    </div> -->
+    </div> 
+</header>
+
+
+<div class="w3-container w3-padding-large ">
+
+    <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+        <legend align='left' style='font-weight:bold; color:#000'>申請單</legend>
+        <div class='itembox'>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>人員異動申請</a><font color=red title='需要我簽核的單子'>2</font>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>設備異動申請</a><font color=red title='需要我簽核的單子'>5</font>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>離職申請線上簽核</a>      
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>線上請假單</a>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>員工公務外出單</a>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>加班補休申請單</a>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>文具採購申請單</a>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>名片申請</a>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>電子郵件簽章檔產生器</a>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=_blank>用印申請單</a>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=_blank>費用申請單</a>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>拍攝需求申請單</a>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>程式設計申請單</a><font color=red title='需要我簽核的單子'>5</font>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>網頁平面設計申請單</a>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>應徵人員甄試表</a>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>人員增補申請單</a>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>進修培訓費申請表</a>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>標案評估申請表</a>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>預算申請單</a>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>SEO申請單</a>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=_blank>工商憑證借出申請單</a></div>
+    </fieldset>
+
+    <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+    <legend align='left' style='font-weight:bold; color:#000'>報修系統</legend> 
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>MIS線上報修系統</a>
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>總務線上報修系統</a> 
+    </fieldset>
+
+    <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>    
+    <legend align='left' style='font-weight:bold; color:#000'>建議系統</legend> <div class='itembox'>
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>總裁信箱</a>  
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=_blank>建議&申訴</a>  
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>全站系統建議</a> 
+        <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=_blank>系統反應/建議</a> </div>
+    </fieldset>
+
+    <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+    <legend align='left' style='font-weight:bold; color:#000'>員工安全/福利</legend> 
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=_blank>健康資訊</a> 
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>醫師諮詢預約</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='/manage/staff/board.asp?type=14' target=_blank>安全衛生資訊</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='/manage/staff/massage/bookingmassage.asp?chme=1' target=mainFrame>員工按摩預約系統</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='/manage/staff/lunch/lunch.asp' target=mainFrame>團膳供餐週訂單</a> 
+    </fieldset>
+    
+    <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+    <legend align='left' style='font-weight:bold; color:#000'>員工出缺勤/考核/維護</legend> 
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=_blank>考勤查詢系統</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>點名表</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='/manage/staff/emp_phone.asp' target=mainFrame>員工分機/代理人維護</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='/manage/staff/emp_nonarrivalReport.asp' target=mainFrame>點名表匯總</a> 
+    </fieldset>
+
+    <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+    <legend align='left' style='font-weight:bold; color:#000'>員工資訊/教學</legend> 
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>員工資料</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=_blank>組織圖JPG</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=_blank>任務組織圖</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>員工需知摘要</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=_blank>各專區負責窗口</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>標準作業流程(SOP)</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>年度行事曆</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>員工知識庫教育平台</a> 
+    </fieldset>
+
+    <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+    <legend align='left' style='font-weight:bold; color:#000'>行政公告</legend> 
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>行政公告一覽表</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>性騷擾防治措施、申訴及懲戒辦法</a> 
+    </fieldset>
+    
+    <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+    <legend align='left' style='font-weight:bold; color:#000'>內部系統</legend> 
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>公告系統</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=_blank>庫存管理系統(舊)</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=_blank>庫存管理系統</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>標案控管系統</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>會議記錄系統</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>招募紀錄</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>事件紀錄</a> 
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>合作廠商及會議記錄</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>會議室預約系統</a> 
+    </fieldset>
+
+    <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+    <legend align='left' style='font-weight:bold; color:#000'>值班表</legend> 
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>工程假日值班表</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>行發假日值班表</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>客服值班表</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>抬飯值班表</a> 
+    </fieldset>
+    
+    <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+    <legend align='left' style='font-weight:bold; color:#000'>公文</legend> 
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>公文發文文號</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>公文/法案管理</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=mainFrame>掛號系統</a> 
+    </fieldset>
+
+    <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+    <legend align='left' style='font-weight:bold; color:#000'>21世紀</legend> 
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=_blank>21世紀簡訊專用</a>  
+    <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href='' target=_blank>21世紀簡訊發送列表</a> </div>
+    </fieldset>
+  <!-- Footer -->
+  <footer class="w3-container w3-padding-32 w3-dark-grey">
+  </footer>
+
+
+
+<!-- End page content -->
+</div>
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+
+</body>
+</html>
