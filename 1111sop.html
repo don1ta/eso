@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/lib/w3.css">
+    <!-- 圖表Chart.js v3.9.1 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <!-- BOX -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/simsCheckbox.css" type="text/css" />
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script src="js/simsCheckbox.js" type="text/javascript"></script>
+
     <style>
         body,
         h1,
@@ -34,12 +43,118 @@
             padding: 0;
             overflow: hidden;
         }
+
+
+
+
+/*------------------Checkbox----------------------*/
+.checkboxWrapper{
+	display:block; /* you can replace with 'display:inline-block' if you want parent element inline */
+}
+
+.checkboxWrapper input[type="checkbox"] {
+	display: none;
+}
+
+.checkboxWrapper input[type="checkbox"] + label {
+	cursor: pointer;
+	display:block;
+}
+
+.checkboxWrapper input[type="checkbox"] + label i {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.checkboxWrapper input[type="checkbox"] + label path {
+	stroke-dashoffset: -189;
+	stroke: inherit;
+	stroke-dasharray: 189;
+	transition: all ease-in-out 0.5s;
+	-webkit-transition: all ease-in-out 0.5s;
+	-moz-transition: all ease-in-out 0.5s;
+	-ms-transition: all ease-in-out 0.5s;
+	-o-transition: all ease-in-out 0.5s;
+}
+
+.checkboxWrapper input[type="checkbox"]:checked + label path {
+	stroke-dashoffset: 0;
+}
+/*----------------------Themes------------------------*/
+/* Turquoise theme */
+	.theme1{
+		stroke:#1ABC9C;	
+	}
+/**/
+
+/* Emerald theme */
+	.theme2{
+		stroke:#2ECC71;
+	}
+/**/
+
+/* Peterriver theme */
+	.theme3{
+		stroke:#3498DB;
+	}
+/**/
+
+/* Amethyst theme */
+	.theme4{
+		stroke:#9B59B6;
+	}
+/**/
+
+/* Wet Asphalt theme */
+	.theme5{
+		stroke:#34495E;
+	}
+/**/
+
+/* Carrot theme */
+	.theme6{
+		stroke:#E67E22;
+	}
+/**/
+/* Alizarin theme */
+	.theme7{
+		stroke:#E74C3C;
+	}
+/**/
+
+/*-----------------------Sizes------------------------------*/
+.extraSmallCheckboxSize.checkboxWrapper input[type="checkbox"] + label i svg{
+	width:20px;
+	height:20px;
+}
+
+.smallCheckboxSize.checkboxWrapper input[type="checkbox"] + label i svg{
+	width:30px;
+	height:30px;
+}
+
+.mediumCheckboxSize.checkboxWrapper input[type="checkbox"] + label i svg{
+	width:40px;
+	height:40px;
+}
+
+.largeCheckboxSize.checkboxWrapper input[type="checkbox"] + label i svg{
+	width:50px;
+	height:50px;
+}
+
+.extraLargeCheckboxSize.checkboxWrapper input[type="checkbox"] + label i svg{
+	width:60px;
+	height:60px;
+}
+
+
     </style>
 </head>
 
 <body class="w3-light-grey w3-content" style="max-width:1600px">
 
-    <!-- 左半邊 -->
+<!-- 左半邊 -->
     <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
 
         <table border="0" cellpadding="0" cellspacing="0" width="99%" align="center">
@@ -56,133 +171,133 @@
                                 <table bgcolor="#FFFFFF" width="100%" cellpadding="3" cellspacing="0">
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="/manage/staff/board.asp" target="mainFrame"
                                                 style="font-size:23px">公告事項</a>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="/manage/staff/pwd_mod.asp" target="mainFrame"
                                                 style="font-size:23px">變更密碼</a>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="/manage/staff/meeting.asp" target="mainFrame"
                                                 style="font-size:23px">視訊會議系統</a>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="menuAlu.asp?m_No=E" target="mainFrame"
                                                 style="color: blue; font-size:23px">員工資訊系統</a>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="menuAlu.asp?m_No=F" target="mainFrame"
                                                 style="color: blue; font-size:23px">員工報表系統</a>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="menuAlu.asp?m_No=G" target="mainFrame"
                                                 style="font-size:23px">網站管理系統</a>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="menuAlu.asp?m_No=H" target="mainFrame"
                                                 style="font-size:23px">活動管理系統</a>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="menuAlu.asp?m_No=B" target="mainFrame"
                                                 style="font-size:23px">行銷管理系統</a>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="menuAlu.asp?m_No=C" target="mainFrame"
                                                 style="font-size:23px">快報管理系統</a>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="menuAlu.asp?m_No=D" target="mainFrame"
                                                 style="font-size:23px">統計查詢系統</a>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="/mnd/go234.asp?ref=185/login.asp" target="_blank"
                                                 style="font-size:23px">求職客服系統</a>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="/mnd/go234.asp?ref=180/login.asp" target="_blank"
                                                 style="font-size:23px">求才客服系統</a>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="http://192.168.1.100/admin/login.asp" target="_blank"
                                                 style="font-size:23px">旅遊客服系統</a>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="/manage/staff/etraining/" target="_blank"
                                                 style="font-size:23px">人才搜尋系統</a>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="http://docs.1111.com.tw/synoProxy.php?u=20200715&l=sheet"
                                                 target="_blank" style="font-size:23px">線上文件系統</a>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="/manage/staff/fileServer.asp" target="_blank"
                                                 style="font-size:23px">檔案伺服器</a>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="/manage/staff/menuSearch.asp" target="mainFrame"
                                                 style="font-size:23px">找不到系統？</a>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="/manage/staff/advice_complaint/" target="_blank"
                                                 style="font-size:23px"><i class="fa fa-envelope"></i>建議&申訴</a>
                                         </td>
                                     </tr>
 
                                     <tr>
-                                        <td style="">
+                                        <td>
                                             <a href="menuAlu.asp?m_No=A" target="mainFrame"
                                                 style="font-size:23px">總管設定</a>
                                         </td>
@@ -200,10 +315,11 @@
     </nav>
 
 
-    <!-- !PAGE CONTENT! -->
+ 
+
+<!-- 表頭 -->
     <div class="w3-main" style="margin-left:300px">
 
-        <!-- Header -->
         <header id="portfolio">
             <a href="#"><img src="assets/img/ftv2folderopen.gif" style="width:65px;"
                     class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
@@ -212,10 +328,11 @@
             <div class="w3-container">
                 <h1><b>1111 SOP非正式教學網</b></h1>
 
+             
 
-                <!-- <div class="w3-section w3-bottombar w3-padding-16">
+    <!-- <div class="w3-section w3-bottombar w3-padding-16">
     <span class="w3-margin-right">誰都不認只認藍字:</span> 
-     <button class="w3-button w3-black">誰都不認</button>
+    <button class="w3-button w3-black">誰都不認</button>
     <button class="w3-button w3-white"><i class="fa fa-diamond w3-margin-right"></i>只認藍字</button>
     <button class="w3-button w3-white w3-hide-small"><i class="fa fa-photo w3-margin-right"></i>就學阿</button>
     <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>董?</button> 
@@ -223,10 +340,10 @@
             </div>
         </header>
 
-        <!--右半邊-->
+<!--右半邊-->
         <div class="w3-container w3-padding-large ">
 
-            <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+            <fieldset style='-moz-border-radius--:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
                 <legend align='left' style='font-weight:bold; color:#000'>申請單</legend>
                 <div class='itembox'>
                     <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href="#A1"
@@ -277,7 +394,7 @@
                 </div>
             </fieldset>
 
-            <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+            <fieldset style="-moz-border-radius-:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;">
                 <legend align='left' style='font-weight:bold; color:#000'>報修系統</legend>
                 <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href="#B1" onclick="openCity('B1')"
                     style="color:blue">MIS線上報修系統</a>
@@ -285,7 +402,7 @@
                     style="color:blue">總務線上報修系統</a>
             </fieldset>
 
-            <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+            <fieldset style='-moz-border-radius-:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
                 <legend align='left' style='font-weight:bold; color:#000'>建議系統</legend>
                 <div class='itembox'>
                     <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href="#C1"
@@ -298,7 +415,7 @@
                         onclick="openCity('C4')">系統反應/建議</a> </div>
             </fieldset>
 
-            <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+            <fieldset style='-moz-border-radius-:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
                 <legend align='left' style='font-weight:bold; color:#000'>員工安全/福利</legend>
                 <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href="#D1"
                     onclick="openCity('D1')">健康資訊</a>
@@ -312,7 +429,7 @@
                     style="color:blue">團膳供餐週訂單</a>
             </fieldset>
 
-            <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+            <fieldset style='-moz-border-radius-:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
                 <legend align='left' style='font-weight:bold; color:#000'>員工出缺勤/考核/維護</legend>
                 <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href="#E1" onclick="openCity('E1')"
                     style="color:blue">考勤查詢系統</a>
@@ -324,7 +441,7 @@
                     onclick="openCity('E4')">點名表匯總</a>
             </fieldset>
 
-            <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+            <fieldset style='-moz-border-radius-:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
                 <legend align='left' style='font-weight:bold; color:#000'>員工資訊/教學</legend>
                 <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href="#F1" onclick="openCity('F1')"
                     style="color:blue">員工資料</a>
@@ -344,7 +461,7 @@
                     onclick="openCity('F8')">員工知識庫教育平台</a>
             </fieldset>
 
-            <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+            <fieldset style='-moz-border-radius-:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
                 <legend align='left' style='font-weight:bold; color:#000'>行政公告</legend>
                 <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href="#G1"
                     onclick="openCity('G1')">行政公告一覽表</a>
@@ -352,7 +469,7 @@
                     onclick="openCity('G2')">性騷擾防治措施、申訴及懲戒辦法</a>
             </fieldset>
 
-            <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+            <fieldset style='-moz-border-radius-:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
                 <legend align='left' style='font-weight:bold; color:#000'>內部系統</legend>
                 <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href="#H1"
                     onclick="openCity('H1')">公告系統</a>
@@ -374,7 +491,7 @@
                     style="color:blue">會議室預約系統</a>
             </fieldset>
 
-            <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+            <fieldset style='-moz-border-radius-:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
                 <legend align='left' style='font-weight:bold; color:#000'>值班表</legend>
                 <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href="#I1"
                     onclick="openCity('I1')">工程假日值班表</a>
@@ -386,7 +503,7 @@
                     onclick="openCity('I4')">抬飯值班表</a>
             </fieldset>
 
-            <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+            <fieldset style='-moz-border-radius-:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
                 <legend align='left' style='font-weight:bold; color:#000'>公文</legend>
                 <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href="#J1"
                     onclick="openCity('J1')">公文發文文號</a>
@@ -396,7 +513,7 @@
                     onclick="openCity('J3')">掛號系統</a>
             </fieldset>
 
-            <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+            <fieldset style='-moz-border-radius-:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
                 <legend align='left' style='font-weight:bold; color:#000'>21世紀</legend>
                 <img src='/assets/img/ftv2folderopen.gif' align='absmiddle'><a href="#K1"
                     onclick="openCity('K1')">21世紀簡訊專用</a>
@@ -407,35 +524,214 @@
 
 
 
-
+<!--下半部-->
         <div class="w3-container w3-padding-large ">
-            <fieldset style='-moz-border-radius:10px; margin:5px 5px 10px 5px; border:1px solid #f0b616;'>
+            <fieldset style='-moz-border-radius-:10px; margin:5px 5px 10px 5px; border:1px solid #f0b616;'>
                 <legend align='left' style='font-weight:bold; color:#000'>申請流程</legend>
 
 
-<!-- 人員異動申請  -->
+                <!-- 人員異動申請  -->
                 <div id="A1" class="city">
                     <h2>人員異動申請</h2>
                     <ul>
 
                         <h3><strong style="color:rgb(184, 37, 11)">注意事項</strong></h3>
 
-                        
-                        <li><strong style="color:rgb(184, 37, 11)">正職</strong>職稱變更:請主管寫信告知人事變更</li>
-                        <li><strong style="color:rgb(184, 37, 11)">駐點</strong>人員:請將基本資料通知人事建檔、獲得員工編號後再申請新人單、並告知護士做健檢</li>
+
+                        <li><strong style="color:rgb(184, 37, 11)">正職</strong>請至總管首頁填寫新人單、並於同頁查詢進度。</li>
+                        <li><strong style="color:rgb(184, 37, 11)">駐點</strong>人員:請將基本資料通知人事建檔、獲得員工編號後再申請新人單、並告知護士做健檢
+                        </li>
+                        <li><strong style="color:rgb(184, 37, 11)">職稱變更</strong>:請主管寫信告知人事變更；換位子、樓層等填設備異動單。</li>
+
                         <BR>
-                        <p style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;"><span style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">新進人員帳號申請</span></p>
+                        <p
+                            style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;">
+                            <span
+                                style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">新進人員帳號申請</span>
+                        </p>
 
                         <img width="100%" height="100%" src="img/A1.jpg">
-                         <BR>
-                        <p style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;"><span style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">新進人員簽核進度</span></p>
+
+                        <BR>
+                        <p
+                            style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;">
+                            <span
+                                style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">新進人員簽核進度</span>
+                        </p>
 
                         <img width="100%" height="100%" src="img/A1-2.jpg">
-                        <p style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;"><span style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">駐點新人帳號申請</span></p>
+                        <br>
+                        <br>
+                        <p
+                            style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;">
+                            <span
+                                style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">駐點新人帳號申請</span>
+                        </p>
+
+                        <h3><strong style="color:rgb(184, 37, 11)">注意事項</strong></h3>
+                        約聘人員需要有合約、並將以下資料寄信給人事建檔、取得員工編號才可申請新進人員帳號<br>
+                        約聘人員皆為紙本打卡、出勤不走人事、不使用出勤系統。(非公司對公司者、個人需填勞務單)
+                        <br>
+                        <br>
+                        <span style="color:rgb(27, 119, 47)">(請全部複製)</span><br>
+                        <li>報到日:8/3</li>
+                        <li>姓名:林O煜 </li>
+                        <li>部門:總管理處-其他</li>
+                        <li>職稱:工程師</li>
+                        <li>身分證字號: F12OOOOO</li>
+                        <li>生日: 1986-11-XX</li>
+                        <li>電話: 0935-XXXXXX</li>
+                        <li>座位分機 2725</li>
+                        <br>
+                        <p
+                            style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;">
+                            <span
+                                style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">人事單位</span>
+                        </p>
+
+                       
+
+
+
+<!--學習單-->
+
+<section>
+    <h3>自我檢視區</h3>
+    
+<!-- -->
+
+<div class="checkboxWrapper theme1">
+    <input type="checkbox" id="sample1">
+    <label for="sample1">
+        <i>
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
+                <circle fill="none" stroke="#B7B7B7" stroke-width="3" stroke-miterlimit="10" cx="25.11" cy="24.883" r="23.519"/>
+                <path fill="none" stroke-width="3" stroke-miterlimit="10" d="M48.659,25c0,12.998-10.537,23.534-23.534,23.534
+                S1.591,37.998,1.591,25S12.127,1.466,25.125,1.466c9.291,0,17.325,5.384,21.151,13.203L19,36l-9-14"/>
+            </svg>
+        </i>
+        Turquoise Theam
+    </label>
+    
+</div>
+<!-- --> 
+
+<!-- -->
+<div class="checkboxWrapper theme2">
+    <input type="checkbox" id="sample2">
+    <label for="sample2">
+        <i>
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
+                <circle fill="none" stroke="#B7B7B7" stroke-width="3" stroke-miterlimit="10" cx="25.11" cy="24.883" r="23.519"/>
+                <path fill="none" stroke-width="3" stroke-miterlimit="10" d="M48.659,25c0,12.998-10.537,23.534-23.534,23.534
+                S1.591,37.998,1.591,25S12.127,1.466,25.125,1.466c9.291,0,17.325,5.384,21.151,13.203L19,36l-9-14"/>
+            </svg>
+        </i>
+        Emerald Theme
+    </label>
+
+<!-- -->
+</div>
+
+
+<!-- -->
+<div class="checkboxWrapper theme3">
+    <input type="checkbox" id="sample3">
+    <label for="sample3">
+        <i>
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
+                <circle fill="none" stroke="#B7B7B7" stroke-width="3" stroke-miterlimit="10" cx="25.11" cy="24.883" r="23.519"/>
+                <path fill="none" stroke-width="3" stroke-miterlimit="10" d="M48.659,25c0,12.998-10.537,23.534-23.534,23.534
+                S1.591,37.998,1.591,25S12.127,1.466,25.125,1.466c9.291,0,17.325,5.384,21.151,13.203L19,36l-9-14"/>
+            </svg>
+        </i>
+        Peter River Theme
+    </label>
+</div>
+<!-- -->
+
+<!-- -->
+<div class="checkboxWrapper theme4">
+    <input type="checkbox" id="sample4">
+    <label for="sample4">
+        <i>
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
+            <circle fill="none" stroke="#B7B7B7" stroke-width="3" stroke-miterlimit="10" cx="25.11" cy="24.883" r="23.519"/>
+            <path fill="none" stroke-width="3" stroke-miterlimit="10" d="M48.659,25c0,12.998-10.537,23.534-23.534,23.534
+            S1.591,37.998,1.591,25S12.127,1.466,25.125,1.466c9.291,0,17.325,5.384,21.151,13.203L19,36l-9-14"/>
+        </svg>
+        </i>
+        Amethyst Theme
+    </label>
+</div>
+<!-- -->
+
+<!-- -->
+<div class="checkboxWrapper theme5">
+    <input type="checkbox" id="sample5">
+    <label for="sample5">
+        <i>
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
+                <circle fill="none" stroke="#B7B7B7" stroke-width="3" stroke-miterlimit="10" cx="25.11" cy="24.883" r="23.519"/>
+                <path fill="none" stroke-width="3" stroke-miterlimit="10" d="M48.659,25c0,12.998-10.537,23.534-23.534,23.534
+                S1.591,37.998,1.591,25S12.127,1.466,25.125,1.466c9.291,0,17.325,5.384,21.151,13.203L19,36l-9-14"/>
+            </svg>
+        </i>
+        Wetasph Alt Theme
+    </label>
+</div>
+<!-- -->
+
+
+<!-- -->
+<div class="checkboxWrapper theme6">
+    <input type="checkbox" id="sample6">
+    <label for="sample6">
+        <i>
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
+            <circle fill="none" stroke="#B7B7B7" stroke-width="3" stroke-miterlimit="10" cx="25.11" cy="24.883" r="23.519"/>
+            <path fill="none" stroke-width="3" stroke-miterlimit="10" d="M48.659,25c0,12.998-10.537,23.534-23.534,23.534
+            S1.591,37.998,1.591,25S12.127,1.466,25.125,1.466c9.291,0,17.325,5.384,21.151,13.203L19,36l-9-14"/>
+        </svg>
+        </i>
+        Carrot Theme
+    </label>
+</div>
+<!-- -->
+
+<!-- -->
+<div class="checkboxWrapper theme7">
+    <input type="checkbox" id="sample7">
+    <label for="sample7">
+        <i>
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
+                <circle fill="none" stroke="#B7B7B7" stroke-width="3" stroke-miterlimit="10" cx="25.11" cy="24.883" r="23.519"/>
+                <path fill="none" stroke-width="3" stroke-miterlimit="10" d="M48.659,25c0,12.998-10.537,23.534-23.534,23.534
+                S1.591,37.998,1.591,25S12.127,1.466,25.125,1.466c9.291,0,17.325,5.384,21.151,13.203L19,36l-9-14"/>
+            </svg>
+        </i>
+        Alizarin Theme
+    </label>
+</div>
+
+</section>
+
+
+
+                       
+
+
 
                     </ul>
                 </div>
-<!-- 設備異動申請  -->
+                <!-- 設備異動申請  -->
                 <div id="A2" class="city">
                     <h2>設備異動申請</h2>
 
@@ -460,16 +756,23 @@
 
 
 
-                        <p style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;"><span style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">安裝開源軟體</span></p>
+                        <p
+                            style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;">
+                            <span
+                                style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">安裝開源軟體</span>
+                        </p>
 
 
 
 
 
 
-                        
-                        <li>SQL Server Management Studio<br>https://docs.microsoft.com/zh-tw/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16</li>
-                        <li> SQL Server 2019 Developer<br>https://www.microsoft.com/zh-tw/sql-server/sql-server-downloads</li>
+
+                        <li>SQL Server Management
+                            Studio<br>https://docs.microsoft.com/zh-tw/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16
+                        </li>
+                        <li> SQL Server 2019
+                            Developer<br>https://www.microsoft.com/zh-tw/sql-server/sql-server-downloads</li>
                         <li> Git<br>https://git-scm.com/downloads</li>
                         <li>Sourcetree<br>https://www.sourcetreeapp.com/</li>
                         <li>FileZilla<br>https://filezilla-project.org/download.php?platform=win64</li>
@@ -479,80 +782,99 @@
                         <li>Visual Studio 2022 Community<br>https://visualstudio.microsoft.com/zh-hant/downloads/</li>
                         <li>Visual Studio Code<br>https://code.visualstudio.com/</li>
                         <li> Fork <br>https://git-fork.com/</li>
-                        <li> LinqPad<br>https://www.linqpad.net/</li> 
+                        <li> LinqPad<br>https://www.linqpad.net/</li>
                         <BR>
-                            <p style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;"><span style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">自行攜帶筆電</span></p>
+                        <p
+                            style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;">
+                            <span
+                                style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">自行攜帶筆電</span>
+                        </p>
 
-                       
+
                         <h4><strong style="color:rgb(184, 37, 11)">注意事項</strong></h4>
-                            公司不會提供WI-FI連結、請自行連手機網路。<br>
-                            公司不會協助任何的更新與安裝、與問題排查。<br>
+                        公司不會提供WI-FI連結、請自行連手機網路。<br>
+                        公司不會協助任何的更新與安裝、與問題排查。<br>
 
-                            <br>
+                        <br>
                         並填寫附件<strong style=" color:red">切結書</strong>，填畢交予MIS方能攜帶。<BR>
-                            <li>姓名: xxx</li> 
-                            <li>員工編號 20xxxxx</li> 
-                            <li>原因：因業務需攜帶筆電進公司。</li> 
-                            <li>電腦平台為 :(如Windows10、7或MAC)。</li> 
-                            <li>申請開放區間:2022/03/03 ~ 2022/04/21。</li> 
+                        <li>姓名: xxx</li>
+                        <li>員工編號 20xxxxx</li>
+                        <li>原因：因業務需攜帶筆電進公司。</li>
+                        <li>電腦平台為 :(如Windows10、7或MAC)。</li>
+                        <li>申請開放區間:2022/03/03 ~ 2022/04/21。</li>
 
-                            <br> 
+                        <br>
 
-                            <p style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;"><span style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">換部門、換樓層、調撥資產</span></p>
-
-
-                            
-
-                            <h4><strong style="color:rgb(184, 37, 11)">注意事項</strong></h4>                  
-                            調換部門後原有對外權限、如line、特殊網站等、網管端將會重置。<br>
-                            若新部門有相關需求、則重新填單申請、網管端再行開放。<br>
-                            <br>
-
-
-                            <li>需求:1.換部門2.換樓層3.調撥資產</li>
-                            <li>原因：skype設定、印表機設定...等</li>
-                            <li>姓名/員編:</li>
-                            <li>螢幕產編(mxxxxx):</li>
-                            <li>主機產編(pxxxxx):</li>
-                            <li>原IP(192.168.x.x):</li>
-                            <li>樓層調整(無 or 89-14f>89-3f):</li>
-                            <li>分機調整(無 or 原8881>現2221):</li>
-                            <li>調撥資產(無 or 工程>行動發展):</li>
-                           
-                            <br>
+                        <p
+                            style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;">
+                            <span
+                                style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">換部門、換樓層、調撥資產</span>
+                        </p>
 
 
 
-                            <p style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;"><span style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">申請VPN</span></p>
 
-                            
-                            <h4><strong style="color:rgb(184, 37, 11)">注意事項</strong></h4>
-                                在家工作vpn務必請依下列sop填寫申請：為了加快vpn設定、開放、控管作業、 請需求在家工作vpn開放同仁、<span  style="color:red">首次</span>申請填單格式範例請依以下"註1"填寫。而若需再申請<span class="red">延長開放時間</span>或<span  style="color:red">第2次</span>申請、煩請於申請單加註，"註2"、已利設定作業、控管、謹在此感謝。<br>
-                                <br>
+                        <h4><strong style="color:rgb(184, 37, 11)">注意事項</strong></h4>
+                        調換部門後原有對外權限、如line、特殊網站等、網管端將會重置。<br>
+                        若新部門有相關需求、則重新填單申請、網管端再行開放。<br>
+                        <br>
 
-                                <span  style="color:rgb(27, 119, 47)">**註1(請全部複製)</span><br>
-                                首次申請填單格式範例<br>
 
-                                <li>姓名: xxx</li>
-                                <li>員工編號 20xxxxx</li>
-                                <li>原因：因應疫情、在家工作需求。</li>
-                                請協助開放vpn連線使用。 <br>
-                                家中電腦使用平台為 :(如Windows10、7或MAC)。 <br>
-                                <li>申請開放區間:2022/xx/xx ~ 2022/xx/xx</li>
-                                <li>公司電腦 IP:192.168.xx.xx </li>
-                                <li>個人email：如 xxxx @gmail.com 、xxxx @hotmail 、 xxxx @yahoo等。</li>
-                                <br>                            
-                                <span style="color:rgb(27, 119, 47)">***註2(請全部複製)</span><br>
-                                原先已申請過在家連線VPN到 2022年 x月 xx日止，因應疫情在家工作需求，故需延長、請協助延長開通日期至 2022 年 x月 xx日。 <br>
+                        <li>需求:1.換部門2.換樓層3.調撥資產</li>
+                        <li>原因：skype設定、印表機設定...等</li>
+                        <li>姓名/員編:</li>
+                        <li>螢幕產編(mxxxxx):</li>
+                        <li>主機產編(pxxxxx):</li>
+                        <li>原IP(無 or 192.168.x.x):</li>
+                        <li>樓層調整(無 or 89-14f>89-3f):</li>
+                        <li>分機調整(無 or 原8881>現2221):</li>
+                        <li>調撥資產(無 or 工程>行動發展):</li>
 
-                    
+                        <br>
 
-<BR>
-                    <p style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;"><span style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">表單範例</span></p>
 
-                    <img width="100%" height="100%" src="img/A2.jpg">
 
-                </ul>
+                        <p
+                            style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;">
+                            <span
+                                style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">申請VPN</span>
+                        </p>
+
+
+                        <h4><strong style="color:rgb(184, 37, 11)">注意事項</strong></h4>
+                        在家工作vpn務必請依下列sop填寫申請：為了加快vpn設定、開放、控管作業、 請需求在家工作vpn開放同仁、<span
+                            style="color:red">首次</span>申請填單格式範例請依以下"註1"填寫。而若需再申請<span class="red">延長開放時間</span>或<span
+                            style="color:red">第2次</span>申請、煩請於申請單加註，"註2"、已利設定作業、控管、謹在此感謝。<br>
+                        <br>
+
+                        <span style="color:rgb(27, 119, 47)">**註1(請全部複製)</span><br>
+                        首次申請填單格式範例<br>
+
+                        <li>姓名: xxx</li>
+                        <li>員工編號 20xxxxx</li>
+                        <li>原因：因應疫情、在家工作需求。</li>
+                        請協助開放vpn連線使用。 <br>
+                        家中電腦使用平台為 :(如Windows10、7或MAC)。 <br>
+                        <li>申請開放區間:2022/xx/xx ~ 2022/xx/xx</li>
+                        <li>公司電腦 IP:192.168.xx.xx </li>
+                        <li>個人email：如 xxxx @gmail.com 、xxxx @hotmail 、 xxxx @yahoo等。</li>
+                        <br>
+                        <span style="color:rgb(27, 119, 47)">***註2(請全部複製)</span><br>
+                        原先已申請過在家連線VPN到 2022年 x月 xx日止，因應疫情在家工作需求，故需延長、請協助延長開通日期至 2022 年 x月 xx日。 <br>
+
+
+
+                        <BR>
+                        <p
+                            style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;">
+                            <span
+                                style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">表單範例</span>
+                        </p>
+
+                        <img width="100%" height="100%" src="img/A2.jpg">
+
+
+                    </ul>
                 </div>
             </fieldset>
 
@@ -562,36 +884,32 @@
 
 
 
-
-                        <div id="A3" class="city">
-                        <h2>離職線上申請</h2>
-                        <p>Paris is the capital of France.</p>
-                        <p>Paris is the capital of France.</p>
-                        <p>Paris is the capital of France.</p>
-                        <p>Paris is the capital of France.</p>
-                        <p>Paris is the capital of France.</p>
-                        <p>Paris is the capital of France.</p>
-                        <p>Paris is the capital of France.</p>
-                        <p>Paris is the capital of France.</p>
-                    </div> 
-
-
-                </fieldset>
-            </div>
-        </div> 
-
-        <!-- Footer -->
-
-        <footer class="w3-container w3-padding-32 w3-dark-grey">
+        <div id="A3" class="city">
+            <h2>離職線上申請</h2>
+            <p>Paris is the capital of France.</p>
+            <p>Paris is the capital of France.</p>
+            <p>Paris is the capital of France.</p>
+            <p>Paris is the capital of France.</p>
+            <p>Paris is the capital of France.</p>
+            <p>Paris is the capital of France.</p>
+            <p>Paris is the capital of France.</p>
+            <p>Paris is the capital of France.</p>
+        </div>
 
 
-        </footer>
-
-        <!-- End page content -->
+        </fieldset>
+    </div>
     </div>
 
+<!-- 頁尾 -->
+
+    <footer class="w3-container w3-padding-32 w3-dark-grey">
+    </footer>
+
+    </div>
+
+<!--JS-->
     <script>
-        // Script to open and close sidebar
         function w3_open() {
             document.getElementById("mySidebar").style.display = "block";
             document.getElementById("myOverlay").style.display = "block";
@@ -615,6 +933,12 @@
             document.getElementById(cityName).style.display = "block";
         }
     </script>
+
+
+<script>
+
+</script>
+
 
 
 
