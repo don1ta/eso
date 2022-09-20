@@ -11,12 +11,6 @@
     <link rel="stylesheet" href="/lib/w3.css">
     <!-- 圖表Chart.js v3.9.1 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <!-- BOX -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
-    <link rel="stylesheet" href="css/simsCheckbox.css" type="text/css" />
-    <script src="js/jquery.min.js" type="text/javascript"></script>
-    <script src="js/simsCheckbox.js" type="text/javascript"></script>
 
     <style>
         body,
@@ -27,7 +21,7 @@
         h5,
         h6 {
             font-family: "Raleway", sans-serif;
-            font-size: 20px ;
+            font-size: 20px;
         }
 
         ;
@@ -45,118 +39,132 @@
             overflow: hidden;
         }
 
-        
+        a {
+            text-decoration: none;
+        }
+
+        b,
+        strong {
+            font-size: 30px;
+        }
 
 
-/*------------------Checkbox----------------------*/
-.checkboxWrapper{
-	display:block; /* you can replace with 'display:inline-block' if you want parent element inline */
-}
+        /*------------------Checkbox----------------------*/
+        .checkboxWrapper {
+            display: block;
+            /* you can replace with 'display:inline-block' if you want parent element inline */
+        }
 
-.checkboxWrapper input[type="checkbox"] {
-	display: none;
-}
+        .checkboxWrapper input[type="checkbox"] {
+            display: none;
+        }
 
-.checkboxWrapper input[type="checkbox"] + label {
-	cursor: pointer;
-	display:block;
-}
+        .checkboxWrapper input[type="checkbox"]+label {
+            cursor: pointer;
+            display: block;
+        }
 
-.checkboxWrapper input[type="checkbox"] + label i {
-	display: inline-block;
-	vertical-align: middle;
-}
+        .checkboxWrapper input[type="checkbox"]+label i {
+            display: inline-block;
+            vertical-align: middle;
+        }
 
-.checkboxWrapper input[type="checkbox"] + label path {
-	stroke-dashoffset: -189;
-	stroke: inherit;
-	stroke-dasharray: 189;
-	transition: all ease-in-out 0.5s;
-	-webkit-transition: all ease-in-out 0.5s;
-	-moz-transition: all ease-in-out 0.5s;
-	-ms-transition: all ease-in-out 0.5s;
-	-o-transition: all ease-in-out 0.5s;
-}
+        .checkboxWrapper input[type="checkbox"]+label path {
+            stroke-dashoffset: -189;
+            stroke: inherit;
+            stroke-dasharray: 189;
+            transition: all ease-in-out 0.5s;
+            -webkit-transition: all ease-in-out 0.5s;
+            -moz-transition: all ease-in-out 0.5s;
+            -ms-transition: all ease-in-out 0.5s;
+            -o-transition: all ease-in-out 0.5s;
+        }
 
-.checkboxWrapper input[type="checkbox"]:checked + label path {
-	stroke-dashoffset: 0;
-}
-/*----------------------Themes------------------------*/
-/* Turquoise theme */
-	.theme1{
-		stroke:#1ABC9C;	
-	}
-/**/
+        .checkboxWrapper input[type="checkbox"]:checked+label path {
+            stroke-dashoffset: 0;
+        }
 
-/* Emerald theme */
-	.theme2{
-		stroke:#2ECC71;
-	}
-/**/
+        /*----------------------Themes------------------------*/
+        /* Turquoise theme */
+        .theme1 {
+            stroke: #1ABC9C;
+        }
 
-/* Peterriver theme */
-	.theme3{
-		stroke:#3498DB;
-	}
-/**/
+        /**/
 
-/* Amethyst theme */
-	.theme4{
-		stroke:#9B59B6;
-	}
-/**/
+        /* Emerald theme */
+        .theme2 {
+            stroke: #2ECC71;
+        }
 
-/* Wet Asphalt theme */
-	.theme5{
-		stroke:#34495E;
-	}
-/**/
+        /**/
 
-/* Carrot theme */
-	.theme6{
-		stroke:#E67E22;
-	}
-/**/
-/* Alizarin theme */
-	.theme7{
-		stroke:#E74C3C;
-	}
-/**/
+        /* Peterriver theme */
+        .theme3 {
+            stroke: #3498DB;
+        }
 
-/*-----------------------Sizes------------------------------*/
-.extraSmallCheckboxSize.checkboxWrapper input[type="checkbox"] + label i svg{
-	width:20px;
-	height:20px;
-}
+        /**/
 
-.smallCheckboxSize.checkboxWrapper input[type="checkbox"] + label i svg{
-	width:30px;
-	height:30px;
-}
+        /* Amethyst theme */
+        .theme4 {
+            stroke: #9B59B6;
+        }
 
-.mediumCheckboxSize.checkboxWrapper input[type="checkbox"] + label i svg{
-	width:40px;
-	height:40px;
-}
+        /**/
 
-.largeCheckboxSize.checkboxWrapper input[type="checkbox"] + label i svg{
-	width:50px;
-	height:50px;
-}
+        /* Wet Asphalt theme */
+        .theme5 {
+            stroke: #34495E;
+        }
 
-.extraLargeCheckboxSize.checkboxWrapper input[type="checkbox"] + label i svg{
-	width:60px;
-	height:60px;
-}
+        /**/
 
+        /* Carrot theme */
+        .theme6 {
+            stroke: #E67E22;
+        }
 
+        /**/
+        /* Alizarin theme */
+        .theme7 {
+            stroke: #E74C3C;
+        }
+
+        /**/
+
+        /*-----------------------Sizes------------------------------*/
+        .extraSmallCheckboxSize.checkboxWrapper input[type="checkbox"]+label i svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .smallCheckboxSize.checkboxWrapper input[type="checkbox"]+label i svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        .mediumCheckboxSize.checkboxWrapper input[type="checkbox"]+label i svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .largeCheckboxSize.checkboxWrapper input[type="checkbox"]+label i svg {
+            width: 50px;
+            height: 50px;
+        }
+
+        .extraLargeCheckboxSize.checkboxWrapper input[type="checkbox"]+label i svg {
+            width: 60px;
+            height: 60px;
+        }
     </style>
 </head>
 
 <body class="w3-light-grey w3-content" style="max-width:1600px">
 
-<!-- 左半邊 -->
-    <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+    <!-- 左半邊 -->
+    <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:250px;" id="mySidebar"><br>
 
         <table border="0" cellpadding="0" cellspacing="0" width="99%" align="center">
             <tr>
@@ -316,9 +324,9 @@
     </nav>
 
 
- 
 
-<!-- 表頭 -->
+
+    <!-- 表頭 -->
     <div class="w3-main" style="margin-left:300px">
 
         <header id="portfolio">
@@ -329,9 +337,9 @@
             <div class="w3-container">
                 <h1><b>1111 SOP非正式教學網</b></h1>
 
-             
 
-    <!-- <div class="w3-section w3-bottombar w3-padding-16">
+
+                <!-- <div class="w3-section w3-bottombar w3-padding-16">
     <span class="w3-margin-right">誰都不認只認藍字:</span> 
     <button class="w3-button w3-black">誰都不認</button>
     <button class="w3-button w3-white"><i class="fa fa-diamond w3-margin-right"></i>只認藍字</button>
@@ -341,7 +349,7 @@
             </div>
         </header>
 
-<!--右半邊-->
+        <!--右半邊-->
         <div class="w3-container w3-padding-large ">
 
             <fieldset style='-moz-border-radius--:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
@@ -525,7 +533,7 @@
 
 
 
-<!--下半部-->
+        <!--下半部-->
         <div class="w3-container w3-padding-large ">
             <fieldset style='-moz-border-radius-:10px; margin:5px 5px 10px 5px; border:1px solid #f0b616;'>
                 <legend align='left' style='font-weight:bold; color:#000'>申請流程</legend>
@@ -574,7 +582,8 @@
                         約聘人員皆為紙本打卡、出勤不走人事、每分計費為主
                         <br>
                         <br>
-                        <span style="color:rgb(27, 119, 47)">*請全部複製給人事建擋</span><br>
+                        <span style="color:rgb(27, 119, 47)">*請全部複製給人事
+                            建擋</span><br>
                         <li>報到日:8/3</li>
                         <li>姓名:林O煜 </li>
                         <li>部門:總管理處-其他</li>
@@ -584,135 +593,17 @@
                         <li>電話: 0935-XXXXXX</li>
                         <li>座位分機 2725</li>
                         <br>
-                        <p
-                            style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;">
-                            <span
-                                style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">人事單位</span>
+                        <p  style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;">
+                            <span style="background-color:#d852529e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">其他設定</span>
                         </p>
-
                        
+                         *請將SKYPE的收尋打開 以利同事收尋
+                        <br>
+                        <img width="100%" height="100%" src="img/A1-3.jpg">
+                        <br>
 
 
 
-<!--學習單-->
-
-<section>
-    <h3>新人自我檢視</h3>
-    
-<!-- -->
-
-<div class="checkboxWrapper theme1">
-    <input type="checkbox" id="sample1">
-    <label for="sample1">
-        <i>
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-            width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
-                <circle fill="none" stroke="#B7B7B7" stroke-width="3" stroke-miterlimit="10" cx="25.11" cy="24.883" r="23.519"/>
-                <path fill="none" stroke-width="3" stroke-miterlimit="10" d="M48.659,25c0,12.998-10.537,23.534-23.534,23.534
-                S1.591,37.998,1.591,25S12.127,1.466,25.125,1.466c9.291,0,17.325,5.384,21.151,13.203L19,36l-9-14"/>
-            </svg>
-        </i>
-        取得員工編號
-    </label>
-    
-</div>
-<!-- --> 
-
-<!-- -->
-<div class="checkboxWrapper theme2">
-    <input type="checkbox" id="sample2">
-    <label for="sample2">
-        <i>
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-            width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
-                <circle fill="none" stroke="#B7B7B7" stroke-width="3" stroke-miterlimit="10" cx="25.11" cy="24.883" r="23.519"/>
-                <path fill="none" stroke-width="3" stroke-miterlimit="10" d="M48.659,25c0,12.998-10.537,23.534-23.534,23.534
-                S1.591,37.998,1.591,25S12.127,1.466,25.125,1.466c9.291,0,17.325,5.384,21.151,13.203L19,36l-9-14"/>
-            </svg>
-        </i>
-        等待主管簽核
-    </label>
-
-<!-- -->
-</div>
-
-
-<!-- -->
-<div class="checkboxWrapper theme3">
-    <input type="checkbox" id="sample3">
-    <label for="sample3">
-        <i>
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-            width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
-                <circle fill="none" stroke="#B7B7B7" stroke-width="3" stroke-miterlimit="10" cx="25.11" cy="24.883" r="23.519"/>
-                <path fill="none" stroke-width="3" stroke-miterlimit="10" d="M48.659,25c0,12.998-10.537,23.534-23.534,23.534
-                S1.591,37.998,1.591,25S12.127,1.466,25.125,1.466c9.291,0,17.325,5.384,21.151,13.203L19,36l-9-14"/>
-            </svg>
-        </i>
-        MIS遠端設定
-    </label>
-</div>
-<!-- -->
-
-<!-- -->
-<div class="checkboxWrapper theme4">
-    <input type="checkbox" id="sample4">
-    <label for="sample4">
-        <i>
-        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-        width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
-            <circle fill="none" stroke="#B7B7B7" stroke-width="3" stroke-miterlimit="10" cx="25.11" cy="24.883" r="23.519"/>
-            <path fill="none" stroke-width="3" stroke-miterlimit="10" d="M48.659,25c0,12.998-10.537,23.534-23.534,23.534
-            S1.591,37.998,1.591,25S12.127,1.466,25.125,1.466c9.291,0,17.325,5.384,21.151,13.203L19,36l-9-14"/>
-        </svg>
-        </i>
-        總管帳密設定
-    </label>
-</div>
-<!-- -->
-
-<!-- -->
-<div class="checkboxWrapper theme5">
-    <input type="checkbox" id="sample5">
-    <label for="sample5">
-        <i>
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-            width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
-                <circle fill="none" stroke="#B7B7B7" stroke-width="3" stroke-miterlimit="10" cx="25.11" cy="24.883" r="23.519"/>
-                <path fill="none" stroke-width="3" stroke-miterlimit="10" d="M48.659,25c0,12.998-10.537,23.534-23.534,23.534
-                S1.591,37.998,1.591,25S12.127,1.466,25.125,1.466c9.291,0,17.325,5.384,21.151,13.203L19,36l-9-14"/>
-            </svg>
-        </i>
-        開啟SKYPE隱私收尋
-    </label>
-</div>
-<!-- -->
-
-
-<!-- -->
-<div class="checkboxWrapper theme6">
-    <input type="checkbox" id="sample6">
-    <label for="sample6">
-        <i>
-        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-        width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
-            <circle fill="none" stroke="#B7B7B7" stroke-width="3" stroke-miterlimit="10" cx="25.11" cy="24.883" r="23.519"/>
-            <path fill="none" stroke-width="3" stroke-miterlimit="10" d="M48.659,25c0,12.998-10.537,23.534-23.534,23.534
-            S1.591,37.998,1.591,25S12.127,1.466,25.125,1.466c9.291,0,17.325,5.384,21.151,13.203L19,36l-9-14"/>
-        </svg>
-        </i>
-        便當與按摩設定
-    </label>
-</div>
-<!-- -->
-
-
-
-</section>
-
-
-
-                       
 
 
 
@@ -736,25 +627,14 @@
                         <li>設備調撥部門、換位子:如、樓層別置換對應ip就必需更換、或調撥資產設備</li>
                         <li>經MIS報修後的硬體設備升級:申請雙螢幕、升級記憶體</li>
                         <li>WIFI申請:查詢自己行動裝置mac address回報設定、如果更換手機、需再寫一次設備單、但標註為更換行動裝置</li>
-                        <BR>
+                        
+                            <h3><strong style="color:rgb(10, 177, 46)">提示</strong></h3>
 
-
-
-                            <p
-                            style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#eca92c9e; vertical-align: baseline;border-width:5px;">
-                            <span
-                                style="background-color:#eca92c9e; border:0px; box-sizing:border-box; color:#fff; display:inline-block; font-family:微軟正黑體; font-size:18px; margin:0px; padding:8px 12px 5px; vertical-align:baseline">大致填單分類</span>
-                        </p>
-
+                        <li>1.開源程式一類、2.本機Admin一類3.LINE一類、4.購物網站一類、5.WIFI一類6.評估過後的硬體設備升級</li>
+                        <li>申請原因請簡述10字.不可寫業務需求過於簡短</li>
+                        <li>另.非工程人員IP不可吃8網段</li>
                         <br>
-                            要開程式一類<br>
-                            本機admin歸一類<br>
-                            賴歸一類<br>
-                            購物網站歸一類<br>
-                            wifi、申請歸一類<br>
-                            申請原因請簡述.不可寫業務需求過於簡短 <br>
-                            <br>
-                            <br>
+                        <br>
                         <p
                             style="box-sizing: border-box; font-family: 微軟正黑體; font-weight: 600; margin: 0px 0px 25px; line-height: 1; padding: 0px;border-bottom-style: solid; border-bottom-color:#d852529e; vertical-align: baseline;border-width:5px;">
                             <span
@@ -763,9 +643,9 @@
 
 
 
+
+                        <h3><strong style="color:rgb(184, 37, 11)">*僅填自己用的到的開源軟體，帳密請去程式設計單申請*</strong></h3>
                         
-
-
 
                         <li>SQL Server Management
                             Studio<br>https://docs.microsoft.com/zh-tw/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16
@@ -842,8 +722,8 @@
 
                         <h4><strong style="color:rgb(184, 37, 11)">注意事項</strong></h4>
                         在家工作vpn務必請依下列sop填寫申請：為了加快vpn設定、開放、控管作業、 請需求在家工作vpn開放同仁、<span
-                            style="color:red">首次</span>申請填單格式範例請依以下"註1"填寫。而若需再申請<span class="red">延長開放時間</span>或<span
-                            style="color:red">第2次</span>申請、煩請於申請單加註，"註2"、已利設定作業、控管、謹在此感謝。<br>
+                            style="color:red">首次</span>申請填單格式範例請依以下"註1"填寫。而若需再申請<span class="red">延長開放時間</span>或
+                            <span style="color:red">第2次</span>申請、煩請於申請單加註，"註2"、已利設定作業、控管、謹在此感謝。<br>
                         <br>
 
                         <span style="color:rgb(27, 119, 47)">**註1(請全部複製)</span><br>
@@ -898,37 +778,37 @@
         <div id="A13" class="city">
             <h2>程式設計申請單</h2>
 
-        GIT http://192.168.1.233:8080/
-        GITLAB http://192.168.1.158/                               
-        EX:
-        員工編號： G2022012
-        員工姓名：陳明審
-        系統名稱或路徑/網址：http://192.168.1.158/
-        使用目的： 申請GitLab權限
-        信箱名稱:lucas.chen@staff.1111.com.tw
+            GIT http://192.168.1.233:8080/
+            GITLAB http://192.168.1.158/
+            EX:
+            員工編號： G2022012
+            員工姓名：陳明審
+            系統名稱或路徑/網址：http://192.168.1.158/
+            使用目的： 申請GitLab權限
+            信箱名稱:lucas.chen@staff.1111.com.tw
 
 
 
-        事由 : 申請主網測試機 FTP 連線帳戶
-        測試網址 http://wwwtest.1111.com.tw/
-        FTP 上傳網址 ftp://192.168.3.234/
-        員編:20210717
+            事由 : 申請主網測試機 FTP 連線帳戶
+            測試網址 http://wwwtest.1111.com.tw/
+            FTP 上傳網址 ftp://192.168.3.234/
+            員編:20210717
 
-</div>
+        </div>
 
 
         </fieldset>
     </div>
     </div>
 
-<!-- 頁尾 -->
+    <!-- 頁尾 -->
 
     <footer class="w3-container w3-padding-32 w3-dark-grey">
     </footer>
 
     </div>
 
-<!--JS-->
+    <!--JS-->
     <script>
         function w3_open() {
             document.getElementById("mySidebar").style.display = "block";
@@ -955,9 +835,9 @@
     </script>
 
 
-<script>
+    <script>
 
-</script>
+    </script>
 
 
 
