@@ -21,6 +21,29 @@
   gtag('config', 'G-VK5Y8CK82T');
 </script>
 
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyCNJAbkW3vb19eUT1aJeaQcxClVljAyz9A",
+      authDomain: "donita-2dc44.firebaseapp.com",
+      projectId: "donita-2dc44",
+      storageBucket: "donita-2dc44.appspot.com",
+      messagingSenderId: "509721019678",
+      appId: "1:509721019678:web:04abe1c0e171c94abef50f",
+      measurementId: "G-03XC594Z22"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
     
 <!--
         // 程序出Bug了？
