@@ -39,11 +39,25 @@
       appId: "1:509721019678:web:04abe1c0e171c94abef50f",
       measurementId: "G-03XC594Z22"
     };
-  
+
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
   </script>
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-03XC594Z22"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-03XC594Z22');
+</script>
+
+
+
     
 <!--
         // 程序出Bug了？
