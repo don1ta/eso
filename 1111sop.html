@@ -179,11 +179,11 @@
 
 <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:250px;" id="mySidebar"><br>
 <table border="0" cellpadding="0" cellspacing="0" width="99%" align="center"><tr><td width="100%">
-    <table border="0" cellpadding="3" cellspacing="0" width="100%" align="center"> 
+    <table  border="0" cellpadding="3" cellspacing="0" width="100%" align="center"> 
         <img src="img\icon02.jpg" style="width:100%;"></a>
         <tr bgcolor="#666699"><td id="logout" align="right"><a href="#" target="mainFrame" style="color:yellow" title="192.168.8.75">小菜雞登出</a></td></tr>
         <tr><td id="menucontent" colspan="2" width="90%"> 
-            <table bgcolor="#FFFFFF" width="100%" cellpadding="3" cellspacing="0">
+            <table  class="order-table" bgcolor="#FFFFFF" width="100%" cellpadding="3" cellspacing="0">
                
                 <tr><td><a href="1111new.html" target="black"  style="color: red; font-size:23px">公告事項</a><t</td></tr>
                 <tr><td><a href="1111esopage0.html" target="black"  style="color: red; font-size:23px">小鱷魚專區</a><t</td></tr>
@@ -202,7 +202,7 @@
                 <tr><td><a href="#" target="_blank" style="font-size:23px">人才搜尋系統</a></td></tr>
                 <tr><td><a href="#" target="_blank" style="font-size:23px">線上文件系統</a></td></tr>
                 <tr><td><a href="#" target="_blank" style="font-size:23px">檔案伺服器</a></td></tr>
-                <tr><td><a href="#" target="mainFrame"  style="font-size:23px">找不到系統？</a></td></tr>
+                <tr><td><a href="#Z1" onclick="openCity('Z1')"   style="color: blue; font-size:23px">找不到系統？</a></td></tr>
                 <tr><td><a href="#" target="_blank" style="font-size:23px"><i class="fa fa-envelope"></i>建議&申訴</a></td></tr>
                 <tr><td><a href="#" target="mainFrame"  style="font-size:23px">總管設定</a></tr></tr>
 
@@ -228,8 +228,9 @@
     </header>
 
 <!--右半邊-->
-        <div class="w3-container w3-padding-large ">
-            <fieldset style='-moz-border-radius--:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
+
+            <div class="w3-container w3-padding-large ">
+            <fieldset  style='-moz-border-radius--:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
                 <legend align='left' style='font-weight:bold; color:#000'>申請單</legend>
                     <div class='itembox'><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A1" onclick="openCity('A1')" style="color:rgb(153, 76, 160)">人員異動申請</a> <font color=red>2</font> 
                        <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A2" onclick="openCity('A2')" style="color:blue">設備異動申請</a> <font color=red>5</font> 
@@ -299,8 +300,8 @@
                 <legend align='left' style='font-weight:bold; color:#000'>員工資訊/教學</legend>
                     <div class='itembox'>
                         <img src='assets/img/ftv2folderopen.gif' align='absmiddle'><a href="#F1" onclick="openCity('F1')" style="color:blue">員工資料</a>
-                        <img src='assets/img/ftv2folderopen.gif' align='absmiddle'><a href="https://www.figma.com/file/3mBxnymeOwb8JzD31mi4VM/%E7%B5%84%E7%B9%94%E6%9E%B6%E6%A7%8B%E5%9C%96?node-id=0%3A1" onclick="openCity('F2')" style="color:blue">組織圖JPG</a>
-                        <img src='assets/img/ftv2folderopen.gif' align='absmiddle'><a href="#F3" onclick="openCity('F3')">任務組織圖</a>
+                        <img src='assets/img/ftv2folderopen.gif' align='absmiddle'><a href="img/F3.png"  target="_blank" onclick="openCity('F2')" style="color:blue">組織圖JPG</a>
+                        <img src='assets/img/ftv2folderopen.gif' align='absmiddle'><a href="https://www.figma.com/file/3mBxnymeOwb8JzD31mi4VM/%E7%B5%84%E7%B9%94%E6%9E%B6%E6%A7%8B%E5%9C%96?node-id=0%3A1" target="_blank" onclick="openCity('F3')" style="color:blue">任務組織圖</a>
                         <img src='assets/img/ftv2folderopen.gif' align='absmiddle'><a href="#F4" onclick="openCity('F4')">員工需知摘要</a>
                         <img src='assets/img/ftv2folderopen.gif' align='absmiddle'><a href="#F5" onclick="openCity('F5')">各專區負責窗口</a>
                         <img src='assets/img/ftv2folderopen.gif' align='absmiddle'><a href="#F6" onclick="openCity('F6')">標準作業流程(SOP)</a>
@@ -358,18 +359,17 @@
                     </div>
             </fieldset>
         
-      
-
+            <fieldset style='-moz-border-radius-:10px; margin:5px 5px 10px 5px; border:1px solid #f0b616;'>
+                <legend align='left' style='font-weight:bold; color:#000'>新人說明書</legend>  
+            </fieldset>
           
 
 
         </div>
 
 <!--下半部-->
-        <div class="w3-container w3-padding-large ">
-            <fieldset style='-moz-border-radius-:10px; margin:5px 5px 10px 5px; border:1px solid #f0b616;'>
-                <legend align='left' style='font-weight:bold; color:#000'>新人說明書</legend>
-
+        <div class="w3-container w3-padding-large "   >
+                          
 
                 <!-- 人員異動申請  -->
                 <div id="A1" class="city">
@@ -517,6 +517,9 @@
                         <br>
                         原先已申請過在家連線VPN到 2022年 x月 xx日止，因應疫情在家工作需求，故需延長、請協助延長開通日期至 2022 年 x月 xx日。 <br>
                         <br>
+
+                        P.S.先前若有申請vpn、因後續搬到XX號9樓、本機電腦ip就會跟先前不一樣。之後若一樣使用vpn連進公司、那vnc那端就要輸入XX-9樓新位子ip、別傻傻的還在輸入舊ip。
+                        <br>
                         <p class="PP"><span class="span2">表單範例</span></p>
                         <img width="100%" height="100%" src="img/A2-1.jpg">
                     </ul>
@@ -532,13 +535,11 @@
                     <li>特休以到職日開始算、請假時數為3.5h、4h、4.5h、8h</li>
                     <li>人名是吃keyword、不是自己打</li>
                 </div>
-
-                <!-- 範本  -->
+                <!-- 離職  -->
                 <div id="A3" class="city">
                     <h2>離職線上申請</h2>
                 </div>
-
-
+                <!-- 用印  -->
                 <div id="A10" class="city">
                     <h2>用印申請單</h2>
                     <ul>
@@ -558,11 +559,9 @@
                         在職、離職、薪資等證明、標案、合約、報價單式合約                     
                     </ul>
                 </div>
-
-
+                <!-- 費用  -->
                 <div id="A11" class="city">
                     <h2>費用申請單</h2>
-
                     <p class="PP"><span class="span2">例行費用</span></p>   
                     <span style="color:red">注意事項:</span>
                     <li>部門與科目是吃keyword、摘要可自己打</li>
@@ -602,7 +601,7 @@
                   
                    
                 </div>
-
+                <!-- 程式設計  -->
                 <div id="A13" class="city">
                     <h2>程式設計申請單</h2>
 
@@ -664,8 +663,7 @@
 
 
                 </div>
-
-
+                <!-- 報修  -->
                 <div id="B1" class="city">
                     <h2>報修單</h2>
                     <p class="PP"><span class="span2">介面</span></p> 
@@ -673,25 +671,22 @@
                     換新硬體需經過"評估"填>報修單;才可申請>設備異動單;
 
                 </div>
-
                 <div id="B2" class="city">
                     <h2>報修單</h2>
                     <p class="PP"><span class="span2">介面</span></p> 
                     <img width="100%" height="100%" src="img/B1.jpg">
                 </div>
-
+                <!-- 福利  -->
                 <div id="D2" class="city">
                     <h2>醫生預約</h2>
                     <p class="PP"><span class="span2">介面</span></p> 
                     <img width="100%" height="100%" src="img/D4.jpg">
                 </div>
-
                 <div id="D4" class="city">
                     <h2>按摩預約</h2>
                     <p class="PP"><span class="span2">介面</span></p> 
                     <img width="100%" height="100%" src="img/D4.jpg">
                 </div>
-
                 <div id="D5" class="city">
                     <h2> 團膳供餐週訂單</h2>
                     <p class="PP"><span class="span2">介面</span></p> 
@@ -700,8 +695,7 @@
                     <li>每週三中午之前要點好下周便當</li>
                     <li>樓層選錯、換樓層請寄信告知6681梁庭瑄(麗對)協理</li>
                 </div>
-
-
+                <!-- 考勤  -->
                 <div id="E1" class="city">
                     <h2> 考勤查詢系統</h2>
                     <p class="PP"><span class="span2">出勤介面</span></p> 
@@ -710,7 +704,6 @@
                     <li>隔天九點後請確認打卡狀況</li>
                     <li>打卡有問題找63-3F怡廷寫小本本</li>
                 </div>
-
                 <div id="F1" class="city">
                     <h2> 員工資料</h2>
                     <p class="PP"><span class="span2">介面</span></p> 
@@ -728,8 +721,7 @@
                     <BR>
                                      
                 </div>
-
-
+                <!-- 月考核  -->
                 <div id="A22" class="city">
                     <h2> 月考核表</h2>
                     <p class="PP"><span class="span2">介面</span></p> 
@@ -742,35 +734,28 @@
                     <BR>
                                   
                 </div>
+                <!-- 找不到系統  -->
+                <div id="Z1" class="city">
+                    <h2> 找不到系統?</h2>
+                    <p class="PP"><span class="span2">介面</span></p>               
+                    找不到系統?  <input type="search" class="light-table-filter" data-table="order-table" placeholder="請輸入關鍵字">
+                </div>
 
-
-               
             </fieldset>
-
         </div>
 
 
-      
-        <!-- </fieldset> -->
 
+<!-- 頁尾 -->
 
-        <!-- 頁尾 -->
-
-        <footer class="w3-container w3-padding-32 w3-dark-grey">
-            
+        <footer class="w3-container w3-padding-32 w3-dark-grey">            
             <P>藍色字體代表常用功能；<BR>
-                按下去的沒反應不是壞掉了，而是沒有做這功能；<br>              
-               本站只寫基本SOP給新人參考，詳情請詢問各自主管。  #by-Donita</P>
-               
-        
-            
-            </footer>
+            按下去的沒反應不是壞掉了，而是沒有做這功能；<br>              
+            本站只寫基本SOP給新人參考，詳情請詢問各自主管。  #by-Donita</P>
+        </footer>
 
 
-
-        <!--JS-->
-
-
+<!--JS-->
 
         <script>
             function w3_open() {
@@ -785,7 +770,6 @@
         </script>
         <script>
             openCity("London")
-
             function openCity(cityName) {
                 var i;
                 var x = document.getElementsByClassName("city");
@@ -795,6 +779,63 @@
                 document.getElementById(cityName).style.display = "block";
             }
         </script>
+
+<!--JS收尋功能-->
+<script>
+
+(function(document) {
+  'use strict';
+
+  // 建立 LightTableFilter
+  var LightTableFilter = (function(Arr) {
+
+    var _input;
+
+    // 資料輸入事件處理函數
+    function _onInputEvent(e) {
+      _input = e.target;
+      var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+      Arr.forEach.call(tables, function(table) {
+        Arr.forEach.call(table.tBodies, function(tbody) {
+          Arr.forEach.call(tbody.rows, _filter);
+        });
+      });
+    }
+
+    // 資料篩選函數，顯示包含關鍵字的列，其餘隱藏
+    function _filter(row) {
+      var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+      row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+    }
+
+    return {
+      // 初始化函數
+      init: function() {
+        var inputs = document.getElementsByClassName('light-table-filter');
+        Arr.forEach.call(inputs, function(input) {
+          input.oninput = _onInputEvent;
+        });
+      }
+    };
+  })(Array.prototype);
+
+  // 網頁載入完成後，啟動 LightTableFilter
+  document.addEventListener('readystatechange', function() {
+    if (document.readyState === 'complete') {
+      LightTableFilter.init();
+    }
+  });
+
+})(document);
+
+</script>
+
+
+
+
+
+
+
 
 </body>
 
