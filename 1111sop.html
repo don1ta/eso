@@ -62,12 +62,6 @@
   gtag('config', 'G-03XC594Z22');
 
 
-gtag('event','A22',{
-    'value':'A22'
-});
-
-
-
 
 </script>
 
@@ -408,7 +402,7 @@ gtag('event','A22',{
                         <h3><strong style="color:rgb(184, 37, 11)">注意事項</strong></h3>
                         約聘人員需要有(公司對公司)合約<br>
                         若是個人顧問合約(公司對個人帳戶)需提供合約與勞務單<br>
-                        勞務單:<em style=" color:red"><a href="img\行管_機會中獎暨勞務報酬單.pdf" download="勞務單">切結書(按我下載)</em></a><br>
+                        勞務單:<em style=" color:red"><a id="download01" href="img\行管_機會中獎暨勞務報酬單.pdf" download="勞務單">切結書(按我下載)</em></a><br>
                         約聘人員皆為紙本打卡、出勤不走人事<br>
                         工單若不能點功能、或選主管請找工程部加權限
                         
@@ -882,7 +876,21 @@ gtag('event','A22',{
 </script>
 
 
+<script>
+   //範本
+   // gtag('event', 'screen_view', {
+   //   'app_name': 'myAppName',
+   //   'screen_name': 'Home'
+   // });
 
+   
+   
+   gtag('event', 'screen_view', {
+    'value':'download01',
+});
+
+
+  </script> 
 
 
 
