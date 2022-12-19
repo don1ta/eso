@@ -194,7 +194,7 @@
         <tr><td id="menucontent" colspan="2" width="90%"> 
             <table  class="order-table" bgcolor="#FFFFFF" width="100%" cellpadding="3" cellspacing="0">
                
-                <tr><td><a href="1111new.html" target="black"  style="color: red; font-size:23px">公告事項</a><t</td></tr>
+                <tr><td><a href="1111new.html" target="black" id="zero1"  style="color: red; font-size:23px">公告事項</a><t</td></tr>
                 <tr><td><a href="1111esopage0.html" target="black"  style="color: red; font-size:23px">小鱷魚專區</a><t</td></tr>
                 <tr><td><a href="#" target="mainFrame"  style="font-size:23px">變更密碼</a><t</td></tr>
                 <tr><td><a href="#" target="mainFrame"  style="font-size:23px">視訊會議系統</a><t</td></tr>
@@ -478,7 +478,7 @@
                         <h4><strong style="color:rgb(184, 37, 11)">注意事項</strong></h4>
                         公司不會提供WI-FI連結、請自行連手機網路。<br>
                         公司不會協助任何的更新與安裝、與問題排查。<br>                
-                        並填寫附件<em style=" color:red"><a href="img\a2.pdf" download="newfilename">切結書(按我下載)</em></a>，填畢交予MIS方能攜帶。<BR>
+                        並填寫附件<em style=" color:red"><a id="download02" href="img\a2.pdf" download="newfilename">切結書(按我下載)</em></a>，填畢交予MIS方能攜帶。<BR>
                             <br> 
                         <span style="color:rgb(27, 119, 47)">**(請全部複製)</span>    
                         <li>姓名: xxx</li>
@@ -888,11 +888,18 @@
    //   'screen_name': 'Home'
    // });
 
+
+
    
-   
-   gtag('event', 'file_download', {
+//點擊下載的次數   
+gtag('event', 'file_download', {
     'event_name':'download01',
 });
+//點擊公告欄的次數
+gtag('event', 'view_item', {
+    'item_id':'zero1',
+});
+
 
 
   </script> 
