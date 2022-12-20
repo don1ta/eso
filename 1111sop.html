@@ -208,9 +208,9 @@
                 <tr><td><a href="#" target="_blank" style="font-size:23px">求職客服系統</a></td></tr>
                 <tr><td><a href="#" target="_blank" style="font-size:23px">求才客服系統</a></td></tr>
                 <tr><td><a href="#" target="_blank" style="font-size:23px">旅遊客服系統</a></td></tr>
-                <tr><td><a href="#" target="_blank" style="font-size:23px">人才搜尋系統</a></td></tr>
-                <tr><td><a href="#" target="_blank" style="font-size:23px">線上文件系統</a></td></tr>
-                <tr><td><a href="#" target="_blank" style="font-size:23px">檔案伺服器</a></td></tr>
+                <tr><td><a id="Y3" href="#" target="_blank" style="font-size:23px">人才搜尋系統</a></td></tr>
+                <tr><td><a id="Y2" href="#" target="_blank" style="font-size:23px">線上文件系統</a></td></tr>
+                <tr><td><a id="Y1" href="#" target="_blank" style="font-size:23px">檔案伺服器</a></td></tr>
                 <tr><td><a href="#Z1" onclick="openCity('Z1')"   style="color: blue; font-size:23px">找不到系統？</a></td></tr>
                 <tr><td><a href="#" target="_blank" style="font-size:23px"><i class="fa fa-envelope"></i>建議&申訴</a></td></tr>
                 <tr><td><a href="#" target="mainFrame"  style="font-size:23px">總管設定</a></tr></tr>
@@ -890,7 +890,7 @@
 
 
 
-   
+
 //點擊下載的次數   
 gtag('event', 'file_download', {
     'event_name':'download01',
@@ -900,8 +900,17 @@ gtag('event', 'view_item', {
     'item_id':'zero1',
 });
 
+//測試Y1與Y2是否被點擊
+gtag('event', 'click', {
+    'index':'Y1',
+});
 
 
+//除錯
+gtag('config', 'G-03XC594Z22',{ 'debug_mode':true });
+//範本
+//gtag('event', 'xyz', { 'debug_mode':true });
+//若要停用偵錯模式，請排除 'debug_mode' 參數；將此參數設為 false 並不會停用偵錯模式。
   </script> 
 
 
