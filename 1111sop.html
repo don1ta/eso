@@ -256,8 +256,8 @@
                                         <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A7" onclick="openCity('A7')">文具採購申請單</a>
                                         <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A8" onclick="openCity('A8')">名片申請</a>
                                         <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A9" onclick="openCity('A9')">電子郵件簽章檔產生器</a>
-                                        <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A10" onclick="openCity('A10')" style="color:blue">用印申請單</a>
-                                        <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A11" onclick="openCity('A11')" style="color:blue">費用申請單</a>
+                                        <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A10" id="A0-10" onclick="openCity('A10')" style="color:blue">用印申請單</a>
+                                        <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A11" id="A0-11" onclick="openCity('A11')" style="color:blue">費用申請單</a>
                                         <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A12" onclick="openCity('A12')">拍攝需求申請單</a>
                                         <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A13" id="A0-13" onclick="openCity('A13')" style="color:blue">程式設計申請單</a>  <font color=red title=''>5</font>
                                         <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A15" onclick="openCity('A15')">應徵人員甄試表</a>
@@ -898,7 +898,10 @@
 //點擊下載的次數   
 gtag('event', 'file_download', {
     'event_name':'download01',
+    'event_name':'download02',
 });
+
+
 //點擊公告欄的次數
 gtag('event', 'view_item', {
     'item_id':'zero1',
@@ -909,6 +912,13 @@ gtag('event', 'view_item', {
 //A2設備A13程式
 gtag('event', 'click02', {
     'page_title':'A0-2',
+    'page_title':'A0-13',
+});
+gtag('event', 'click10', {
+    'page_title':'A0-10',
+});
+gtag('event', 'click11', {
+    'page_title':'A0-11',
 });
 gtag('event', 'click13', {
     'page_title':'A0-13',
