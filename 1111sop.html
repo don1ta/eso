@@ -67,19 +67,11 @@
 
 </script>
 
-<!-- Google tag (gtag.js) -->
-<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-0WF2ME4PB5"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-0WF2ME4PB5');
-</script> -->
 
     
 <!--
-        // 程序出Bug了？
+        // 程式出Bug了？
         // 　　　∩∩
         // 　　（´･ω･）
         // 　 ＿|　⊃／(＿＿_
@@ -95,11 +87,13 @@
         // 　 ＿|　⊃／(＿＿_
         // 　／ └-(＿＿＿／
         // 　￣￣￣￣￣￣￣
-        // 算了反正改了一個又出三個..等我有空吧
+        // 算了反正修了一個又出三個..等我有空吧
         // 　　 ⊂⌒／ヽ-、＿
         // 　／⊂_/＿＿＿＿ ／
         // 　￣￣
 -->
+
+
 
 
 
@@ -218,9 +212,9 @@
                 <tr><td><a href="#" target="_blank" style="font-size:23px">求職客服系統</a></td></tr>
                 <tr><td><a href="#" target="_blank" style="font-size:23px">求才客服系統</a></td></tr>
                 <tr><td><a href="#" target="_blank" style="font-size:23px">旅遊客服系統</a></td></tr>
-                <tr><td><a id="Y3" href="#" target="_blank" style="font-size:23px">人才搜尋系統</a></td></tr>
-                <tr><td><a id="Y2" href="#" target="_blank" style="font-size:23px">線上文件系統</a></td></tr>
-                <tr><td><a id="Y1" href="#" target="_blank" style="font-size:23px">檔案伺服器</a></td></tr>
+                <tr><td><a href="#" target="_blank" style="font-size:23px">人才搜尋系統</a></td></tr>
+                <tr><td><a href="#" target="_blank" style="font-size:23px">線上文件系統</a></td></tr>
+                <tr><td><a href="#" target="_blank" style="font-size:23px">檔案伺服器</a></td></tr>
                 <tr><td><a href="#Z1" onclick="openCity('Z1')"   style="color: blue; font-size:23px">找不到系統？</a></td></tr>
                 <tr><td><a href="#" target="_blank" style="font-size:23px"><i class="fa fa-envelope"></i>建議&申訴</a></td></tr>
                 <tr><td><a href="#" target="mainFrame"  style="font-size:23px">總管設定</a></tr></tr>
@@ -254,7 +248,7 @@
             <fieldset  style='-moz-border-radius--:10px; margin:5px 5px 10px 5px; border:1px solid #7abbc1;'>
                 <legend align='left' style='font-weight:bold; color:#000'>申請單</legend>
                     <div class='itembox'><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A1" onclick="openCity('A1')" style="color:rgb(153, 76, 160)">人員異動申請</a> <font color=red>2</font> 
-                       <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A2" onclick="openCity('A2')" style="color:blue">設備異動申請</a> <font color=red>5</font> 
+                       <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A2" id="A2" onclick="openCity('A2')" style="color:blue">設備異動申請</a> <font color=red>5</font> 
                             <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A3" onclick="openCity('A3')">離職線上申請</button> 
                                <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A4" onclick="openCity('A4')" style="color:blue">線上請假單</a>
                                <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A5" onclick="openCity('A5')">員工公務外出單</a>
@@ -265,7 +259,7 @@
                                         <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A10" onclick="openCity('A10')" style="color:blue">用印申請單</a>
                                         <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A11" onclick="openCity('A11')" style="color:blue">費用申請單</a>
                                         <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A12" onclick="openCity('A12')">拍攝需求申請單</a>
-                                        <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A13" onclick="openCity('A13')" style="color:blue">程式設計申請單</a>  <font color=red title=''>5</font>
+                                        <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A13" id="A13" onclick="openCity('A13')" style="color:blue">程式設計申請單</a>  <font color=red title=''>5</font>
                                         <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A15" onclick="openCity('A15')">應徵人員甄試表</a>
                                         <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A16" onclick="openCity('A16')">人員增補申請單</a>
                                         <img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A17" onclick="openCity('A17')">進修培訓費申請表</a>
@@ -910,9 +904,15 @@ gtag('event', 'view_item', {
     'item_id':'zero1',
 });
 
-//測試Y1與Y2是否被點擊
+
+
+//A2設備A13程式
+//A2點擊率
 gtag('event', 'click', {
-    'index':'Y1',
+    'page_title':'A2',
+});
+gtag('event', 'click', {
+    'page_title':'A13',
 });
 
 
