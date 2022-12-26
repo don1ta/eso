@@ -261,7 +261,7 @@
                 <legend align='left' style='font-weight:bold; color:#000'>申請單</legend>
                     <div class='itembox'>
                     <div class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A1" onclick="openCity('A1')" style="color:rgb(153, 76, 160)">人員異動申請</a> <font color=red>2</font> </div>
-                    <div class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A2" id="A0-2" onclick="openCity('A2')" style="color:blue">設備異動申請</a> <font color=red>5</font></div> 
+                    <div id="item02" class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A2" onclick="openCity('A2')" style="color:blue">設備異動申請</a> <font color=red>5</font></div> 
                     <div class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A3" onclick="openCity('A3')">離職線上申請</button> </div>
                     <div class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A4" onclick="openCity('A4')" style="color:blue">線上請假單</a></div>
                     <div class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A5" onclick="openCity('A5')">員工公務外出單</a></div>
@@ -269,10 +269,10 @@
                     <div class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A7" onclick="openCity('A7')">文具採購申請單</a></div>
                     <div class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A8" onclick="openCity('A8')">名片申請</a></div>
                     <div class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A9" onclick="openCity('A9')">電子郵件簽章檔</a></div>
-                    <div class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A10" id="A0-10" onclick="openCity('A10')" style="color:blue">用印申請單</a></div>
-                    <div class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A11" id="A0-11" onclick="openCity('A11')" style="color:blue">費用申請單</a></div>
+                    <div id="item10" class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A10" onclick="openCity('A10')" style="color:blue">用印申請單</a></div>
+                    <div id="item11" class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A11" onclick="openCity('A11')" style="color:blue">費用申請單</a></div>
                     <div class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A12" onclick="openCity('A12')">拍攝需求申請單</a></div>
-                    <div class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A13" id="A0-13" onclick="openCity('A13')" style="color:blue">程式設計申請單</a>  <font color=red title=''>5</font></div>
+                    <div id="item13" class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A13"  onclick="openCity('A13')" style="color:blue">程式設計申請單</a>  <font color=red title=''>5</font></div>
                     <div class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A15" onclick="openCity('A15')">應徵人員甄試表</a></div>
                     <div class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A16" onclick="openCity('A16')">人員增補申請單</a></div>
                     <div class="itembox2"><img src='assets/img/ftv2folderopen.gif' align='absmiddle'> <a href="#A17" onclick="openCity('A17')">進修培訓費申請表</a></div>
@@ -907,43 +907,19 @@
 
 
 
-
-//點擊下載的次數   
-gtag('event', 'file_download', {
-    'event_name':'download01',
-    'event_name':'download02',
-});
-
-
 //點擊公告欄的次數
 gtag('event', 'view_item', {
     'item_id':'zero1',
 });
 
-
-
-//A2設備A13程式
-gtag('event', 'click', {
-    'page_title02':'A0-2',
-    
-});
-gtag('event', 'click', {
-    'page_title10':'A0-10',
-});
-gtag('event', 'click', {
-    'page_title11':'A0-11',
-});
-gtag('event', 'click', {
-    'page_title13':'A0-13',
+gtag('event','screen_view',{
+   'view_name02':'item02'
 });
 
 
 //除錯
 gtag('config', 'G-03XC594Z22',{ 'debug_mode':true });
 
-//範本
-//gtag('event', 'xyz', { 'debug_mode':true });
-//若要停用偵錯模式，請排除 'debug_mode' 參數；將此參數設為 false 並不會停用偵錯模式。
   </script> 
 
 
