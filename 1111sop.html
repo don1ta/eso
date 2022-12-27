@@ -880,10 +880,20 @@
 
 <script>
 // 除錯
- gtag('config', 'G-03XC594Z22',{ 'debug_mode':true });
+gtag('config', 'G-03XC594Z22',{ 'debug_mode':true });
 
-
-
+//啟用基本資料收集功能；設定 User-ID
+gtag('config', 'GA_MEASUREMENT_ID', {
+'user_id': 'USER_ID'});
+//進行 Cookie 設定
+gtag('config', 'GA_MEASUREMENT_ID', {
+'cookie_prefix': 'MyCookie',
+'cookie_domain': 'blog.example.com',
+'cookie_expires': 28 * 24 * 60 * 60  });// 28 天，以秒數表示
+//封鎖 page_view 事件
+gtag('config', 'MEASUREMENT_ID', {
+'user_id': 'USER_ID',
+'send_page_view': false});
 
    //範本
    // gtag('event', 'screen_view', {
@@ -894,7 +904,7 @@
 
 
 //點擊公告欄的次數
-// gtag('event', 'view_item', {
+// gtag('event', '點擊公告欄', {
 //     'item_id':'zero1',
 // });
 
