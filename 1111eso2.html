@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="zh">
+<title>1111ESO.COM</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link href='https://fonts.googleapis.com/css?family=RobotoDraft' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- 提示窗 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- icon圖 -->
+<link rel="icon" type="image/gif" href="img\002.jpg" />
+
+
+<script src="assets/js/demo.js"></script>
+<script src="assets/js/jquery-1.11.0.min.js"></script>
+<!-- 隱藏拉霸 -->
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<!-- <script src="js/modernizr.custom.63321.js"></script> -->
+
+
+
+
+<style>
+  /*基本設定*/
+  /*1111esopage0背景色:#81c784*/
+  html,
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  p {
+    font-family: "Helvetica", "Arial", "LiHei Pro", "黑體-繁", "微軟正黑體", sans-serif;
+    text-align: justify;
+    padding-right: 10px;
+    font-size: large;
+  }
+
+  .w3-bar-block .w3-bar-item {
+    padding: 16px;
+  }
+
+  em {
+    color: #64448f;
+    font-size: 1.5rem;
+  }
+
+  .em2 {
+    color: #df6659;
+    font-size: 1.3rem;
+  }
+
+  strong {
+    color: #3755ad;
+  }
+
+  .strong2 {
+    color: crimson;
+    font-size: 1rem;
+  }
+
+
+  /*滾輪隱藏*/
+  html {
+    overflow: -moz-hidden-unscrollable;
+    height: 100%;
+  }
+
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
+  body {
+    -ms-overflow-style: none;
+    height: 100%;
+    width: calc(100vw + 18px);
+    overflow: auto;
+  }
+
+  /* 密碼按鈕CSS */
+  /* .button2 {
+  display: inline-block;
+  padding: 15px 15px;
+  font-size: 20px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #1563bd;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;}
+.button2:hover {background-color: #5c9ee9}
+.button2:active {
+  background-color: #1563bd;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);} */
+  /*消除黑線*/
+  /* .button2:focus{outline:none} */
+
+  li {
+    line-height: 3;
+  }
+
+  footer {
+
+    text-align: center;
+    background-color: #81c784;
+    padding-left: 400px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    text-align: center;
+
+
+  }
+
+
+  /* 聯絡表格RWD */
+  /*0-480*/
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    margin: 5px;
+  }
+
+  @media (max-width: 480px) {
+
+    #nameText,
+    #emailText,
+    #telText,
+    #subText,
+    #bodyText {
+      width: 100%;
+    }
+
+    .modal-body img {
+      width: 100%;
+    }
+
+    li {
+      line-height: 2;
+    }
+
+    ol {
+      margin-left: -10px;
+      padding-left: 40px;
+      font-size: xx-small;
+      padding-right: 20px;
+    }
+
+    .container {
+      padding-right: 10px;
+      padding-left: 0px;
+    }
+
+
+
+    .img91 {
+      position: absolute;
+      width: 30%;
+    }
+
+    footer {
+      padding: 7px;
+      background-color: rgb(241, 191, 199);
+    }
+
+
+  }
+
+
+
+
+
+
+
+
+  footer {
+    margin-left: 0px;
+    text-align: center;
+    background-color: rgb(241, 191, 199);
+    /* padding: 7px; */
+  }
+
+  .img003 {
+    width: 100%;
+  }
+
+
+  .container>header h2 {
+    font-size: 42px;
+  }
+
+  .container>header h2 {
+    font-size: 30px;
+  }
+
+
+
+
+
+
+  /*480-768*/
+  @media (min-width: 480px) and (max-width: 768px) {
+
+    #nameText,
+    #emailText,
+    #telText,
+    #subText,
+    #bodyText {
+      width: 100%;
+    }
+
+    .modal-body img {
+      width: 100%;
+    }
+
+    footer {
+      margin-left: 0px;
+      text-align: center;
+      background-color: rgb(241, 191, 199);
+      padding: 7px;
+
+    }
+
+    .img003 {
+      width: 100%;
+    }
+
+    .demo {
+      padding: 2em 0;
+      margin-left: 0;
+    }
+
+    .img91 {
+      position: absolute;
+      width: 30%;
+      top: -50px;
+
+
+    }
+
+  }
+
+
+  input,
+  optgroup,
+  select,
+  textarea {
+    width: 100%;
+  }
+
+  /*769-990*/
+  @media (min-width: 769px) and (max-width: 990px) {
+    footer {
+      background-color: rgb(241, 191, 199);
+      padding-left: 0px;
+      padding: 7px;
+    }
+
+
+
+
+  }
+
+  /*三張圖CSS*/
+  .demo {
+    padding: 2em 0;
+  }
+
+  /* margin-left: 200px;} */
+  .box {
+    font-family: 'Zilla Slab', serif;
+    overflow: hidden;
+    position: relative;
+    border-radius: 30px;
+  }
+
+  .box:before {
+    content: '';
+    height: 100%;
+    width: 100%;
+    background-image:
+      radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.2) 10%, transparent 15%),
+      radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.4) 10%, transparent 15%);
+    background-size: 40px 40px;
+    transform: translateX(-50%) scale(2);
+    opacity: 0;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    z-index: 1;
+    transition: all 0.3s ease 0s;
+  }
+
+  .box:hover:before {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+
+  .box:after {
+    content: '';
+    height: 100%;
+    width: 100%;
+    background: radial-gradient(transparent, rgba(0, 0, 0, 0.7));
+    transform: scale(2);
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: all 0.3s ease 0.1s;
+  }
+
+  .box:hover:after {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .box img {
+    width: 100%;
+    height: auto;
+    transition: all 0.3s ease 0s;
+  }
+
+  .box .box-content {
+    color: #6F1E51;
+    background-color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    width: 80%;
+    padding: 20px 20px;
+    border-radius: 50px;
+    border-left: 4px solid #fff;
+    border-right: 4px solid #fff;
+    transform: translateX(-50%) translateY(-50%) scale(0.2) rotate(-90deg);
+    opacity: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+    transition: all 0.3s ease 0s;
+  }
+
+  .box:hover .box-content {
+    transform: translateX(-50%) translateY(-50%) scale(1) rotate(0);
+    opacity: 1;
+  }
+
+  .box .title {
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-shadow: 0 0 2px #fff;
+    margin-bottom: 5px;
+  }
+
+  .box .post {
+    color: #000;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .box .icon {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+  }
+
+  .box .icon li {
+    margin: 0 4px;
+    display: inline-block;
+  }
+
+  .box .icon li a {
+    color: #fff;
+    background-color: #6F1E51;
+    font-size: 17px;
+    text-align: center;
+    line-height: 30px;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    display: block;
+    transition: all 0.3s ease 0s;
+  }
+
+  .box .icon li a:hover {
+    color: #6F1E51;
+    background-color: #fff;
+    box-shadow: 0 0 5px #6F1E51;
+  }
+
+  @media only screen and (max-width:990px) {
+    .box {
+      margin-bottom: 30px;
+    }
+  }
+
+  @media only screen and (max-width:479px) {
+    .box .title {
+      font-size: 20px;
+    }
+  }
+
+
+
+
+  /* 我的權益程式框 */
+  .sublime {
+    position: relative;
+    width: 80%;
+    margin: 25px auto;
+    padding: 2%;
+    list-style: none;
+    border-top: 25px solid #b4b4b4;
+    border-radius: 10px;
+    background: #262728;
+    color: #f1f1f1;
+    font-family: 'Source Code Pro';
+    font-weight: 200;
+    font-size: 1.1em;
+    /* Colors */
+  }
+
+  .sublime li {
+    min-height: 25px;
+    line-height: 25px;
+  }
+
+  .sublime .buttons {
+    min-height: 0;
+    position: absolute;
+    top: -18px;
+    border-radius: 100%;
+    width: 13px;
+    height: 13px;
+    background-color: #ff5d5b;
+    border: 1px solid #e64344;
+  }
+
+  .sublime .buttons:before,
+  .sublime .buttons:after {
+    position: absolute;
+    content: "";
+    width: 13px;
+    height: 13px;
+    border-radius: 100%;
+    top: -1px;
+  }
+
+  .sublime .buttons:before {
+    left: 20px;
+    border: 1px solid #e3a041;
+    background-color: #ffbc4c;
+  }
+
+  .sublime .buttons:after {
+    left: 40px;
+    border: 1px solid #13ad46;
+    background-color: #00c956;
+  }
+
+  .sublime .tab {
+    margin-left: 2%;
+    list-style: none;
+  }
+
+  .sublime .blue {
+    color: #66d9ef;
+  }
+
+  .sublime .purple {
+    color: #8a7bff;
+  }
+
+  .sublime .red {
+    color: #e92772;
+  }
+
+  .sublime .green {
+    color: #a6e22d;
+  }
+
+  .sublime .orange {
+    color: #fd9720;
+  }
+
+  .sublime .yellow {
+    color: #e6db74;
+  }
+
+  .sublime .gray {
+    color: #8f908a;
+  }
+
+  .sublime .cursor:before {
+    opacity: 0;
+    content: "|";
+    color: #f1f1f1;
+    -webkit-animation: blink 0.8s infinite;
+    animation: blink 0.8s infinite;
+  }
+
+  @-webkit-keyframes blink {
+    0% {
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes blink {
+    0% {
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+
+  /* Demo */
+  .demo {
+    font-size: 1.2em;
+    text-align: center;
+    font-family: 'Old Standard TT', serif;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  /* 第三頁STYLE */
+  .table1 {
+    border-style: solid;
+    width: 100%;
+  }
+
+  .table2 {
+    border-style: solid;
+    width: 100%;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  .img9 {
+    position: relative;
+    left: 60%;
+    top: -50px;
+
+  }
+
+
+
+
+
+
+  /*第四頁*/
+
+  .serviceBox {
+    border: 1px solid #f33838;
+    padding: 30px 30px 30px 30px;
+    position: relative;
+    transition: all 0.5s ease 0s;
+    margin-bottom: 20px;
+    background-color: honeydew;
+  }
+
+  .serviceBox:hover {
+    border-color: #f37b0a;
+  }
+
+  .serviceBox:before,
+  .serviceBox:after {
+    content: "";
+    display: block;
+    width: 50px;
+    height: 5px;
+    background: #41d7f7;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    transition: all 0.5s ease 0s;
+  }
+
+  .serviceBox:before {
+    top: -3px;
+  }
+
+  .serviceBox:after {
+    bottom: -3px;
+  }
+
+  .serviceBox:hover:before,
+  .serviceBox:hover:after {
+    left: 40px;
+    opacity: 1;
+  }
+
+  .serviceBox .service-icon {
+    display: inline-block;
+    position: absolute;
+    top: 33%;
+    left: 23px;
+    font-size: 45px;
+    color: #f88c11;
+    opacity: 0.3;
+    transition: all 0.5s ease-in 0s;
+  }
+
+  .serviceBox:hover .service-icon {
+    opacity: 1;
+  }
+
+  .serviceBox .title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1f2a2c;
+    margin-bottom: 15px;
+  }
+
+  .serviceBox .description {
+    font-size: 15px;
+
+    line-height: 35px;
+  }
+
+  @media only screen and (max-width: 990px) {
+    .serviceBox {
+      margin-bottom: 30px;
+    }
+  }
+
+
+
+
+
+
+  /*第五頁測試*/
+
+
+  .msg {
+    font-family: monospace;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 5vh;
+    padding-top: 5vh;
+    background: red;
+    box-shadow: 0 0 30px red;
+    text-shadow: 0 0 20px white;
+    color: white;
+    width: 20vw;
+    height: 15vh;
+    position: absolute;
+    left: 50%;
+    margin-left: -10vw;
+    top: 50%;
+    margin-top: -5vh;
+    text-align: center;
+    min-width: 200px;
+    animation-name: blink;
+    animation-duration: 0.6s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: linear;
+  }
+
+  @keyframes blink {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+</style>
+
+<body>
+
+
+
+  <!-- 第一頁 -->
+  <nav class="w3-sidebar w3-bar-block w3-collapse w3-white w3-animate-left w3-card" style="z-index:3;width:320px;"
+    id="mySidebar">
+
+    <img src="img\001.jpg" style="width:100%;"></a>
+    <a href="javascript:void(0)" onclick="w3_close()" title="Close Sidemenu"
+      class="w3-bar-item w3-button w3-hide-large w3-large">Close <i class="fa fa-remove"></i></a>
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align"
+      onclick="document.getElementById('id01').style.display='block'">點我進入問診室 <i
+        class="w3-padding fa fa-pencil"></i></a>
+    <a id="myBtn" onclick="myFunc('Demo1')" href="javascript:void(0)" class="w3-bar-item w3-button"><i
+        class="fa fa-inbox w3-margin-right"></i>看診指南 (4)<i class="fa fa-caret-down w3-margin-left"></i></a>
+
+
+    <div id="Demo1" class="w3-hide w3-animate-left">
+
+      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"
+        onclick="openMail('Borge');w3_close();" id="firstTab">
+        <div class="w3-container">
+          <span class="w3-opacity w3-large">初診報到</span>
+        </div>
+      </a>
+      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"
+        onclick="openMail('Jane');w3_close();">
+        <div class="w3-container">
+          <span class="w3-opacity w3-large">櫃檯掛號</span>
+
+        </div>
+      </a>
+      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"
+        onclick="openMail('John');w3_close();">
+        <div class="w3-container">
+          <span class="w3-opacity w3-large">病歷健檢</span>
+
+        </div>
+      </a>
+
+      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"
+        onclick="openMail('Doni');w3_close();">
+        <div class="w3-container">
+          <span class="w3-opacity w3-large">櫃台批號</span>
+
+        </div>
+      </a>
+
+
+      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom test w3-hover-light-grey"
+        onclick="openMail('Rinn');w3_close();">
+        <div class="w3-container">
+          <span class="w3-opacity w3-large">防疫專區</span>
+
+        </div>
+      </a>
+
+
+
+
+
+    </div>
+
+
+    <br>
+    <i style="color: crimson;">【主線任務】</i>
+    <a href="https://docs.google.com/spreadsheets/d/1LFGJc1vbKGHOCOBzvrbKf0ja7diYa7A0sxlHx52eDtc/edit#gid=1316445406"
+      target="black" class="w3-bar-item w3-button"><i class="fa fa-paper-plane w3-margin-right"></i>每日任務</a>
+    <a href="https://docs.google.com/spreadsheets/d/1Iv-xhDBAXHvHRfgNtoqx9K_Luop2sdV40PwGFO4ac1Q/edit#gid=86180606"
+      target="black" class="w3-bar-item w3-button"><i class="fa fa-paper-plane w3-margin-right"></i>武器商城</a>
+    <a href="https://docs.google.com/spreadsheets/d/1os9BST1EXuyUYbInLfY4t5cDjUToyT1iZ_TMfS4IW5k/edit#gid=1337831679"
+      target="black" class="w3-bar-item w3-button"><i class="fa fa-paper-plane w3-margin-right"></i>每月值日生</a>
+    <i style="color: rgb(18, 130, 235);">【活動會員】</i>
+    <a href="https://docs.google.com/spreadsheets/d/1lDhFCwhSOiN5LKz6Dzkk7PQczWpoP7Gt1Tw06P_ACto/edit?show_add_on=ejljeigigmpdnoohkmbpbgdgmgffjahc#gid=626172113"
+      target="black" class="w3-bar-item w3-button"><i class="fa fa-paper-plane w3-margin-right"></i>甘特圖(活動結束)</a>
+    <a href="https://docs.google.com/spreadsheets/d/1kyTBeZKxTPjpxJldLMI8O2cu91HRSC5dYp97tKrCMsU/edit#gid=0"
+      target="black" class="w3-bar-item w3-button"><i class="fa fa-paper-plane w3-margin-right"></i>每週任務(帳號登入)</a>
+   
+
+  </nav>
+
+  <!-- 聯絡表單 -->
+  <section class="contact" id="contact">
+    <div id="id01" class="w3-modal" style="z-index:4">
+      <div class="w3-modal-content w3-animate-zoom">
+        <div class="w3-container w3-padding w3-Pale Green">
+          <h2 class="heading w3-button w3-Pale Green w3-left w3-xxlarge">報告!我有病x_x</h2><br><br>
+          <form class="contact-form" enctype="text/plain" accept-charset="utf-8"><br>
+            <input id="nameText" type="text" name="name" value size="100%" placeholder="姓名(name)" required>
+            <input id="emailText" type="email" name="email" value size="100%" placeholder="郵件(email)" required>
+            <input id="telText" type="tel" name="Phone" value size="100%" aria-invalid="false" placeholder="分機號碼(NO.)"
+              required>
+            <input id="subText" type="text" name="Subject" value size="100%" aria-invalid="false"
+              placeholder="主旨(subject)" required>
+            <br>
+            <textarea id="bodyText" name="your-message" cols="100%" rows="10" aria-required="true" aria-invalid="false"
+              placeholder="您的訊息(Your Message)" required></textarea>
+          </form>
+          <input type="button" value="送出訊息" onclick="submitHandler();">
+          <a id="mailTo"></a>
+          <input type="button" value="取消" onclick="document.getElementById('id01').style.display='none'"></input>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+    title="Close Sidemenu" id="myOverlay">
+  </div>
+
+
+  <!-- Page content -->
+  <div class="w3-main" style="margin-left:320px;">
+    <i class="fa fa-bars w3-button w3-white w3-hide-large w3-xlarge w3-margin-left w3-margin-top"
+      onclick="w3_open()"></i>
+    <a href="javascript:void(0)" class="w3-hide-large w3-red w3-button w3-right w3-margin-top w3-margin-right"
+      onclick="document.getElementById('id01').style.display='block'"><i class="fa fa-pencil"></i></a>
+    <div id="Borge" class="w3-container person">
+      <br>
+
+
+
+
+      <div class="container">
+        <header class="clearfix">
+
+          <!-- <h1>Responsive CSS Timeline with 3D Effect <span>(Best viewed in WebKit browsers)</span></h1> -->
+          <h2>鐵支工程部 <span>這是一個非正式的入職典禮入口</span></h2>
+
+
+          <div class="support-note">
+            <span class="note-ie">你好~我是小鱷</span>
+          </div>
+
+        </header>
+
+        <section class="main">
+
+          <ul class="timeline">
+
+            <li class="event">
+              <input type="radio" name="tl-group" checked />
+              <label></label>
+              <div class="thumb user-4"><span>小鱷助理</span></div>
+              <div class="content-perspective">
+                <div class="content">
+                  <div class="content-inner">
+                    <h3>您好~我是小鱷助理</h3>
+                    <p> &emsp;&emsp; 歡迎進入鐵支核心工廠！小鱷見你相貌堂堂，頗有大將之勢，今天就來指點你一二！！！
+                      這裡是<em><a href="http://192.168.1.242/manage/staff/chart/orgchartjpg.asp"
+                          target="black">網路事業群</a></em>之之之<em>技術中心</em>下下下的<em>工程部</em>。
+                      老實說！第一天通常都沒什麼事情，所以請您先自行打掃自己的環境，如果好了請測試開機沒問題後，電話直播<em class="em2">2721 </em>找工程小秘書-小薰</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="event">
+              <input type="radio" name="tl-group" />
+              <label></label>
+              <div class="thumb user-6"><span>step1.</span></div>
+              <div class="content-perspective">
+                <div class="content">
+                  <div class="content-inner">
+                    <h3>step1.會員造冊</h3>
+                    <p> 請拿出紙筆記住你腳下的位址：192.168._____._____(螢幕右下角有個VNC可以查看)，螢幕型號M_________(請參照您螢幕後方貼紙)待會我們要開始填寫戶口名冊。 </p>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="event">
+              <input type="radio" name="tl-group" />
+              <label></label>
+              <div class="thumb user-3"><span>step2.</span></div>
+              <div class="content-perspective">
+                <div class="content">
+                  <div class="content-inner">
+                    <h3>step2.戶口申報</h3>
+                    <p> <a href="http://192.168.1.242/manage/staff/no_paper/addNewTrans.asp"
+                        target="black">【戶口申報】</a>填畢。請等待戶政事務所(MIS)設定完成。<br>(等待過程您電話會響起，敢漏接你就死定了!!!) </p>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="event">
+              <input type="radio" name="tl-group" />
+              <label></label>
+              <div class="thumb user-5"><span>step3.</span></div>
+              <div class="content-perspective">
+                <div class="content">
+                  <div class="content-inner">
+                    <h3>step3.定居位置</h3>
+                    <p>兄弟分布圖:<a
+                        href="https://docs.google.com/spreadsheets/d/14vsF6nHDwHr33vLFF73FMhLMcNv69nSMYTFaaITpmNE/edit#gid=1218101508"
+                        target="black">【請按我】</a><br></p>
+                    <p>組織概念圖:<a href="https://www.figma.com/file/3mBxnymeOwb8JzD31mi4VM/%E7%B5%84%E7%B9%94%E6%9E%B6%E6%A7%8B%E5%9C%96?node-id=0%3A1">【請按我】</a></p>
+                    <br><img class="img003" src="img\003.jpg"></p>                
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="event">
+              <input type="radio" name="tl-group" />
+              <label></label>
+              <div class="thumb user-2"><span>step4.</span></div>
+              <div class="content-perspective">
+                <div class="content">
+                  <div class="content-inner">
+                    <h3>step4.認識旁鄰</h3>
+                    <p><em class="em2">走起(.verb)</em> 跟老大拜碼頭、並加入幫口的社群：
+                      <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#exampleModalCenter"> 工程部 / MIS 坐位圖</button>
+                      <div style="background-color: rgb(240, 216, 156);">
+                    </P>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="event">
+              <input type="radio" name="tl-group" />
+              <label></label>
+              <div class="thumb user-7"><span>step5.</span></div>
+              <div class="content-perspective">
+                <div class="content">
+                  <div class="content-inner">
+                    <h3>step5.注意事項</h3>
+
+                    <p> 事務所流程非常漫長，層層關卡弄一弄就已經中午拉，我們提供您幾個薪水小偷方案: <br>
+                      1.無限閱讀我們的官方影片<a href="http://192.168.1.242/manage/staff/video3.asp" target="black">【請點擊】</a><br>
+                      2.跟助理借書來看 【這樣O那樣X一看就懂的UI設計與資訊編排】 ㄟ!我只有這本能看<br>
+                      3.你可以亂翻我們的網站 <a href=" https://www.1111.com.tw/news/ " target="black">【產經新聞】</a><a
+                        href=" https://university.1111.com.tw/index.asp" target="black">【大學網】</a> (或者...<a
+                        href="https://www.1111.com.tw/webmap.asp">【網站指引】</a>)<br>
+                      4.「九大職能星」是一款剖析台灣職場最常評估的職能表現測驗<a
+                        href=" https://assessment.1111.com.tw/cstar/?utm_source=201404cstar_2020OCT&utm_medium=btnOnintro&agent=201404cstar"
+                        target="black">【自命不凡之人】</a><br>
+                    </p>
+
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <!-- <li class="event">
+        <input type="radio" name="tl-group"/>
+        <label></label>
+        <div class="thumb user-1"><span>step6.</span></div>
+        <div class="content-perspective">
+          <div class="content">
+            <div class="content-inner">
+              <h3>step6.</h3>
+              <p>Rrrrrrr rrrraaaahhh rrrrrrggghhhhnn!</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="event">
+        <input type="radio" name="tl-group"/>
+        <label></label>
+        <div class="thumb user-8"><span>step7.</span></div>
+        <div class="content-perspective">
+          <div class="content">
+            <div class="content-inner">
+              <h3>step7.</h3>
+              <p>Can we talk? OK</p>
+            </div>
+          </div>
+        </div>
+      </li>  -->
+          </ul>
+        </section>
+      </div><!-- /container -->
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div style="background-color: rgb(240, 216, 156);">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle">工程部 / MIS 坐位圖</h5><button type="button" class="close"
+                data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body"><img src="img\004.png">
+            </div>
+            <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+            </div>
+          </div>
+        </div>
+        <!-- 坐位圖按鈕窗  末 -->
+
+
+
+        <!-- 三張圖片 -->
+        <div class="container">
+          <h2 style="color: rgb(35, 143, 243);">掃描 QR CODE 解鎖更多功能 </h2>
+        </div>
+      </div>
+      <div class="htmleaf-container">
+        <div class="demo">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4 col-sm-6">
+                <div class="box">
+                  <img src="img\1.jpg" alt="">
+                  <div class="box-content">
+                    <h3 class="title">(APP/MIS/ESO)</h3>
+
+                    <ul class="icon">
+                      <img src="img\006.jpg">
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="box">
+                  <img src="img\2.jpg" alt="">
+                  <div class="box-content">
+                    <h3 class="title">(APP/MIS)</h3>
+                    <ul class="icon">
+                      <img src="img\007.jpg">
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-6">
+                <div class="box">
+                  <img src="img\3.jpg" alt="">
+                  <div class="box-content">
+                    <h6 class="title">诶!這是我收款帳號</h6>
+                    <ul class="icon">
+                      <img src="img\008.jpg">
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+    <!-- 第二頁-->
+
+    <div id="Jane" class="w3-container person">
+      <br>
+      <h3 class="w3-opacity">我的權益</h3>
+      <h5>以下只是幽默性質介紹、正規規範還請參照1111人事總管處</h5>
+      <hr>
+
+
+
+
+      <ul class="sublime">
+        <li class="buttons"></li>
+        <li><span class="gray">function(我的權益) {</span></li>
+
+        <li><span class="orange">加入SKYPE工作群組：</span>:
+          <button class="button3" onclick="ShowMeDate()">進入付費頻道=)</button>
+          <br>
+          <br>
+        <li>1.了解鐵支堂強大的: (<a href="http://192.168.1.242/manage/staff/index.asp" target="black">
+            <spen class="red">【管家系統】</spen>
+          </a>)</li>
+        <br>
+        <li>2.老大的聖旨:(程式設計申請單)<a href="http://192.168.1.242/manage/engineer/programask/index.aspx?chme=1"><span
+              class="blue">派單</span></a>、(請假單)<a
+            href="http://192.168.1.242/manage/engineer/leaveask/defalit.aspx?chme=1"><span
+              class="blue">裝病單</span></a>、(員工資料)<a href="http://192.168.1.242/manage/staff/employee.asp"><span
+              class="blue">找小弟</span></a>、功能。</li>
+        <br>
+        <li>3.公司基本福利: <span class="blue"><a href="http://192.168.1.242/manage/staff/lunch/lunch.asp">供餐</a></span>、<span
+            class="blue">三節牲品</span>、<a href="http://192.168.1.242/manage/staff/Massage/Bookinginquiry.asp"
+            target="black"><span class="blue">駐點醫生</span></a>、當月<a href="http://192.168.1.242/manage/staff/main.asp"
+            target="black"><span class="blue">2次抓龍</span></a>、<span class="blue">法律顧問</span>等服務。</li>
+        <br>
+        <li> 4.本分部另收保護費: <span class="red">2個月100元</span>、入會即贈<span class="red">衛生紙</span>、<span
+            class="red">洗碗精</span>無限暢飲。<br>
+          <span class="yellow">（第1個月免月費、附贈１個月１次的下午茶或不定期鴻門宴）</span></li>
+        <br>
+        <li>5.亦不例外總有一天要在家無料值勤、有問題請在社群<span class="red">回報</span>大哥們。</li>
+        <!-- <li><span class="orange">$OOXXXOOO</span>: (phone: <span class="blue">320px</span>, tablet: <span class="blue">768px</span>, desktop: <span class="blue">1024px</span>);</li>
+          -->
+        <br>
+        <li><span class="gray">/*使用工具*/</span></li>
+        <li><span class="red">@Please note:</span>(<span class="yellow">"各式表格"</span>) {</li>
+        <ul class="tab">
+          <li><span class="blue">中午值日生:</span><a
+              href="https://docs.google.com/spreadsheets/d/1os9BST1EXuyUYbInLfY4t5cDjUToyT1iZ_TMfS4IW5k/edit#gid=1337831679"
+              target="black"><span class="purple">排班表</span></a>;</li>
+          <li><span class="blue">假日值日生:</span><a
+              href="http://192.168.1.242/manage/engineer/holidaySchedul/schedulList.asp?ctype=1" target="black"><span
+                class="purple">排班表</span></a>;</li>
+
+          <li>}}</li>
+        </ul>
+    </div>
+
+
+
+
+
+
+
+    <div id="John" class="w3-container person">
+      <br>
+      <h3 class="w3-opacity">我的義務</h3>
+      <h5> 以下只是幽默性質介紹、正規規範還請參照1111人事總管處</h5>
+
+      <hr>
+
+      <!-- 第三頁-->
+
+      <!--結束-->
+
+      <br>
+
+
+
+      <div class="container mt-3">
+        <h2>醫生健檢</h2>
+        <p style="text-align: right;">(特種) 字第NO:20211109號</p>
+        <div class="alert alert-light">
+          <br>
+          <h2 style="text-align: center;">鐵支醫院工程分院診斷證明書</h2>
+          <table class="table1">
+            <tr>
+              <td>姓　　名：</td>
+              <td>鐵老么</td>
+              <td>病　　號：</td>
+              <td>C8763</td>
+            </tr>
+            <tr>
+              <td>說　　明：</td>
+              <td>到院前死亡(以下空白)</td>
+            </tr>
+
+          </table>
+          <br>
+
+          <table class="table2">
+            <tr>
+              <td style="padding-left: 10px;"><br>醫生囑咐：</td>
+            </tr>
+            <tr>
+              <td>
+                <ol style="padding-left: 40px;">
+
+
+                  <li><strong class="strong2">每日16點30分</strong>要回報<a
+                      href="https://docs.google.com/spreadsheets/d/1LFGJc1vbKGHOCOBzvrbKf0ja7diYa7A0sxlHx52eDtc/edit#gid=1316445406"
+                      target="black">工作進度</a>，(大哥可以惹，助理姊姊惹不起^.＜)</li>
+                  <li><strong class="strong2">每月25號前</strong>要交業績<a
+                      href="http://192.168.1.242/manage/engineer/monthReport/report.aspx"
+                      target="black">考核表</a>給老大，可能會影響你的年終考核
+                  </li>
+                  <li><strong class="strong2">每月１０號前</strong>提供<strong><a
+                      href="https://docs.google.com/spreadsheets/d/1Iv-xhDBAXHvHRfgNtoqx9K_Luop2sdV40PwGFO4ac1Q/edit#gid=86180606"
+                      target="black">武器商城</a></strong>申請（只有特定武器，其他請自費，申請等待時間約1個月）</li>
+                  <li>電腦壞掉找<a href="http://192.168.1.242/manage/onlineService/index.asp?adminDept=ESA"
+                      target="black">【<strong>MIS線上報修系統</strong>】</a>；水、電找總務<a
+                      href="http://192.168.1.242/manage/onlineservice/index.asp?admindept=eoob2&chme=1"
+                      target="black">【<strong>總務線上報修系統</strong>】</a> 這是生活常識不會分就等被罵。</li>
+                  <li><strong>裝病</strong>要報備老大<strong class="strong2">(請私密俊傑副總)</strong>、告知大哥們<strong
+                      class="strong2">(工程群告休)</strong>、上班沒有緩衝時間；1分鐘1塊錢。</li>
+                  <li><strong>不明曠職</strong><strong class="strong2">3日內</strong>請至63號3樓找人事陳怡廷#2383補卡<a
+                      href="http://192.168.1.242/manage/staff/attandance/index.asp" target="black">【考勤查詢】</a></li>
+                  <li>非討債組不會有費用請款、若有老大指示費用請回報助理協助。</li>
+                  <li><strong class="strong2">年假與補休</strong>是用到職日當週期:年假單日可請假時數為3.5小時、4小時、4.5小時、8小時</li>
+                  <li><strong class="strong2">任務完成-</strong>想怎麼請特、補休就怎麼請、湊不滿時數請不了假、剩餘1小時換1分錢</li>
+                  <li> <strong>生理假</strong>不扣全勤扣半薪/1day、出示<strong>疫苗假</strong>不扣全勤不給薪/2day、<strong>颱風假</strong>不扣全勤不給薪
+                  </li>
+                  <li>我知道你要問的都在這裡啦<a
+                      href="http://192.168.1.242/manage/staff/meetingRecord/worksCouncil/%E7%A6%8F%E5%A7%94%E6%9C%83%E7%A6%8F%E5%88%A9%E4%BA%8B%E9%A0%85%E4%B8%80%E8%A6%BD%E8%A1%A8_1020917.htm"
+                      target="black">【按我前往】</a></li>
+
+                  <li><strong class="strong2">*</strong>特休=年假、不要問我為什麼要提醒，有人就是不知道我鞋子穿幾號!!!</li>
+                  <li><strong class="strong2">*</strong>你敢問我產假我就打死你!!!私人假別請自行問人事=(</li>
+                  
+                </ol>
+              </td>
+            </tr>
+
+          </table>
+
+          <div class="img9"><img class="img91" src="img\009.png"></div>
+          <br>
+          注意:以上病人經本院判屬實特予證明
+        </div>
+      </div>
+
+
+
+      <!--自費聲明-->
+      <br>
+      <div class="container mt-3">
+        <h2>自費聲明書</h2>
+        <p style="text-align: right;">(特種) 字第NO:20211109-2號</p>
+        <div class="alert alert-light">
+          <br>
+          <h2 style="text-align: center;">鐵支醫院工程分院自費聲明書</h2>
+          <table class="table1">
+            <tr>
+              <td>姓　　名：</td>
+              <td>鐵老么</td>
+              <td>病　　號：</td>
+              <td>C8763</td>
+            </tr>
+            <tr>
+              <td>說　　明：</td>
+              <td>略(以下空白)</td>
+            </tr>
+
+          </table>
+          <br>
+
+          <table class="table2">
+
+            <tr>
+              <br>
+              <td style="padding-left: 10px;"><br>自費申明：</td>
+            </tr>
+            <tr>
+              <td>
+                <ol style="padding-left: 40px;">
+                  <strong class="strong2">兌換金由來：</strong><br>
+                  工程部每個月有一筆ＢＵＧ獎金，我們領多少錢，就要給多少發票出去。
+                  但我們不一定每個月都會有這麼多的支出，不足的部分，就看大家誰可以給發票來補，<strong>所以我們的下午茶就是拿獎金來當部門福利。</strong>（獎金也不一定每個月會有，也有可能某一天會消失，現在有穩定給的就是ＢＵＧ獎金）<br>
+                  <br><strong class="strong2">兌換金用途：</strong><br>
+                  助理每次下午茶會宣布一個上限金額，如果您超額點餐，就可以拿兌換金來折抵超額部分。<br>
+                  <br><strong class="strong2">兌換金方法：</strong><br>
+                  一、 <strong>捐發票</strong>（發票的項目範疇不限，只要是開<strong class="strong2">１６７７６３８７</strong>皆可）<br>
+                  二、 再你的薪資單多一個<strong>虛擬獎金</strong>，但你級距會被調高。＊參考說明<br>
+                  <br><strong class="strong2">兌換金換算：</strong><br>
+                  １０００元*０.０５=５０、即５０元就是兌換金，以此類推。<br>
+                  (兩種兌換金換算皆一樣)<br>
+                  <br><strong class="strong2">說明：</strong><br>
+
+                  <li> 看你當月報多少數字給我，我就給多少數字出去，你會在你的薪資單看到獎金多了多少錢但是實際上你並沒有拿到這筆錢。（跟發票無關、單純口頭數字交易）。</li>
+                  <li> 你報的數字只會在你的薪資單出現一次，例如你8月給我2000，那你9/5應該會看到你薪資單多了一筆2000的獎金，然後就結束了，不會再有其他的了，所以須說明清楚要報幾個月。</li>
+                  <li>這個金額可能會影響到你要多繳稅，所以請自行換算，有些人會想把級距提高，就是看個人需求。</li>
+                  <li> 公司一年會提報兩次薪資級距，所以你哪個月提報也有差(每年2月及8月申報、3月、9月生效、所屬員工最近3個月之平均月薪資總額)。</li>
+
+
+                </ol>
+              </td>
+            </tr>
+
+          </table>
+
+          <div class="img9"><img class="img91" src="img\009.png"></div>
+          <br>
+          注意:以上病人經本院判屬實特予證明
+        </div>
+      </div>
+
+
+
+      <!--手術聲明-->
+
+
+    </div>
+
+
+
+    <div id="Doni" class="w3-container person">
+      <br>
+      <h3 class="w3-opacity">初級任務</h3>
+      <h5> 以下只是幽默性質介紹、正規規範還請參照1111人事總管處</h5>
+      <hr>
+
+      <!--TEST-->
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-sm-6" style="max-width: 100% ; flex:100% ;">
+            <div class="serviceBox">
+
+              <div class="service-Content">
+                
+                <p class="description">
+                  <h3 class="title">開發軟體</h3>
+                  *請填自己用的到的*<br>
+                  <ul> 
+                  <li>編輯器(則一即可)： vscode <br> https://code.visualstudio.com/ </li>  
+                  <li>上傳：FileZilla Client <br> https://filezilla-project.org/download.php?platform=win64 </li>  
+                  <li>API測試：POSTMAN <br> https://www.postman.com/</li>  
+                  <li>sourcetree <br> https://www.sourcetreeapp.com/</li>  
+                  <li>SQL Server Management
+                      Studio<br>https://docs.microsoft.com/zh-tw/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16
+                  </li>
+                  <li> SQL Server 2019
+                      Developer<br>https://www.microsoft.com/zh-tw/sql-server/sql-server-downloads</li>                 
+                  <li>Sourcetree<br>https://www.sourcetreeapp.com/</li>
+                  <li>FileZilla<br>https://filezilla-project.org/download.php?platform=win64</li>
+                  <li> Postman<br>https://www.postman.com/downloads/</li>
+                  <li> Winmerge<br>https://winmerge.org/downloads/?lang=en</li>
+                  <li>Notepad++<br>https://notepad-plus-plus.org/downloads/v8.4.5/</li>
+                  <li>Visual Studio 2022 Community<br>https://visualstudio.microsoft.com/zh-hant/downloads/</li>
+                  <li>Visual Studio Code<br>https://code.visualstudio.com/</li>
+                  <li> Fork <br>https://git-fork.com/</li>
+                  <li> LinqPad<br>https://www.linqpad.net/</li>
+</ul>
+                  <br>
+                  *非必要*<br>                
+                  申請手機可以連測試機WIFI<BR>
+
+                  <BR>
+                  
+                  <h3 class="title">自行攜帶筆電者請複製以下文字上設備異動單:</h3>
+                  並填寫附件切結書，填畢交予MIS方能攜帶。<BR>
+                  *姓名: xxx<BR>
+                  *員工編號 20xxxxx<BR>
+                  *原因：因教育訓練課程需攜帶筆電進公司。<BR>
+                  *電腦使用平台為 :(如Windows10、7或MAC)。<BR>
+                  *申請開放區間:2022/03/03 ~ 2022/04/21。<BR>
+                  注意:<BR>
+                  公司不會提供WI-FI連結、請自行連手機網路。<BR>
+                  公司不會協助任何的更新與安裝、與問題排查。<BR>
+                  <BR>
+
+                  
+            
+
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-6" style="max-width: 100% ; flex:100% ;">
+            <div class="serviceBox">
+
+              <div class="col-md-4 col-sm-6" style="max-width: 100% ; flex:100% ;">
+                <h3 class="title">上正式機的需求</h3>
+                <p class="description">
+
+                  1.<strong style="color: blue;">修改</strong>(沒特別註明 都是修改)<br>
+                  2.<strong style="color: red;">新增</strong>(圖片檔)<br>
+                  需求單:<br>
+                  企劃某<strong style="color: purple;">A檔案</strong>要從<strong
+                    style="color: blue;">測試機</strong>(192.168.<strong style="color: blue;">1.234</strong> )上傳至<br>
+                  <strong style="color: red;">正式機</strong>(192.168.<strong style="color: red;">8.101</strong>
+                  )or(192.168.<strong style="color: red;">8.102</strong> )
+
+                </p>
+
+
+                <h3 class="title">步驟</h3>
+                <p class="description">
+                <img  src="img/ftp.png">
+                  <p>STEP<em>1</em>:<br><strong style="color:green;">本機</strong>建立一個資料夾名為<strong
+                      style="color:green;">20211014</strong> 和子資料夾 <strong style="color:green;">backup</strong><br>
+                    <p>STEP<em>2</em>:<br>收尋企劃給的<strong style="color: blue;">測試機</strong>路徑找到<strong
+                        style="color: purple;">A檔案</strong>，將<strong style="color: blue;">測試機</strong><strong
+                        style="color: purple;">A檔案</strong>丟進<strong style="color:green;">本機</strong><strong
+                        style="color:rgb(230, 21, 177);">待傳</strong><br>
+                      <p>STEP<em>3</em>:<br>開啟<strong style="color: red;">正式機</strong>找到<strong
+                          style="color: purple;">A檔案</strong>並<em style="font-size: x-large;"> "備份" </em>到<strong
+                          style="color:green;">本機</strong>的子資料夾<strong style="color:green;">backup</strong>內<br>
+                        <p>STEP<em>4</em>:<br>再把<strong style="color:green;">本機</strong><strong
+                            style="color:rgb(230, 21, 177);">待傳</strong>的<strong
+                            style="color: purple;">A檔案</strong>覆蓋至<strong style="color: red;">正式機</strong><strong
+                            style="color: purple;">A檔案</strong>即完成</p>
+                      </p>
+
+
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-6" style="max-width: 100% ; flex:100% ;">
+            <div class="serviceBox">
+
+              <div class="col-md-4 col-sm-6" style="max-width: 100% ; flex:100% ;">
+              
+                <h3 class="title">戲說鐵支</h3>
+                <p>這是一個機房重地，若您聽到o~oh~o~oh的聲音請別害怕!這只是因為臭蟲太多!</p>
+                <p>若您看到一個黑影跑過去，請你害怕!不要問!你以後就知道了!!</p>
+                <p>在這裡你需要KEEP保持運動，否則...我真不敢想像呢?</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div id="Rinn" class="w3-container person">
+      <br>
+      <h3 class="w3-opacity">防疫專區</h3>
+      <h5> 以下只是幽默性質介紹、正規規範還請參照1111人事總管處</h5>
+      <hr>
+
+
+
+
+
+
+
+
+
+      <!--第一測試區-->
+
+
+
+
+
+
+
+      <ul class="sublime">
+        <li class="buttons"></li>
+        <li><span class="gray">function(防疫專區) {</span></li>
+
+        <li><span class="orange">1.申請居家上班：</span>
+          <spen class="red">填寫設備異動單</spen><br>
+          <br>
+          在家工作vpn務必請依下列sop填寫申請、感謝<br>
+          為了加快vpn設定、開放、控管作業、 請需求在家工作vpn開放同仁、<span class="red">首次</span>申請填單格式範例請依以下"註1"填寫。<br>
+          <br>
+          而若需再申請<span class="red">延長開放時間</span>或<span class="red">第2次</span>申請、煩請於申請單加註，"註2"、已利設定作業、控管、謹在此感謝。<br>
+          <br>
+
+
+          <span class="yellow">**註1(請全部複製)</span><br>
+          首次申請填單格式範例<br>
+
+          *姓名: xxx<br>
+          *員工編號 20xxxxx<br>
+          *原因：因應疫情、在家工作需求。<br>
+          請協助開放vpn連線使用。 <br>
+          家中電腦使用平台為 :(如Windows10、7或MAC)。 <br>
+          *申請開放區間:2022/xx/xx ~ 2022/xx/xx<br>
+          *公司電腦 IP:192.168.xx.xx <br>
+          *個人email：如 xxxx @gmail.com 、xxxx @hotmail 、 xxxx @yahoo等。<br>
+
+          <hr>
+
+
+          <span class="yellow">***註2(請全部複製)</span><br>
+          原先已申請過在家連線VPN到 2022年 x月 xx日止，因應疫情在家工作需求，故需延長、請協助延長開通日期至 2022 年 x月 xx日。 <br>
+
+          <br>
+          <span class="blue">其他說明:</span>
+        <li><span class="red">@Please note:</span>(<span class="yellow">"關於VPN"</span>) {</li>
+        <ul class="tab">
+
+          <li><span class="gray">/*新童鞋一律進公司上班、除非主管安排居家*/</span></li>
+          <li><span class="gray">/*若沒有電腦可以居家、一律進公司上班*/</span></li>
+          <li><span class="gray">/*第一次填寫設備異動單等待MIS處理，MIS會寄帳號密碼至你指定信箱並告知你*/</span></li>
+          <li><span class="gray">/*依信件內容下載VPN連線即可，如果還有問題請尋求MIS排除*/</span></li>
+          }
+        </ul>
+        <br>
+
+        <li><span class="red">@Please note:</span>(<span class="yellow">"關於1HR APP打卡"</span>) {</li>
+        <ul class="tab">
+          <li><span class="gray">/*新增第二地址需主管同意*/</span>
+          <li><span class="gray">/*請假一律用總管系統，APP人事不收*/</span>
+          <li><span class="gray">/*當日打卡請翌日進出勤系統確認*/</span>
+
+          <li>}</li>
+        </ul>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  <footer> 無趣的不是這個世界<br>而是我們沒有堅持那些有趣的活法 </footer>
+
+
+
+  <script>
+    var openInbox = document.getElementById("myBtn");
+    openInbox.click();
+
+    function w3_open() {
+      document.getElementById("mySidebar").style.display = "block";
+      document.getElementById("myOverlay").style.display = "block";
+    }
+
+    function w3_close() {
+      document.getElementById("mySidebar").style.display = "none";
+      document.getElementById("myOverlay").style.display = "none";
+    }
+
+    function myFunc(id) {
+      var x = document.getElementById(id);
+      if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+        x.previousElementSibling.className += " w3-red";
+      } else {
+        x.className = x.className.replace(" w3-show", "");
+        x.previousElementSibling.className =
+          x.previousElementSibling.className.replace(" w3-red", "");
+      }
+    }
+
+    openMail("Borge")
+
+    function openMail(personName) {
+      var i;
+      var x = document.getElementsByClassName("person");
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+      }
+      x = document.getElementsByClassName("test");
+      for (i = 0; i < x.length; i++) {
+        // x[i].className = x[i].className.replace(" w3-light-grey", "");
+      }
+      document.getElementById(personName).style.display = "block";
+      // event.currentTarget.className += " w3-light-grey";
+    }
+  </script>
+
+  <script>
+    var openTab = document.getElementById("firstTab");
+    openTab.click();
+  </script>
+
+  <script type="text/javascript">
+    var initSubject = '',
+      initBody = '';
+
+    //按下傳送按鈕後執行
+    function submitHandler() {
+      var to = "c150075@staff.1111.com.tw"; //寫死的傳送對象 就是公司的信箱 不會顯示在網頁上
+      var name = nameText.value; //讀取ID為 nameTextuser 物件中的值
+      var email = emailText.value;
+      var tel = telText.value;
+      var subject = subText.value;
+      //把user填的資料都塞到 mail body 中
+      var body = "" + bodyText.value + '%0A%0A%0A'; //%0A是換行 換了三行
+      body += "From：" + nameText.value + '%0A';
+      body += "Email：" + emailText.value + '%0A';
+      body += "No.：" + telText.value + '%0A';
+
+
+      //傳送的主要程式碼
+      mailTo.href = "mailto:" + to + "?subject=" + subject + "&body=" + body;
+
+      mailTo.click();
+    }
+  </script>
+
+  <!-- skype群組連結隱藏 -->
+  <script language="javascript">
+    function ShowMeDate() {
+      var password = ""
+      var nlil = ''
+      password = prompt('輸入密碼:', '');
+      if (password != nlil) {
+        location.href = password + ".html";
+      }
+    }
+  </script>
+
+  <!-- 第5頁-第一測試區 -->
+  <script>
+    //綁定 .setBtn
+    var setBtn = document.querySelector(".setBtn");
+    //監聽 setBtn
+    setBtn.addEventListener("click", setInputItem, false);
+    //建立 function
+    function setInputItem(e) {
+      var str = document.querySelector(".text").value; //選擇到表單輸入的值
+      localStorage.setItem("textName", str); //存入 localStorage
+    }
+
+    console.log("textName");
+    //透過 Application 檢查 localStorage 後
+    //key=textName
+    //value=tim
+
+    //綁定 .getBtn
+    var getBtn = document.querySelector(".getBtn");
+    //監聽 getBtn
+    getBtn.addEventListener("click", getInputItem, false);
+    //建立 function
+    function getInputItem(e) {
+      var str = localStorage.getItem("textName"); //取出 textName 的值
+      // alert("Hello!" + str); 取出後跳 alert
+      document.getElementById("msg").innerHTML = "H!," + str + "會員您好"
+
+    }
+  </script>
+
+
+
+
+  </script>
+
+</body>
+
+</html>
