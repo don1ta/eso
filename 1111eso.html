@@ -346,7 +346,7 @@
          -->
         
         
-           <a class="w3-button w3-block w3-black" href='javascript:addBookmarkForBrowser("1111com", "https://don1ta.github.io/eso/1111eso.html");'>💗</a>
+           <a class="w3-button w3-block w3-black" href='#'>💗</a>
         
         
         
@@ -392,7 +392,7 @@
       </div>
       <div class="w3-display-bottomright w3-center w3-padding-large">
         <span class="w3-text-white">鐵支工程部.COM</span><br>
-        <span class="w3-text-white">02 January, 2023</span>
+        <span class="w3-text-white">03 January, 2023</span>
       </div>
   </header>
 
@@ -647,8 +647,8 @@
 
 
 
-  <!-- <script>
-    // Tabbed Menu
+  <script>
+    // 任務JS
     function openMenu(evt, menuName) {
       var i, x, tablinks;
       x = document.getElementsByClassName("menu");
@@ -668,7 +668,7 @@
 <script>
   var openTab = document.getElementById("firstTab");
   openTab.click();
-</script> -->
+</script>
 
 
 <!-- email -->
@@ -677,27 +677,27 @@
   // var openInbox = document.getElementById("myBtn");
   // openInbox.click();
 
-  function w3_open() {
-    document.getElementById("mySidebar").style.display = "block";
-    document.getElementById("myOverlay").style.display = "block";
-  }
+  // function w3_open() {
+  //   document.getElementById("mySidebar").style.display = "block";
+  //   document.getElementById("myOverlay").style.display = "block";
+  // }
 
-  function w3_close() {
-    document.getElementById("mySidebar").style.display = "none";
-    document.getElementById("myOverlay").style.display = "none";
-  }
+  // function w3_close() {
+  //   document.getElementById("mySidebar").style.display = "none";
+  //   document.getElementById("myOverlay").style.display = "none";
+  // }
 
-  function myFunc(id) {
-    var x = document.getElementById(id);
-    if (x.className.indexOf("w3-show") == -1) {
-      x.className += " w3-show";
-      x.previousElementSibling.className += " w3-red";
-    } else {
-      x.className = x.className.replace(" w3-show", "");
-      x.previousElementSibling.className =
-        x.previousElementSibling.className.replace(" w3-red", "");
-    }
-  }
+  // function myFunc(id) {
+  //   var x = document.getElementById(id);
+  //   if (x.className.indexOf("w3-show") == -1) {
+  //     x.className += " w3-show";
+  //     x.previousElementSibling.className += " w3-red";
+  //   } else {
+  //     x.className = x.className.replace(" w3-show", "");
+  //     x.previousElementSibling.className =
+  //       x.previousElementSibling.className.replace(" w3-red", "");
+  //   }
+  // }
 
   // openMail("Borge")
 
@@ -721,6 +721,9 @@
   openTab.click();
 </script> -->
 
+
+
+<!-- 申訴信箱 -->
 <script type="text/javascript">
   var initSubject = '',
     initBody = '';
@@ -747,7 +750,7 @@
 
 
 
-
+<!-- 回TOP -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script>
@@ -766,17 +769,6 @@
   </script>
 
 
-<script>
-  function addBookmarkForBrowser(sTitle, sUrl) {
-      if (window.sidebar && window.sidebar.addPanel) {
-          window.sidebar.addPanel(sTitle, sUrl, "");
-       } else if (window.external) {
-           window.external.AddFavorite(sUrl, sTitle);
-       } else {
-           alert("您的瀏覽器不支援此功能!");
-       }
-   }
-</script>
 
 
 
