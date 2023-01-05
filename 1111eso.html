@@ -342,7 +342,14 @@
 
 
         <div class="w3-col s2">
-          <option  class="w3-button w3-block w3-black" >💗</option>
+           <!-- <option  class="w3-button w3-block w3-black" >💗</option> 
+         -->
+        
+        
+           <a class="w3-button w3-block w3-black" href='javascript:addBookmarkForBrowser("1111com", "https://don1ta.github.io/eso/1111eso.html");'>💗</a>
+        
+        
+        
         </div>
           <div class="w3-col s2">
             <a class="w3-button w3-block w3-black" href="#" >公告</a>
@@ -398,7 +405,7 @@
   <div class="w3-sand  w3-large">   
     <div class="w3-container" id="about">
       <div class="w3-content" style="max-width:700px">
-        <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">1111com</span></h5>
+        <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">1111.COM</span></h5>
 
         <div class="w3-panel w3-leftbar w3-light-grey px1">
           <p><i>「 生活似乎要找尋藉口才能好好持續下去，為了讓平凡無奇的生活日常中，怦出有些絢爛的火花，交織歡笑、練習展現自我的一面，沒有誰是不被需要的 」 </i></p>
@@ -640,7 +647,7 @@
 
 
 
-  <script>
+  <!-- <script>
     // Tabbed Menu
     function openMenu(evt, menuName) {
       var i, x, tablinks;
@@ -661,14 +668,14 @@
 <script>
   var openTab = document.getElementById("firstTab");
   openTab.click();
-</script>
+</script> -->
 
 
 <!-- email -->
 
 <script>
-  var openInbox = document.getElementById("myBtn");
-  openInbox.click();
+  // var openInbox = document.getElementById("myBtn");
+  // openInbox.click();
 
   function w3_open() {
     document.getElementById("mySidebar").style.display = "block";
@@ -692,27 +699,27 @@
     }
   }
 
-  openMail("Borge")
+  // openMail("Borge")
 
-  function openMail(personName) {
-    var i;
-    var x = document.getElementsByClassName("person");
-    for (i = 0; i < x.length; i++) {
-      x[i].style.display = "none";
-    }
-    x = document.getElementsByClassName("test");
-    for (i = 0; i < x.length; i++) {
-      // x[i].className = x[i].className.replace(" w3-light-grey", "");
-    }
-    document.getElementById(personName).style.display = "block";
-    // event.currentTarget.className += " w3-light-grey";
-  }
+  // function openMail(personName) {
+  //   var i;
+  //   var x = document.getElementsByClassName("person");
+  //   for (i = 0; i < x.length; i++) {
+  //     x[i].style.display = "none";
+  //   }
+  //   x = document.getElementsByClassName("test");
+  //   for (i = 0; i < x.length; i++) {
+  
+  //   }
+  //   document.getElementById(personName).style.display = "block";
+  
+  // }
 </script>
 
-<script>
+<!-- <script>
   var openTab = document.getElementById("firstTab");
   openTab.click();
-</script>
+</script> -->
 
 <script type="text/javascript">
   var initSubject = '',
@@ -759,9 +766,17 @@
   </script>
 
 
-
-
-
+<script>
+  function addBookmarkForBrowser(sTitle, sUrl) {
+      if (window.sidebar && window.sidebar.addPanel) {
+          window.sidebar.addPanel(sTitle, sUrl, "");
+       } else if (window.external) {
+           window.external.AddFavorite(sUrl, sTitle);
+       } else {
+           alert("您的瀏覽器不支援此功能!");
+       }
+   }
+</script>
 
 
 
