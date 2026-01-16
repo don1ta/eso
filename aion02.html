@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
-    <title>Aion2 高階解析 - API 串接增強版</title>
+    <title>Aion2 高階解析 - 角色名稱快速查詢版</title>
     <style>
+        /* 保留你原本的所有 CSS 樣式 */
         :root {
             --bg: #0b0e14;
             --panel: #1a1f29;
@@ -50,16 +51,19 @@
             display: flex;
             gap: 10px;
             margin-bottom: 15px;
+            flex-wrap: wrap;
         }
-        .api-input-group input {
-            flex: 1;
+        .api-input-group input, .api-input-group select {
             background: #010409;
             border: 1px solid var(--border);
             color: var(--blue);
             padding: 12px;
             border-radius: 6px;
-            font-family: monospace;
+            font-family: inherit;
         }
+        #charNameInput { flex: 2; min-width: 200px; }
+        #serverSelect { flex: 1; min-width: 120px; }
+
         .import-controls {
             display: flex;
             gap: 15px;
@@ -94,10 +98,11 @@
             background: linear-gradient(135deg, #58a6ff, #1f6feb);
             color: white;
             border: none;
-            padding: 0 25px;
+            padding: 0 30px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
+            min-height: 45px;
         }
         button#parseBtn {
             background: linear-gradient(135deg, #d4b483, #aa8a59);
@@ -121,7 +126,7 @@
             font-size: 24px;
         }
 
-        /* 原始樣式保持不變 */
+        /* 儀表板樣式 */
         .dashboard { display: none; flex-direction: column; gap: 20px; }
         .profile-card { background: var(--profile-bg); border: 1px solid var(--gold); border-radius: 12px; padding: 25px; display: flex; align-items: center; gap: 30px; flex-wrap: wrap; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); }
         .profile-img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--gold); padding: 3px; background: #000; }
@@ -183,13 +188,59 @@
 
     <div class="container">
         <div class="input-area">
-            <h2 style="color:var(--gold); margin-top:0; text-align: center;">💎 Aion2 數據中心</h2>
+            <h2 style="color:var(--gold); margin-top:0; text-align: center;">💎 Aion2 角色數據查詢系統</h2>
             
             <div class="import-section">
-                <div style="font-size: 14px; color: var(--gold); font-weight: bold;">🔗 方法 A：貼上 API 網址直接讀取</div>
+                <div style="font-size: 14px; color: var(--gold); font-weight: bold;">🔍 方法 A：快速角色查詢</div>
                 <div class="api-input-group">
-                    <input type="text" id="apiUrlInput" placeholder="請貼上完整的 API 請求網址 (包含 characterId 與 Token)...">
-                    <button class="btn-api" onclick="fetchFromApi()">讀取 API</button>
+                    <input type="text" id="charNameInput" placeholder="輸入角色名稱 (例如: 小紅線)...">
+                   
+<select id="serverSelect">
+    <optgroup label="─── 天族伺服器 ───">
+        <option value="希埃爾">希埃爾</option>
+        <option value="奈薩肯">奈薩肯</option>
+        <option value="白傑爾">白傑爾</option>
+        <option value="凱西內爾">凱西內爾</option>
+        <option value="尤斯迪埃">尤斯迪埃</option>
+        <option value="艾瑞爾">艾瑞爾</option>
+        <option value="普雷奇翁">普雷奇翁</option>
+        <option value="梅斯蘭泰達">梅斯蘭泰達</option>
+        <option value="希塔尼耶">希塔尼耶</option>
+        <option value="納尼亞">納尼亞</option>
+        <option value="塔哈巴達">塔哈巴達</option>
+        <option value="路特斯">路特斯</option>
+        <option value="菲爾諾斯">菲爾諾斯</option>
+        <option value="達彌努">達彌努</option>
+        <option value="卡薩卡">卡薩卡</option>
+        <option value="巴卡爾摩">巴卡爾摩</option>
+        <option value="天加隆">天加隆</option>
+        <option value="科奇隆">科奇隆</option>
+    </optgroup>
+    <optgroup label="─── 魔族伺服器 ───">
+        <option value="伊斯拉佩爾">伊斯拉佩爾</option>
+        <option value="吉凱爾">吉凱爾</option>
+        <option value="崔妮爾">崔妮爾</option>
+        <option value="露梅爾">露梅爾</option>
+        <option value="瑪爾庫坦">瑪爾庫坦</option>
+        <option value="阿斯佩爾">阿斯佩爾</option>
+        <option value="艾萊修奇卡">艾萊修奇卡</option>
+        <option value="布里特拉">布里特拉</option>
+        <option value="奈蒙">奈蒙</option>
+        <option value="哈達爾">哈達爾</option>
+        <option value="盧德萊">盧德萊</option>
+        <option value="鄔爾古倫">鄔爾古倫</option>
+        <option value="默尼">默尼</option>
+        <option value="奧達爾">奧達爾</option>
+        <option value="簡卡卡">簡卡卡</option>
+        <option value="克羅梅德">克羅梅德</option>
+        <option value="奎靈">奎靈</option>
+        <option value="巴巴隆">巴巴隆</option>
+    </optgroup>
+</select>
+
+
+
+                    <button class="btn-api" onclick="fetchFromApi()">立即查詢</button>
                 </div>
 
                 <div style="font-size: 14px; color: var(--gold); font-weight: bold;">📝 方法 B：手動貼上 JSON 或選擇檔案</div>
@@ -214,7 +265,7 @@
                         <span>等級：<b id="p-lv" style="color:var(--gold)"></b></span>
                         <span>職業：<b id="p-class" style="color:var(--gold)"></b></span>
                         <span>道具等級：<b id="p-itemlv" style="color:#58a6ff"></b></span>
-                        <span>數據讀取時間：<b id="p-update" style="color:#3fb950"></b></span>
+                        <span>數據更新時間：<b id="p-update" style="color:#3fb950"></b></span>
                     </div>
                     <div id="p-ranking-container" class="rank-container"></div>
                 </div>
@@ -277,72 +328,58 @@
     </div>
 
 <script>
-// 初始化：讀取上次使用的 API 網址
+// 初始化：讀取上次搜尋的角色與伺服器
 window.onload = function() {
-    const savedUrl = localStorage.getItem('last_aion2_api_url');
-    if (savedUrl) {
-        document.getElementById('apiUrlInput').value = savedUrl;
-    }
+    const savedName = localStorage.getItem('last_char_name');
+    const savedServer = localStorage.getItem('last_server');
+    if (savedName) document.getElementById('charNameInput').value = savedName;
+    if (savedServer) document.getElementById('serverSelect').value = savedServer;
 }
 
-// --- API 請求邏輯 ---
+// --- 核心 API 請求邏輯 ---
 async function fetchFromApi() {
-    const fullUrl = document.getElementById('apiUrlInput').value.trim();
-    if (!fullUrl) {
-        alert("請貼上 API 網址");
+    const charName = document.getElementById('charNameInput').value.trim();
+    const serverName = document.getElementById('serverSelect').value;
+    
+    if (!charName) {
+        alert("請輸入角色名稱");
         return;
     }
 
-    // 儲存網址以便下次使用
-    localStorage.setItem('last_aion2_api_url', fullUrl);
+    // 儲存設定
+    localStorage.setItem('last_char_name', charName);
+    localStorage.setItem('last_server', serverName);
     
     document.getElementById('loading').style.display = 'flex';
 
     try {
+        // 構造原始 API 網址
+        const baseUrl = `https://aion-api.bnshive.com/character/query?name=${encodeURIComponent(charName)}&server=${encodeURIComponent(serverName)}`;
+        
         // 使用你的 Proxy 解決跨域問題
-        const proxyUrl = `https://proxy.kk69347321.workers.dev/?url=${encodeURIComponent(fullUrl)}`;
+        const proxyUrl = `https://proxy.kk69347321.workers.dev/?url=${encodeURIComponent(baseUrl)}`;
         
         const response = await fetch(proxyUrl);
         if (!response.ok) throw new Error(`HTTP 錯誤: ${response.status}`);
         
         const json = await response.json();
+        
+        // 檢查 API 回傳的結果
+        if (!json || (json.result === "Fail")) {
+            throw new Error(json.message || "找不到該角色，請確認名稱與伺服器是否正確。");
+        }
+        
         processData(json);
-        document.getElementById('jsonInput').value = "API 數據讀取成功！";
+        document.getElementById('jsonInput').value = `角色 [${charName}] 數據讀取成功！`;
     } catch (err) {
         console.error(err);
-        alert("讀取 API 失敗，請確認網址是否正確或 Proxy 是否正常。\n錯誤：" + err.message);
+        alert("讀取失敗：" + err.message);
     } finally {
         document.getElementById('loading').style.display = 'none';
     }
 }
 
-// --- 原有匯入邏輯 ---
-
-document.getElementById('fileInput').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            const json = JSON.parse(e.target.result);
-            processData(json);
-            document.getElementById('jsonInput').value = "檔案讀取成功！";
-        } catch (err) { alert("JSON 檔案格式錯誤！"); }
-    };
-    reader.readAsText(file);
-});
-
-function handleTextImport() {
-    const text = document.getElementById('jsonInput').value.trim();
-    if (!text) { alert("請先貼上 JSON 內容！"); return; }
-    try {
-        const json = JSON.parse(text);
-        processData(json);
-    } catch (err) { alert("JSON 格式有誤。"); }
-}
-
-// --- 核心解析邏輯 (維持你原本的邏輯) ---
-
+// --- 核心解析邏輯 (保持不變) ---
 function getCorrectIcon(path) {
     if (!path) return "";
     if (path.startsWith('http')) return path;
@@ -357,8 +394,9 @@ function getGradeColor(grade) {
 }
 
 function processData(json) {
-    const data = json.queryResult ? json.queryResult.data : (json.data ? json.data : null);
-    if (!data) { alert("無法在 JSON 中找到角色數據！"); return; }
+    // 兼容不同的數據結構層次
+    const data = json.queryResult ? json.queryResult.data : (json.data ? json.data : json);
+    if (!data || !data.profile) { alert("無法在結果中找到有效的角色數據！"); return; }
 
     document.getElementById('main-content').style.display = 'flex';
     document.getElementById('arcana-grid').innerHTML = "";
@@ -485,6 +523,7 @@ function processData(json) {
     window.scrollTo({ top: document.getElementById('main-content').offsetTop - 20, behavior: 'smooth' });
 }
 
+// 輔助渲染函數 (維持不變)
 function renderRankings(rankList) {
     const container = document.getElementById('p-ranking-container');
     container.innerHTML = "";
@@ -524,6 +563,30 @@ function renderStatTable(stats) {
         return `<tr><td class="td-left">${k}</td><td>${fmt(d.nezakan)}</td><td>${fmt(d.zikel)}</td><td>${fmt(d.baizel)}</td><td>${fmt(d.triniel)}</td><td>${fmt(d.ariel)}</td><td>${fmt(d.asphel)}</td>${cell(d.equipMain)}${cell(d.equipSub)}${cell(d.other)}<td style="color:var(--green);font-weight:bold;">+${Math.round(sum * 100) / 100}${d.isPerc ? '%' : ''}</td></tr>`;
     }).join('');
 }
+
+// 支援原本的手動匯入功能
+function handleTextImport() {
+    const text = document.getElementById('jsonInput').value.trim();
+    if (!text) { alert("請先貼上 JSON 內容！"); return; }
+    try {
+        const json = JSON.parse(text);
+        processData(json);
+    } catch (err) { alert("JSON 格式有誤。"); }
+}
+
+document.getElementById('fileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const json = JSON.parse(e.target.result);
+            processData(json);
+            document.getElementById('jsonInput').value = "檔案讀取成功！";
+        } catch (err) { alert("JSON 檔案格式錯誤！"); }
+    };
+    reader.readAsText(file);
+});
 </script>
 </body>
 </html>
