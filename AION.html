@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
-    <title>角色即時查詢版</title>
+    <title>Aion2 高階解析 - 角色即時查詢版</title>
     <style>
         :root {
             --bg: #0b0e14;
@@ -32,15 +32,14 @@
         }
         .container { max-width: 1900px; margin: auto; }
         
-        /* 重新設計輸入區域，確保清晰可見 */
         .input-area {
             background: var(--panel);
-            border: 2px solid var(--gold); /* 加粗邊框方便辨識 */
+            border: 2px solid var(--gold);
             padding: 25px;
             border-radius: 12px;
             margin-bottom: 25px;
             display: flex;
-            flex-direction: column; /* 改為垂直排列 */
+            flex-direction: column;
             gap: 15px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
@@ -63,9 +62,7 @@
         }
         input:focus { border-color: var(--gold); background: #0d1117; }
 
-        /* 名稱框寬度 */
         #charName { width: 250px; }
-        /* 網址框寬度 - 讓它非常長 */
         #apiLink { width: 600px; border-color: var(--blue); }
 
         .or-divider {
@@ -93,7 +90,6 @@
         }
         button:hover { filter: brightness(1.1); transform: translateY(-1px); }
 
-        /* 以下為原有的儀表板 CSS */
         .dashboard { display: none; flex-direction: column; gap: 20px; }
         .profile-card { background: var(--profile-bg); border: 1px solid var(--gold); border-radius: 12px; padding: 25px; display: flex; align-items: center; gap: 30px; flex-wrap: wrap; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); }
         .profile-img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--gold); padding: 3px; background: #000; }
@@ -148,7 +144,6 @@
         .base-stat-row { border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding: 3px 0; font-size: 12px; }
         .random-row { display: flex; justify-content: space-between; color: var(--green); margin-bottom: 3px; }
         .skill-badge-mini { color: var(--blue); margin-top: 5px; display: block; font-weight: bold; border-left: 2px solid var(--blue); padding-left: 6px; font-size: 11px; }
-        
     </style>
 </head>
 <body>
@@ -185,20 +180,18 @@
                             <option value="奎靈">奎靈</option> <option value="巴巴隆">巴巴</option>
                         </optgroup>
                     </select>
-                    
                 </div>
                 <button id="searchBtn" onclick="fetchAndProcess()">開始查詢角色數據</button>
             </div>
 
-            <div class="or-divider">若查不到請在下方直接貼上網址</div>
-
+            <div class="or-divider">若查不到請在下方直接貼上網址或 JSON</div>
+            
             <div class="input-row">
                 <div class="input-group">
-                    <label style="color:var(--blue); font-weight:bold;">🔗 官方API連結：</label>
+                    <label style="color:var(--blue); font-weight:bold;">🔗 官方API連結 / JSON檔案：</label>
                     <input type="text" id="apiLink" placeholder="網址">
                 </div>
-                
-                本網站僅供個人專案練習使用，不提供商業用途，請勿用於營利行為，資料來源皆來自官方API，若有不正確請以官方資料為主。
+                本網站僅供個人專案練習使用，資料來源皆來自官方API，若有不正確請以官方資料為主。
                 <span id="loadingTxt" style="display:none; color:var(--gold); font-weight:bold;">抓取中...</span>
             </div>
         </div>
@@ -278,22 +271,23 @@
     </div>
 
 <script>
-    // --- API 請求核心邏輯 ---
-// --- 修改後的 API 請求核心邏輯 ---
+// --- 修改後的 API 請求核心邏輯 (加入 Proxy) ---
 async function fetchAndProcess() {
     const name = document.getElementById('charName').value.trim();
     const server = document.getElementById('serverSelect').value;
-    const apiLinkInput = document.getElementById('apiLink').value.trim(); // 獲取網址輸入框
+    const apiLinkInput = document.getElementById('apiLink').value.trim();
     const btn = document.getElementById('searchBtn');
     const loading = document.getElementById('loadingTxt');
 
     let apiUrl = "";
+    let jsonData = null;
+    
+    // 定義 CORS 代理伺服器
+    const proxy = "https://cors-anywhere.herokuapp.com/";
 
-    // 優先權判斷：如果「官方API連結」有填寫，優先使用連結
     if (apiLinkInput) {
         apiUrl = apiLinkInput;
     } else if (name) {
-        // 如果沒填連結但有填名字，則組裝網址
         apiUrl = `https://aion-api.bnshive.com/character/query?name=${encodeURIComponent(name)}&server=${server}`;
     } else {
         alert("請輸入角色名稱或直接貼上 API 網址！");
@@ -304,218 +298,220 @@ async function fetchAndProcess() {
     loading.style.display = "inline";
     
     try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error("API 請求失敗");
-        const json = await response.json();
+        // 如果輸入框是直接貼上 JSON 內容 (以 { 開頭)
+        if (apiLinkInput.startsWith('{')) {
+            jsonData = JSON.parse(apiLinkInput);
+        } else { 
+            // 否則視為 URL，並加上 Proxy
+            const response = await fetch(proxy + apiUrl);
+            if (!response.ok) throw new Error("API 請求失敗，請確認是否已開啟代理授權");
+            jsonData = await response.json();
+        }
+
+        if (!jsonData) {
+            alert("無效的數據格式。");
+            return;
+        }
         
-        // 驗證數據是否存在
-        if (!json.data && (!json.queryResult || !json.queryResult.data)) {
+        // 檢查數據結構
+        const dataToProcess = jsonData.queryResult ? jsonData.queryResult.data : (jsonData.data ? jsonData.data : null);
+        
+        if (!dataToProcess) {
             alert("找不到該角色，請確認網址、名稱或伺服器是否正確。");
             return;
         }
 
-        processData(json);
+        processData(jsonData); // 呼叫下方的渲染邏輯
     } catch (error) {
         console.error(error);
-        alert("抓取數據出錯！\n1. 請檢查網址是否正確\n2. 可能是瀏覽器跨網域(CORS)限制\n3. 伺服器暫時無法連線");
+        alert("抓取數據出錯！\n\n1. 請點擊上方連結開啟代理服務權限\n2. 檢查網址或 JSON 格式是否正確\n3. 官網 API 可能暫時無回應");
     } finally {
         btn.disabled = false;
         loading.style.display = "none";
     }
 }
 
-    // --- 以下為解析與渲染邏輯 (與你提供的邏輯一致) ---
-    function getCorrectIcon(path) {
-        if (!path) return "";
-        if (path.startsWith('http')) return path;
-        let cleanPath = path.replace(/^\//, '');
-        if (!cleanPath.includes('.')) cleanPath += '.png';
-        if (!cleanPath.includes('/')) cleanPath = `ui/icon/${cleanPath}`;
-        return `https://assets.playnccdn.com/static-aion2-gamedata/resources/${cleanPath}`;
-    }
+// --- 以下為解析與渲染邏輯 (與原版細節一致) ---
+function getCorrectIcon(path) {
+    if (!path) return "";
+    if (path.startsWith('http')) return path;
+    let cleanPath = path.replace(/^\//, '');
+    if (!cleanPath.includes('.')) cleanPath += '.png';
+    if (!cleanPath.includes('/')) cleanPath = `ui/icon/${cleanPath}`;
+    return `https://assets.playnccdn.com/static-aion2-gamedata/resources/${cleanPath}`;
+}
 
-    function getGradeColor(grade) {
-        const colors = { 'Myth': '#ff3e3e', 'Unique': '#f90', 'Legend': '#d4b483', 'Epic': '#a335ee', 'Rare': '#0070dd', 'Ancient': '#3fb950' };
-        return colors[grade] || 'white';
-    }
+function getGradeColor(grade) {
+    const colors = { 'Myth': '#ff3e3e', 'Unique': '#f90', 'Legend': '#d4b483', 'Epic': '#a335ee', 'Rare': '#0070dd', 'Ancient': '#3fb950' };
+    return colors[grade] || 'white';
+}
 
-    function processData(json) {
-        const data = json.queryResult ? json.queryResult.data : json.data;
-        document.getElementById('main-content').style.display = 'flex';
+function processData(json) {
+    const data = json.queryResult ? json.queryResult.data : json.data;
+    document.getElementById('main-content').style.display = 'flex';
 
-        // 重置容器
-        document.getElementById('arcana-grid').innerHTML = "";
-        document.getElementById('set-bonus-grid').innerHTML = "";
-        document.getElementById('stat-body').innerHTML = "";
+    document.getElementById('arcana-grid').innerHTML = "";
+    document.getElementById('set-bonus-grid').innerHTML = "";
+    document.getElementById('stat-body').innerHTML = "";
 
-        // 1. 基本資料
-        document.getElementById('p-name').innerText = data.profile.characterName;
-        document.getElementById('p-title-disp').innerText = `[${data.profile.titleName || "無稱號"}]`;
-        document.getElementById('p-img').src = getCorrectIcon(data.profile.profileImage);
-        document.getElementById('p-server').innerText = data.profile.serverName;
-        document.getElementById('p-lv').innerText = `Lv.${data.profile.characterLevel}`;
-        document.getElementById('p-class').innerText = data.profile.className;
-        const itemLvObj = data.stat.statList.find(s => s.type === "ItemLevel");
-        document.getElementById('p-itemlv').innerText = itemLvObj ? itemLvObj.value : "--";
-        document.getElementById('p-update').innerText = new Date().toLocaleString('zh-TW', { hour12: false });
+    document.getElementById('p-name').innerText = data.profile.characterName;
+    document.getElementById('p-title-disp').innerText = `[${data.profile.titleName || "無稱號"}]`;
+    document.getElementById('p-img').src = getCorrectIcon(data.profile.profileImage);
+    document.getElementById('p-server').innerText = data.profile.serverName;
+    document.getElementById('p-lv').innerText = `Lv.${data.profile.characterLevel}`;
+    document.getElementById('p-class').innerText = data.profile.className;
+    const itemLvObj = data.stat.statList.find(s => s.type === "ItemLevel");
+    document.getElementById('p-itemlv').innerText = itemLvObj ? itemLvObj.value : "--";
+    document.getElementById('p-update').innerText = new Date().toLocaleString('zh-TW', { hour12: false });
 
-        renderRankings(data.ranking ? data.ranking.rankingList : []);
+    renderRankings(data.ranking ? data.ranking.rankingList : []);
 
-        let stats = {};
-        let boardSkillMap = {};
-        let cardSkillMap = {};
-        let processedSets = new Set();
-        let armorHtml = "";
-        let accessoryHtml = "";
-        let titleHtml = "";
+    let stats = {};
+    let boardSkillMap = {};
+    let cardSkillMap = {};
+    let processedSets = new Set();
+    let armorHtml = "";
+    let accessoryHtml = "";
+    let titleHtml = "";
 
-        const getEntry = (k) => {
-            if (!stats[k]) {
-                stats[k] = { 
-                    nezakan: 0, zikel: 0, baizel: 0, triniel: 0, ariel: 0, asphel: 0, 
-                    equipMain: 0, equipSub: 0, other: 0, 
-                    isPerc: k.includes('%'),
-                    detailGroups: { base: [], random: [], stone: [], arcana: [], title: [], etc: [] }
-                };
-            }
-            return stats[k];
-        };
+    const getEntry = (k) => {
+        if (!stats[k]) {
+            stats[k] = { 
+                nezakan: 0, zikel: 0, baizel: 0, triniel: 0, ariel: 0, asphel: 0, 
+                equipMain: 0, equipSub: 0, other: 0, 
+                isPerc: k.includes('%'),
+                detailGroups: { base: [], random: [], stone: [], arcana: [], title: [], etc: [] }
+            };
+        }
+        return stats[k];
+    };
 
-        // 2. 能力值概覽
-        let mainStatHtml = "";
-        (data.stat.statList || []).forEach(s => {
-            if (s.type === "ItemLevel") return;
-            let details = s.statSecondList ? s.statSecondList.map(d => `▹ ${d}`).join('<br>') : "無額外數據";
-            mainStatHtml += `<div class="stat-mini-card"><span style="font-size:12px;color:#8b949e;display:block;">${s.name}</span><span class="stat-mini-val">${s.value}</span><div class="tooltip"><b>${s.name} 詳細轉換:</b><br>${details}</div></div>`;
+    let mainStatHtml = "";
+    (data.stat.statList || []).forEach(s => {
+        if (s.type === "ItemLevel") return;
+        let details = s.statSecondList ? s.statSecondList.map(d => `▹ ${d}`).join('<br>') : "無額外數據";
+        mainStatHtml += `<div class="stat-mini-card"><span style="font-size:12px;color:#8b949e;display:block;">${s.name}</span><span class="stat-mini-val">${s.value}</span><div class="tooltip"><b>${s.name} 詳細轉換:</b><br>${details}</div></div>`;
+    });
+    document.getElementById('stat-main-grid').innerHTML = mainStatHtml;
+
+    (data.daevanionDetails || []).forEach(b => {
+        (b.detail?.openStatEffectList || []).forEach(ef => {
+            let parts = ef.desc.split(' +'); if (parts.length < 2) return;
+            let n = parts[0], vS = parts[1];
+            let k = vS.includes('%') ? n.trim() + '%' : n.trim(), v = parseFloat(vS.replace('%', '')), e = getEntry(k);
+            if (b.boardName.includes("奈薩肯")) e.nezakan += v;
+            else if (b.boardName.includes("吉凱爾")) e.zikel += v;
+            else if (b.boardName.includes("白傑爾")) e.baizel += v;
+            else if (b.boardName.includes("崔妮爾")) e.triniel += v;
+            else if (b.boardName.includes("艾瑞爾")) e.ariel += v;
+            else if (b.boardName.includes("阿斯佩爾")) e.asphel += v;
         });
-        document.getElementById('stat-main-grid').innerHTML = mainStatHtml;
+        (b.detail?.openSkillEffectList || []).forEach(sk => {
+            let [sn, sv] = sk.desc.split(' +');
+            boardSkillMap[sn] = (boardSkillMap[sn] || 0) + parseInt(sv);
+        });
+    });
 
-        // 3. 板塊
-        if (data.daevanionBoardList) {
-            data.daevanionBoardList.forEach(b => {
-                const tipEl = document.getElementById(`tip-${b.name}`);
-                if (tipEl) tipEl.innerHTML = `<b>${b.name} 板塊完成度:</b><br>節點：${b.openNodeCount}/${b.totalNodeCount}<br>進度：${Math.round((b.openNodeCount / b.totalNodeCount) * 100)}%`;
+    (data.title?.titleList || []).forEach(t => {
+        if (t.equipCategory) { 
+            let catName = t.equipCategory === "Attack" ? "⚔️ 攻擊稱號" : "🛡️ 防禦稱號";
+            titleHtml += `<div class="title-box"><span class="title-label" style="color:${t.equipCategory === "Attack" ? 'var(--nezakan)' : 'var(--triniel)'}">${catName}</span><span class="title-val">${t.name}</span><div class="title-desc">${(t.equipStatList || []).map(ef => `▹ ${ef.desc}`).join('<br>')}</div></div>`;
+            (t.equipStatList || []).forEach(ef => {
+                let parts = ef.desc.split(' +'); if (parts.length < 2) return;
+                let n = parts[0], vS = parts[1];
+                let k = vS.includes('%') ? n.trim() + '%' : n.trim(), v = parseFloat(vS.replace('%', '')), e = getEntry(k);
+                e.other += v; e.detailGroups.title.push(`[${t.name}]: +${vS}`);
             });
         }
-        (data.daevanionDetails || []).forEach(b => {
-            (b.detail?.openStatEffectList || []).forEach(ef => {
-                let [n, vS] = ef.desc.split(' +'); if (!vS) return;
-                let k = vS.includes('%') ? n.trim() + '%' : n.trim(), v = parseFloat(vS.replace('%', '')), e = getEntry(k);
-                if (b.boardName.includes("奈薩肯")) e.nezakan += v;
-                else if (b.boardName.includes("吉凱爾")) e.zikel += v;
-                else if (b.boardName.includes("白傑爾")) e.baizel += v;
-                else if (b.boardName.includes("崔妮爾")) e.triniel += v;
-                else if (b.boardName.includes("艾瑞爾")) e.ariel += v;
-                else if (b.boardName.includes("阿斯佩爾")) e.asphel += v;
-            });
-            (b.detail?.openSkillEffectList || []).forEach(sk => {
-                let [sn, sv] = sk.desc.split(' +');
-                boardSkillMap[sn] = (boardSkillMap[sn] || 0) + parseInt(sv);
-            });
-        });
+    });
+    document.getElementById('title-grid').innerHTML = titleHtml || "<div style='color:#8b949e; padding:10px;'>未裝備稱號</div>";
 
-        // 4. 稱號
-        (data.title?.titleList || []).forEach(t => {
-            if (t.equipCategory) { 
-                let catName = t.equipCategory === "Attack" ? "⚔️ 攻擊稱號" : "🛡️ 防禦稱號";
-                titleHtml += `<div class="title-box"><span class="title-label" style="color:${t.equipCategory === "Attack" ? 'var(--nezakan)' : 'var(--triniel)'}">${catName}</span><span class="title-val">${t.name}</span><div class="title-desc">${(t.equipStatList || []).map(ef => `▹ ${ef.desc}`).join('<br>')}</div></div>`;
-                (t.equipStatList || []).forEach(ef => {
-                    let [n, vS] = ef.desc.split(' +'); if (!vS) return;
-                    let k = vS.includes('%') ? n.trim() + '%' : n.trim(), v = parseFloat(vS.replace('%', '')), e = getEntry(k);
-                    e.other += v; e.detailGroups.title.push(`[${t.name}]: +${vS}`);
-                });
-            }
-        });
-        document.getElementById('title-grid').innerHTML = titleHtml || "<div style='color:#8b949e; padding:10px;'>未裝備稱號</div>";
+    const equipMap = {};
+    (data.equipment ? data.equipment.equipmentList : []).forEach(item => { equipMap[item.slotPos] = item; });
+    (data.itemDetails || []).forEach(i => {
+        const d = i.detail; if (!d) return;
+        const slot = i.slotPos;
+        const isArmor = (slot >= 1 && slot <= 8) || slot === 21;
+        const isAccessory = (slot >= 9 && slot <= 20) || (slot >= 22 && slot <= 40);
+        const isArcana = (slot >= 41 && slot <= 45);
+        const originalItem = equipMap[slot] || i;
+        const finalIcon = getCorrectIcon(originalItem.icon);
 
-        // 5. 裝備
-        const equipMap = {};
-        (data.equipment ? data.equipment.equipmentList : []).forEach(item => { equipMap[item.slotPos] = item; });
-        (data.itemDetails || []).forEach(i => {
-            const d = i.detail; if (!d) return;
-            const slot = i.slotPos;
-            const isArmor = (slot >= 1 && slot <= 8) || slot === 21;
-            const isAccessory = (slot >= 9 && slot <= 20) || (slot >= 22 && slot <= 40);
-            const isArcana = (slot >= 41 && slot <= 45);
-            const originalItem = equipMap[slot] || i;
-            const finalIcon = getCorrectIcon(originalItem.icon);
+        if (d.set && !processedSets.has(d.set.name)) {
+            processedSets.add(d.set.name);
+            document.getElementById('set-bonus-grid').innerHTML += `<div class="info-box"><div class="box-header">🔱 套裝：${d.set.name}</div>${d.set.bonuses.map(b => `<div style="margin-bottom:8px; padding-left:10px; border-left:2px solid var(--blue)"><span style="color:var(--blue); font-weight:bold;">[${b.degree}件效果]</span><br><span style="color:#e6edf3; font-size:12px;">${b.descriptions.join('、')}</span></div>`).join('')}</div>`;
+        }
 
-            if (d.set && !processedSets.has(d.set.name)) {
-                processedSets.add(d.set.name);
-                document.getElementById('set-bonus-grid').innerHTML += `<div class="info-box"><div class="box-header">🔱 套裝：${d.set.name}</div>${d.set.bonuses.map(b => `<div style="margin-bottom:8px; padding-left:10px; border-left:2px solid var(--blue)"><span style="color:var(--blue); font-weight:bold;">[${b.degree}件效果]</span><br><span style="color:#e6edf3; font-size:12px;">${b.descriptions.join('、')}</span></div>`).join('')}</div>`;
-            }
+        if (isArcana) {
+            const gradeColor = getGradeColor(d.grade); 
+            const arcanaIcon = getCorrectIcon(originalItem.icon);
+            let arcanaStatsHtml = (d.mainStats || []).map(ms => `<div>${ms.name} +${ms.value}</div>`).join('');
+            let arcanaSubStatsHtml = (d.subStats || []).map(ss => `<div style="color:var(--green)">刻印: ${ss.name} +${ss.value}</div>`).join('');
+            let arcanaSkillsHtml = (d.subSkills || []).map(sk => `<div style="color:var(--blue)">${sk.name} Lv.${sk.level}</div>`).join('');
+            document.getElementById('arcana-grid').innerHTML += `<div class="info-box" style="border-left: 4px solid ${gradeColor}; border-top-color: ${gradeColor}; display: flex; gap: 10px; align-items: flex-start;"><div class="arcana-icon-wrapper"><img src="${arcanaIcon}" style="width: 44px; height: 44px; border: 1px solid ${gradeColor}; border-radius: 4px; background: #161b22; padding: 2px;"></div><div style="flex-grow: 1;"><div class="box-header" style="color:${gradeColor}; font-size: 13px; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 3px;">+${i.enchantLevel} ${d.name}</div><div style="font-size:12px; margin-bottom:4px; color: #e6edf3;">${arcanaStatsHtml}</div><div style="font-size:11px; margin-bottom:4px;">${arcanaSubStatsHtml}</div><div style="font-size:11px;">${arcanaSkillsHtml}</div></div></div>`;
+            (d.subSkills || []).forEach(sk => { if (!cardSkillMap[sk.name]) cardSkillMap[sk.name] = []; cardSkillMap[sk.name].push({ name: d.name, lv: sk.level }); });
+            (d.mainStats || []).forEach(ms => { let e = getEntry(ms.name); e.other += parseFloat(ms.value); e.detailGroups.arcana.push(`${d.name}(主屬): +${ms.value}`); });
+            (d.subStats || []).forEach(ss => { let k = ss.value.toString().includes('%') ? ss.name + '%' : ss.name; let e = getEntry(k); e.other += parseFloat(ss.value.toString().replace('%','')); e.detailGroups.arcana.push(`${d.name}(刻印): +${ss.value}`); });
+        }
 
-            if (isArcana) {
-                const gradeColor = getGradeColor(d.grade); 
-                const arcanaIcon = getCorrectIcon(originalItem.icon);
-                let arcanaStatsHtml = (d.mainStats || []).map(ms => `<div>${ms.name} +${ms.value}</div>`).join('');
-                let arcanaSubStatsHtml = (d.subStats || []).map(ss => `<div style="color:var(--green)">刻印: ${ss.name} +${ss.value}</div>`).join('');
-                let arcanaSkillsHtml = (d.subSkills || []).map(sk => `<div style="color:var(--blue)">${sk.name} Lv.${sk.level}</div>`).join('');
-                document.getElementById('arcana-grid').innerHTML += `<div class="info-box" style="border-left: 4px solid ${gradeColor}; border-top-color: ${gradeColor}; display: flex; gap: 10px; align-items: flex-start;"><div class="arcana-icon-wrapper"><img src="${arcanaIcon}" style="width: 44px; height: 44px; border: 1px solid ${gradeColor}; border-radius: 4px; background: #161b22; padding: 2px;"></div><div style="flex-grow: 1;"><div class="box-header" style="color:${gradeColor}; font-size: 13px; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 3px;">+${i.enchantLevel} ${d.name}</div><div style="font-size:12px; margin-bottom:4px; color: #e6edf3;">${arcanaStatsHtml}</div><div style="font-size:11px; margin-bottom:4px;">${arcanaSubStatsHtml}</div><div style="font-size:11px;">${arcanaSkillsHtml}</div></div></div>`;
-                (d.subSkills || []).forEach(sk => { if (!cardSkillMap[sk.name]) cardSkillMap[sk.name] = []; cardSkillMap[sk.name].push({ name: d.name, lv: sk.level }); });
-                (d.mainStats || []).forEach(ms => { let e = getEntry(ms.name); e.other += parseFloat(ms.value); e.detailGroups.arcana.push(`${d.name}(主屬): +${ms.value}`); });
-                (d.subStats || []).forEach(ss => { let k = ss.value.includes('%') ? ss.name + '%' : ss.name; let e = getEntry(k); e.other += parseFloat(ss.value.replace('%','')); e.detailGroups.arcana.push(`${d.name}(刻印): +${ss.value}`); });
-            }
+        if (isArmor || isAccessory) {
+            let gradeColor = getGradeColor(d.grade);
+            let exceedBadge = (originalItem.exceedLevel || 0) > 0 ? `<div class="exceed-badge">${originalItem.exceedLevel}</div>` : "";
+            let mainStatsD = (d.mainStats || []).map(s => `<div class="base-stat-row"><b>${s.name} ${(parseFloat(s.value)||0)+(parseFloat(s.extra)||0)}</b>${(parseFloat(s.extra)>0)?` <span style="color:var(--green);">(+${s.extra})</span>`:""}</div>`).join('');
+            let godStoneHtml = (d.godStoneStat || []).map(gs => `<div style="margin-top: 8px; padding: 8px; background: rgba(0, 212, 255, 0.05); border: 1px dashed rgba(0, 212, 255, 0.3); border-radius: 4px;"><div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;"><img src="${gs.icon}" style="width: 20px; height: 20px; border: 1px solid #00d4ff; border-radius: 3px;"><b style="color: #00d4ff; font-size: 12px;">${gs.name}</b></div><div style="color: #e6edf3; font-size: 11px; line-height: 1.4; padding-left: 2px;">${gs.desc ? gs.desc.replace(/\n/g, '<br>') : ""}</div></div>`).join('');
+            let cardHtml = `<div class="equip-item-card" style="border-top-color: ${gradeColor}; border-left: 4px solid ${gradeColor};"><div class="equip-left-section"><div style="display:flex; align-items:center; gap:10px;"><div class="equip-img-container"><img src="${finalIcon}">${exceedBadge}</div><div><span class="equip-name" style="color:${gradeColor}">${d.name}</span><div><span style="color:#fff; font-weight:bold;">+${i.enchantLevel}</span></div></div></div><div style="margin-top:8px;">${mainStatsD}</div></div><div class="equip-right-section"><div style="color:#8b949e; font-size:10px; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:5px;">刻印/神石/磨石</div>${(d.subStats||[]).map(s=>`<div class="random-row"><span>${s.name}</span><span>+${s.value}</span></div>`).join('')}${(d.subSkills||[]).map(sk=>`<div class="skill-badge-mini">${sk.name} Lv.${sk.level}</div>`).join('')}${godStoneHtml}<div style="margin-top:5px;">${(d.magicStoneStat||[]).map(ms=>`<div class="random-row" style="color:var(--gold); font-size:11px;"><span>[磨石] ${ms.name}</span><span>${ms.value}</span></div>`).join('')}</div></div></div>`;
+            if (isArmor) armorHtml += cardHtml; else accessoryHtml += cardHtml;
+            (d.mainStats || []).forEach(ms => { let v = parseFloat(ms.value || 0) + parseFloat(ms.extra || 0); let e = getEntry(ms.name); e.equipMain += v; e.detailGroups.base.push(`+${i.enchantLevel} ${d.name}: +${v}`); });
+            (d.subStats || []).forEach(ss => { if (!ss.value) return; let k = ss.value.toString().includes('%') ? ss.name + '%' : ss.name; let v = parseFloat(ss.value.toString().replace('%', '')) || 0; let e = getEntry(k); e.equipSub += v; e.detailGroups.random.push(`${d.name}: +${ss.value}`); });
+            (d.magicStoneStat || []).forEach(ms => { if (!ms.value) return; let k = ms.value.toString().includes('%') ? ms.name + '%' : ms.name; let v = parseFloat(ms.value.toString().replace('%', '')) || 0; let e = getEntry(k); e.equipSub += v; e.detailGroups.stone.push(`${d.name}: ${ms.value}`); });
+        }
+    });
 
-            if (isArmor || isAccessory) {
-                let gradeColor = getGradeColor(d.grade);
-                let exceedBadge = (originalItem.exceedLevel || 0) > 0 ? `<div class="exceed-badge">${originalItem.exceedLevel}</div>` : "";
-                let mainStatsD = (d.mainStats || []).map(s => `<div class="base-stat-row"><b>${s.name} ${(parseFloat(s.value)||0)+(parseFloat(s.extra)||0)}</b>${(parseFloat(s.extra)>0)?` <span style="color:var(--green);">(+${s.extra})</span>`:""}</div>`).join('');
-                let godStoneHtml = (d.godStoneStat || []).map(gs => `<div style="margin-top: 8px; padding: 8px; background: rgba(0, 212, 255, 0.05); border: 1px dashed rgba(0, 212, 255, 0.3); border-radius: 4px;"><div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;"><img src="${gs.icon}" style="width: 20px; height: 20px; border: 1px solid #00d4ff; border-radius: 3px;"><b style="color: #00d4ff; font-size: 12px;">${gs.name}</b></div><div style="color: #e6edf3; font-size: 11px; line-height: 1.4; padding-left: 2px;">${gs.desc ? gs.desc.replace(/\n/g, '<br>') : ""}</div></div>`).join('');
-                let cardHtml = `<div class="equip-item-card" style="border-top-color: ${gradeColor}; border-left: 4px solid ${gradeColor};"><div class="equip-left-section"><div style="display:flex; align-items:center; gap:10px;"><div class="equip-img-container"><img src="${finalIcon}">${exceedBadge}</div><div><span class="equip-name" style="color:${gradeColor}">${d.name}</span><div><span style="color:#fff; font-weight:bold;">+${i.enchantLevel}</span></div></div></div><div style="margin-top:8px;">${mainStatsD}</div></div><div class="equip-right-section"><div style="color:#8b949e; font-size:10px; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:5px;">刻印/神石/磨石</div>${(d.subStats||[]).map(s=>`<div class="random-row"><span>${s.name}</span><span>+${s.value}</span></div>`).join('')}${(d.subSkills||[]).map(sk=>`<div class="skill-badge-mini">${sk.name} Lv.${sk.level}</div>`).join('')}${godStoneHtml}<div style="margin-top:5px;">${(d.magicStoneStat||[]).map(ms=>`<div class="random-row" style="color:var(--gold); font-size:11px;"><span>[磨石] ${ms.name}</span><span>${ms.value}</span></div>`).join('')}</div></div></div>`;
-                if (isArmor) armorHtml += cardHtml; else accessoryHtml += cardHtml;
-                (d.mainStats || []).forEach(ms => { let v = parseFloat(ms.value || 0) + parseFloat(ms.extra || 0); let e = getEntry(ms.name); e.equipMain += v; e.detailGroups.base.push(`+${i.enchantLevel} ${d.name}: +${v}`); });
-                (d.subStats || []).forEach(ss => { if (!ss.value) return; let k = ss.value.toString().includes('%') ? ss.name + '%' : ss.name; let v = parseFloat(ss.value.toString().replace('%', '')) || 0; let e = getEntry(k); e.equipSub += v; e.detailGroups.random.push(`${d.name}: +${ss.value}`); });
-                (d.magicStoneStat || []).forEach(ms => { if (!ms.value) return; let k = ms.value.toString().includes('%') ? ms.name + '%' : ms.name; let v = parseFloat(ms.value.toString().replace('%', '')) || 0; let e = getEntry(k); e.equipSub += v; e.detailGroups.stone.push(`${d.name}: ${ms.value}`); });
-            }
-        });
+    document.getElementById('equip-armor-list').innerHTML = armorHtml || "<div>無資料</div>";
+    document.getElementById('equip-accessory-list').innerHTML = accessoryHtml || "<div>無資料</div>";
+    renderSkills(data, boardSkillMap, cardSkillMap);
+    renderStatTable(stats);
+}
 
-        document.getElementById('equip-armor-list').innerHTML = armorHtml || "<div>無資料</div>";
-        document.getElementById('equip-accessory-list').innerHTML = accessoryHtml || "<div>無資料</div>";
-        renderSkills(data, boardSkillMap, cardSkillMap);
-        renderStatTable(stats);
-    }
+function renderRankings(rankList) {
+    const container = document.getElementById('p-ranking-container');
+    container.innerHTML = "";
+    rankList.forEach(r => {
+        if (!r.rank) return;
+        let changeHtml = r.rankChange > 0 ? `<span class="rank-change up">▲${r.rankChange}</span>` : (r.rankChange < 0 ? `<span class="rank-change down">▼${Math.abs(r.rankChange)}</span>` : "");
+        container.innerHTML += `<div class="rank-badge"><img src="${r.gradeIcon}" alt="${r.gradeName}"><div class="rank-info"><span class="rank-title">${r.rankingContentsName} [${r.gradeName}]</span><span class="rank-val">${r.rank} 位 ${changeHtml}</span></div></div>`;
+    });
+}
 
-    function renderRankings(rankList) {
-        const container = document.getElementById('p-ranking-container');
-        container.innerHTML = "";
-        rankList.forEach(r => {
-            if (!r.rank) return;
-            let changeHtml = r.rankChange > 0 ? `<span class="rank-change up">▲${r.rankChange}</span>` : (r.rankChange < 0 ? `<span class="rank-change down">▼${Math.abs(r.rankChange)}</span>` : "");
-            container.innerHTML += `<div class="rank-badge"><img src="${r.gradeIcon}" alt="${r.gradeName}"><div class="rank-info"><span class="rank-title">${r.rankingContentsName} [${r.gradeName}]</span><span class="rank-val">${r.rank} 位 ${changeHtml}</span></div></div>`;
-        });
-    }
+function renderSkills(data, boardSkillMap, cardSkillMap) {
+    let act = "", pas = "", sti = "";
+    data.skill.skillList.forEach(s => {
+        let bLv = boardSkillMap[s.name] || 0;
+        let cLv = (cardSkillMap[s.name] || []).reduce((a, b) => a + b.lv, 0);
+        let tip = `<div class="tooltip"><b>${s.name}</b><br>基礎: Lv.${Math.max(0, s.skillLevel - bLv - cLv)}<br>板塊: +${bLv}<br>卡片: +${cLv}</div>`;
+        let h = `<div class="skill-card"><img src="${getCorrectIcon(s.icon)}"><div><span class="sk-name">${s.name}</span><span style="color:var(--blue);font-size:14px">Lv.${s.skillLevel}</span></div>${tip}</div>`;
+        if (s.category === "Active") act += h; else if (s.category === "Passive") pas += h; else sti += h;
+    });
+    document.getElementById('sk-act').innerHTML = act; document.getElementById('sk-pas').innerHTML = pas; document.getElementById('sk-stigma').innerHTML = sti;
+}
 
-    function renderSkills(data, boardSkillMap, cardSkillMap) {
-        let act = "", pas = "", sti = "";
-        data.skill.skillList.forEach(s => {
-            let bLv = boardSkillMap[s.name] || 0;
-            let cLv = (cardSkillMap[s.name] || []).reduce((a, b) => a + b.lv, 0);
-            let tip = `<div class="tooltip"><b>${s.name}</b><br>基礎: Lv.${Math.max(0, s.skillLevel - bLv - cLv)}<br>板塊: +${bLv}<br>卡片: +${cLv}</div>`;
-            let h = `<div class="skill-card"><img src="${getCorrectIcon(s.icon)}"><div><span class="sk-name">${s.name}</span><span style="color:var(--blue);font-size:14px">Lv.${s.skillLevel}</span></div>${tip}</div>`;
-            if (s.category === "Active") act += h; else if (s.category === "Passive") pas += h; else sti += h;
-        });
-        document.getElementById('sk-act').innerHTML = act; document.getElementById('sk-pas').innerHTML = pas; document.getElementById('sk-stigma').innerHTML = sti;
-    }
-
-    function renderStatTable(stats) {
-        document.getElementById('stat-body').innerHTML = Object.keys(stats).sort().map(k => {
-            const d = stats[k];
-            const sum = d.nezakan + d.zikel + d.baizel + d.triniel + d.ariel + d.asphel + d.equipMain + d.equipSub + d.other;
-            if (sum === 0) return '';
-            const fmt = (v) => v === 0 ? '--' : (Math.round(v * 100) / 100 + (d.isPerc ? '%' : ''));
-            const makeGroup = (title, items, color) => items.length === 0 ? "" : `<div style="margin-top:6px;"><b style="color:${color}; border-bottom:1px solid rgba(255,255,255,0.2); display:block; margin-bottom:2px;">${title}</b>${items.map(i => `<div style="font-size:11px; color:#eee; padding-left:5px;">▹ ${i}</div>`).join('')}</div>`;
-            let tooltip = `<b style="font-size:14px; color:var(--gold); border-bottom:2px solid var(--gold); display:block; margin-bottom:5px;">${k} 來源對帳表</b>`;
-            tooltip += makeGroup("🛡️ 基礎屬性與強化", d.detailGroups.base, "var(--blue)");
-            tooltip += makeGroup("💎 磨石鑲嵌", d.detailGroups.stone, "var(--gold)");
-            tooltip += makeGroup("✨ 隨機刻印", d.detailGroups.random, "var(--green)");
-            tooltip += makeGroup("🎖️ 稱號加成", d.detailGroups.title, "var(--nezakan)");
-            tooltip += makeGroup("🎴 聖物/其他", d.detailGroups.arcana.concat(d.detailGroups.etc), "var(--arcana)");
-            const cell = (val) => val === 0 ? '<td>--</td>' : `<td><div class="hover-calc">${fmt(val)}<div class="tooltip">${tooltip}</div></div></td>`;
-            return `<tr><td class="td-left">${k}</td><td>${fmt(d.nezakan)}</td><td>${fmt(d.zikel)}</td><td>${fmt(d.baizel)}</td><td>${fmt(d.triniel)}</td><td>${fmt(d.ariel)}</td><td>${fmt(d.asphel)}</td>${cell(d.equipMain)}${cell(d.equipSub)}${cell(d.other)}<td style="color:var(--green);font-weight:bold;">+${Math.round(sum * 100) / 100}${d.isPerc ? '%' : ''}</td></tr>`;
-        }).join('');
-    }
-
+function renderStatTable(stats) {
+    document.getElementById('stat-body').innerHTML = Object.keys(stats).sort().map(k => {
+        const d = stats[k];
+        const sum = d.nezakan + d.zikel + d.baizel + d.triniel + d.ariel + d.asphel + d.equipMain + d.equipSub + d.other;
+        if (sum === 0) return '';
+        const fmt = (v) => v === 0 ? '--' : (Math.round(v * 100) / 100 + (d.isPerc ? '%' : ''));
+        const makeGroup = (title, items, color) => items.length === 0 ? "" : `<div style="margin-top:6px;"><b style="color:${color}; border-bottom:1px solid rgba(255,255,255,0.2); display:block; margin-bottom:2px;">${title}</b>${items.map(i => `<div style="font-size:11px; color:#eee; padding-left:5px;">▹ ${i}</div>`).join('')}</div>`;
+        let tooltip = `<b style="font-size:14px; color:var(--gold); border-bottom:2px solid var(--gold); display:block; margin-bottom:5px;">${k} 來源對帳表</b>`;
+        tooltip += makeGroup("🛡️ 基礎屬性與強化", d.detailGroups.base, "var(--blue)");
+        tooltip += makeGroup("💎 磨石鑲嵌", d.detailGroups.stone, "var(--gold)");
+        tooltip += makeGroup("✨ 隨機刻印", d.detailGroups.random, "var(--green)");
+        tooltip += makeGroup("🎖️ 稱號加成", d.detailGroups.title, "var(--nezakan)");
+        tooltip += makeGroup("🎴 聖物/其他", d.detailGroups.arcana.concat(d.detailGroups.etc), "var(--arcana)");
+        const cell = (val) => val === 0 ? '<td>--</td>' : `<td><div class="hover-calc">${fmt(val)}<div class="tooltip">${tooltip}</div></div></td>`;
+        return `<tr><td class="td-left">${k}</td><td>${fmt(d.nezakan)}</td><td>${fmt(d.zikel)}</td><td>${fmt(d.baizel)}</td><td>${fmt(d.triniel)}</td><td>${fmt(d.ariel)}</td><td>${fmt(d.asphel)}</td>${cell(d.equipMain)}${cell(d.equipSub)}${cell(d.other)}<td style="color:var(--green);font-weight:bold;">+${Math.round(sum * 100) / 100}${d.isPerc ? '%' : ''}</td></tr>`;
+    }).join('');
+}
 </script>
 </body>
 </html>
