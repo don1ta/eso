@@ -74,7 +74,7 @@
             border-top: 1px solid var(--border);
         }
         textarea {
-            width: 100%;
+            width: 90%;
             height: 80px;
             background: #010409;
             border: 1px solid var(--border);
@@ -181,6 +181,35 @@
         .base-stat-row { border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding: 3px 0; font-size: 12px; }
         .random-row { display: flex; justify-content: space-between; color: var(--green); margin-bottom: 3px; }
         .skill-badge-mini { color: var(--blue); margin-top: 5px; display: block; font-weight: bold; border-left: 2px solid var(--blue); padding-left: 6px; font-size: 11px; }
+        
+    
+        /* RWD 調整 */
+        @media (max-width: 1200px) { .main-layout-wrapper { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .profile-card { flex-direction: column; text-align: center; } .api-input-group { flex-direction: column; align-items: stretch; } .api-input-group input, .api-input-group select, .btn-api {  min-width: unset; } .stat-grid-main { grid-template-columns: repeat(2, 1fr); } #equip-armor-list, #equip-accessory-list { grid-template-columns: 1fr; } .skill-list { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); } .grid-box-container { grid-template-columns: 1fr; } .title-grid { grid-template-columns: 1fr; } .rank-badge{ width:100%} }
+   
+        @media (max-width: 768px) {
+    /* 讓主要能力值概覽在手機版變成一行四欄 */
+    .stat-grid-main {
+        grid-template-columns: repeat(4, 1fr); /* 強制四欄 */
+        gap: 5px; /* 縮小間隙，否則手機螢幕會太擠 */
+    }
+
+    /* 調整卡片內的間距與字體，避免文字溢出 */
+    .stat-mini-card {        padding: 8px 4px; /* 縮減內距 */    }
+
+    .stat-mini-card span[style*="font-size:12px"] {
+        font-size: 10px !important; /* 縮小標籤文字 */
+        white-space: nowrap; /* 避免標籤換行 */
+    }
+
+    .stat-mini-val {
+        font-size: 14px !important; /* 縮小數值文字，確保一行塞得下 */
+        margin-top: 3px;
+    }
+}
+
+
+
     </style>
 </head>
 <body>
@@ -444,6 +473,7 @@ function processData(json) {
     document.getElementById('stat-main-grid').innerHTML = mainStatHtml;
 
     (data.daevanionDetails || []).forEach(b => {
+
         (b.detail?.openStatEffectList || []).forEach(ef => {
             let parts = ef.desc.split(' +'); if (parts.length < 2) return;
             let n = parts[0], vS = parts[1];
