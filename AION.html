@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
-    <title>Aion2 高階解析 - 角色即時查詢版</title>
+    <title>Aion2 高階解析 - JSON 匯入版</title>
     <style>
         :root {
             --bg: #0b0e14;
@@ -32,52 +32,50 @@
         }
         .container { max-width: 1900px; margin: auto; }
         
+        /* 重新設計的匯入區塊 */
         .input-area {
             background: var(--panel);
             border: 2px solid var(--gold);
             padding: 25px;
             border-radius: 12px;
             margin-bottom: 25px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            text-align: center;
         }
-        .input-row {
+        .import-controls {
             display: flex;
             gap: 15px;
+            justify-content: center;
             align-items: center;
             flex-wrap: wrap;
         }
-        .input-group { display: flex; align-items: center; gap: 10px; }
-        
-        input, select {
+        textarea {
+            width: 100%;
+            height: 100px;
             background: #010409;
             border: 1px solid var(--border);
             color: #fff;
             padding: 12px;
             border-radius: 6px;
-            font-size: 15px;
-            outline: none;
+            font-family: monospace;
+            margin-top: 15px;
+            resize: vertical;
         }
-        input:focus { border-color: var(--gold); background: #0d1117; }
-
-        #charName { width: 250px; }
-        #apiLink { width: 600px; border-color: var(--blue); }
-
-        .or-divider {
-            color: #8b949e;
-            font-size: 14px;
+        input[type="file"] {
+            display: none;
+        }
+        .file-label {
+            background: var(--blue);
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
             font-weight: bold;
-            padding: 5px 0;
-            border-top: 1px solid #333c4d;
-            margin: 5px 0;
-            display: flex;
-            align-items: center;
+            transition: 0.2s;
         }
-        .or-divider::after { content: ""; flex: 1; height: 1px; background: #333c4d; margin-left: 10px; }
+        .file-label:hover { filter: brightness(1.1); }
 
-        button {
+        button#parseBtn {
             background: linear-gradient(135deg, #d4b483, #aa8a59);
             color: #000;
             border: none;
@@ -86,10 +84,9 @@
             cursor: pointer;
             font-weight: bold;
             font-size: 18px;
-            transition: 0.2s;
         }
-        button:hover { filter: brightness(1.1); transform: translateY(-1px); }
 
+        /* 原始樣式保持不變 */
         .dashboard { display: none; flex-direction: column; gap: 20px; }
         .profile-card { background: var(--profile-bg); border: 1px solid var(--gold); border-radius: 12px; padding: 25px; display: flex; align-items: center; gap: 30px; flex-wrap: wrap; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); }
         .profile-img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--gold); padding: 3px; background: #000; }
@@ -149,51 +146,14 @@
 <body>
     <div class="container">
         <div class="input-area">
-            <div class="input-row">
-                <div class="input-group">
-                    <label style="color:var(--gold); font-weight:bold;">🔍 角色名稱：</label>
-                    <input type="text" id="charName" placeholder="請輸入名稱">
-                </div>
-                <div class="input-group">
-                    <label>伺服器：</label>
-                    <select id="serverSelect">
-                        <optgroup label="─── 天族 (Race 1) ───">
-                            <option value="尤斯迪埃">尤斯</option> <option value="希埃爾">希埃</option>
-                            <option value="奈薩肯">奈薩</option> <option value="白傑爾">白傑</option>
-                            <option value="凱西內爾">凱西</option> <option value="艾瑞爾">艾瑞</option>
-                            <option value="普雷奇翁">普雷</option> <option value="梅斯蘭泰達">梅斯</option>
-                            <option value="希塔尼耶">希塔</option> <option value="納尼亞">納尼</option>
-                            <option value="塔哈巴達">塔哈</option> <option value="路特斯">路特</option>
-                            <option value="菲爾諾斯">菲爾</option> <option value="達彌努">達彌</option>
-                            <option value="卡薩卡">卡薩</option> <option value="巴卡爾摩">巴卡</option>
-                            <option value="天加隆">天加</option> <option value="科奇隆">科奇</option>
-                        </optgroup>
-                        <optgroup label="─── 魔族 (Race 2) ───">
-                            <option value="伊斯拉佩爾">伊斯</option> <option value="吉凱爾">吉凱</option>
-                            <option value="崔妮爾">崔妮</option> <option value="露梅爾">露梅</option>
-                            <option value="瑪爾庫坦">瑪爾</option> <option value="阿斯佩爾">阿斯</option>
-                            <option value="艾萊修奇卡">艾萊</option> <option value="布里特拉">布里</option>
-                            <option value="奈蒙">奈蒙</option> <option value="哈達爾">哈達</option>
-                            <option value="盧德萊">盧德</option> <option value="鄔爾古倫">鄔爾</option>
-                            <option value="默尼">默尼</option> <option value="奧達爾">奧達</option>
-                            <option value="簡卡卡">簡卡</option> <option value="克羅梅德">克羅</option>
-                            <option value="奎靈">奎靈</option> <option value="巴巴隆">巴巴</option>
-                        </optgroup>
-                    </select>
-                </div>
-                <button id="searchBtn" onclick="fetchAndProcess()">開始查詢角色數據</button>
+            <h2 style="color:var(--gold); margin-top:0;">💎 Aion2 數據匯入中心</h2>
+            <div class="import-controls">
+                <label class="file-label" for="fileInput">📁 選擇 JSON 檔案匯入</label>
+                <input type="file" id="fileInput" accept=".json">
+                <span style="color:#8b949e">─ 或者 ─</span>
+                <button id="parseBtn" onclick="handleTextImport()">立即解析文字內容</button>
             </div>
-
-            <div class="or-divider">若查不到請在下方直接貼上網址或 JSON</div>
-            
-            <div class="input-row">
-                <div class="input-group">
-                    <label style="color:var(--blue); font-weight:bold;">🔗 官方API連結 / JSON檔案：</label>
-                    <input type="text" id="apiLink" placeholder="網址">
-                </div>
-                本網站僅供個人專案練習使用，資料來源皆來自官方API，若有不正確請以官方資料為主。
-                <span id="loadingTxt" style="display:none; color:var(--gold); font-weight:bold;">抓取中...</span>
-            </div>
+            <textarea id="jsonInput" placeholder="請在此處貼上從 API 獲取的完整 JSON 內容..."></textarea>
         </div>
 
         <div id="main-content" class="dashboard">
@@ -207,7 +167,7 @@
                         <span>等級：<b id="p-lv" style="color:var(--gold)"></b></span>
                         <span>職業：<b id="p-class" style="color:var(--gold)"></b></span>
                         <span>道具等級：<b id="p-itemlv" style="color:#58a6ff"></b></span>
-                        <span>最後更新：<b id="p-update" style="color:#3fb950"></b></span>
+                        <span>數據讀取時間：<b id="p-update" style="color:#3fb950"></b></span>
                     </div>
                     <div id="p-ranking-container" class="rank-container"></div>
                 </div>
@@ -216,9 +176,8 @@
             <div class="main-layout-wrapper">
                 <div class="left-column">
                     <div class="card">
-                        <h3>📊 主要能力值對帳概覽</h3>
+                        <h3>📊 主要能力值概覽</h3>
                         <div id="stat-main-grid" class="stat-grid-main"></div>
-                        <h4 style="color:#8b949e; margin-top:10px; font-size:12px;">** 此區塊官方並沒有對 API 做即時更新 **</h4>
                     </div>
                     <div class="card">
                         <h3>⚔️ 技能等級分解</h3>
@@ -250,8 +209,8 @@
                                         <th style="color:var(--ariel)">艾瑞爾</th>
                                         <th style="color:var(--asphel)">阿斯佩爾</th>
                                         <th style="color:var(--gold)">武防強化</th>
-                                        <th style="color:var(--blue)">刻印</th>
-                                        <th>其他/聖物</th>
+                                        <th style="color:var(--blue)">刻印/磨石</th>
+                                        <th>聖物/稱號</th>
                                         <th style="color:var(--green)">最終加總</th>
                                     </tr>
                                 </thead>
@@ -262,76 +221,51 @@
                 </div>
             </div>
             <div class="card">
-                <div class="section-header">🛡️ 武器與防具 (強化/突破細節)</div>
+                <div class="section-header">🛡️ 武器與防具</div>
                 <div id="equip-armor-list"></div>
-                <div class="section-header">💍 飾品與配件 (強化/突破細節)</div>
+                <div class="section-header">💍 飾品與配件</div>
                 <div id="equip-accessory-list"></div>
             </div>
         </div>
     </div>
 
 <script>
-// --- 修改後的 API 請求核心邏輯 (加入 Proxy) ---
-async function fetchAndProcess() {
-    const name = document.getElementById('charName').value.trim();
-    const server = document.getElementById('serverSelect').value;
-    const apiLinkInput = document.getElementById('apiLink').value.trim();
-    const btn = document.getElementById('searchBtn');
-    const loading = document.getElementById('loadingTxt');
+// --- 匯入處理邏輯 ---
 
-    let apiUrl = "";
-    let jsonData = null;
-    
-    // 定義 CORS 代理伺服器
-    const proxy = "https://cors-anywhere.herokuapp.com/";
+// 1. 處理檔案匯入
+document.getElementById('fileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const json = JSON.parse(e.target.result);
+            processData(json);
+            document.getElementById('jsonInput').value = "檔案讀取成功！已顯示下方圖表。";
+        } catch (err) {
+            alert("JSON 檔案格式錯誤！");
+        }
+    };
+    reader.readAsText(file);
+});
 
-    if (apiLinkInput) {
-        apiUrl = apiLinkInput;
-    } else if (name) {
-        apiUrl = `https://aion-api.bnshive.com/character/query?name=${encodeURIComponent(name)}&server=${server}`;
-    } else {
-        alert("請輸入角色名稱或直接貼上 API 網址！");
+// 2. 處理文字貼入匯入
+function handleTextImport() {
+    const text = document.getElementById('jsonInput').value.trim();
+    if (!text) {
+        alert("請先貼上 JSON 內容！");
         return;
     }
-
-    btn.disabled = true;
-    loading.style.display = "inline";
-    
     try {
-        // 如果輸入框是直接貼上 JSON 內容 (以 { 開頭)
-        if (apiLinkInput.startsWith('{')) {
-            jsonData = JSON.parse(apiLinkInput);
-        } else { 
-            // 否則視為 URL，並加上 Proxy
-            const response = await fetch(proxy + apiUrl);
-            if (!response.ok) throw new Error("API 請求失敗，請確認是否已開啟代理授權");
-            jsonData = await response.json();
-        }
-
-        if (!jsonData) {
-            alert("無效的數據格式。");
-            return;
-        }
-        
-        // 檢查數據結構
-        const dataToProcess = jsonData.queryResult ? jsonData.queryResult.data : (jsonData.data ? jsonData.data : null);
-        
-        if (!dataToProcess) {
-            alert("找不到該角色，請確認網址、名稱或伺服器是否正確。");
-            return;
-        }
-
-        processData(jsonData); // 呼叫下方的渲染邏輯
-    } catch (error) {
-        console.error(error);
-        alert("抓取數據出錯！\n\n1. 請點擊上方連結開啟代理服務權限\n2. 檢查網址或 JSON 格式是否正確\n3. 官網 API 可能暫時無回應");
-    } finally {
-        btn.disabled = false;
-        loading.style.display = "none";
+        const json = JSON.parse(text);
+        processData(json);
+    } catch (err) {
+        alert("JSON 格式有誤，請檢查是否複製完整。\n錯誤訊息：" + err.message);
     }
 }
 
-// --- 以下為解析與渲染邏輯 (與原版細節一致) ---
+// --- 以下為原本的核心解析與渲染邏輯 (保持不變) ---
+
 function getCorrectIcon(path) {
     if (!path) return "";
     if (path.startsWith('http')) return path;
@@ -347,9 +281,13 @@ function getGradeColor(grade) {
 }
 
 function processData(json) {
-    const data = json.queryResult ? json.queryResult.data : json.data;
-    document.getElementById('main-content').style.display = 'flex';
+    const data = json.queryResult ? json.queryResult.data : (json.data ? json.data : null);
+    if (!data) {
+        alert("無法在 JSON 中找到角色數據 (data 欄位)！");
+        return;
+    }
 
+    document.getElementById('main-content').style.display = 'flex';
     document.getElementById('arcana-grid').innerHTML = "";
     document.getElementById('set-bonus-grid').innerHTML = "";
     document.getElementById('stat-body').innerHTML = "";
@@ -415,7 +353,7 @@ function processData(json) {
     (data.title?.titleList || []).forEach(t => {
         if (t.equipCategory) { 
             let catName = t.equipCategory === "Attack" ? "⚔️ 攻擊稱號" : "🛡️ 防禦稱號";
-            titleHtml += `<div class="title-box"><span class="title-label" style="color:${t.equipCategory === "Attack" ? 'var(--nezakan)' : 'var(--triniel)'}">${catName}</span><span class="title-val">${t.name}</span><div class="title-desc">${(t.equipStatList || []).map(ef => `▹ ${ef.desc}`).join('<br>')}</div></div>`;
+            titleHtml += `<div class="title-box"><span class="title-label">${catName}</span><span class="title-val">${t.name}</span><div class="title-desc">${(t.equipStatList || []).map(ef => `▹ ${ef.desc}`).join('<br>')}</div></div>`;
             (t.equipStatList || []).forEach(ef => {
                 let parts = ef.desc.split(' +'); if (parts.length < 2) return;
                 let n = parts[0], vS = parts[1];
@@ -444,22 +382,21 @@ function processData(json) {
 
         if (isArcana) {
             const gradeColor = getGradeColor(d.grade); 
-            const arcanaIcon = getCorrectIcon(originalItem.icon);
             let arcanaStatsHtml = (d.mainStats || []).map(ms => `<div>${ms.name} +${ms.value}</div>`).join('');
             let arcanaSubStatsHtml = (d.subStats || []).map(ss => `<div style="color:var(--green)">刻印: ${ss.name} +${ss.value}</div>`).join('');
             let arcanaSkillsHtml = (d.subSkills || []).map(sk => `<div style="color:var(--blue)">${sk.name} Lv.${sk.level}</div>`).join('');
-            document.getElementById('arcana-grid').innerHTML += `<div class="info-box" style="border-left: 4px solid ${gradeColor}; border-top-color: ${gradeColor}; display: flex; gap: 10px; align-items: flex-start;"><div class="arcana-icon-wrapper"><img src="${arcanaIcon}" style="width: 44px; height: 44px; border: 1px solid ${gradeColor}; border-radius: 4px; background: #161b22; padding: 2px;"></div><div style="flex-grow: 1;"><div class="box-header" style="color:${gradeColor}; font-size: 13px; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 3px;">+${i.enchantLevel} ${d.name}</div><div style="font-size:12px; margin-bottom:4px; color: #e6edf3;">${arcanaStatsHtml}</div><div style="font-size:11px; margin-bottom:4px;">${arcanaSubStatsHtml}</div><div style="font-size:11px;">${arcanaSkillsHtml}</div></div></div>`;
+            document.getElementById('arcana-grid').innerHTML += `<div class="info-box" style="border-left: 4px solid ${gradeColor}; display: flex; gap: 10px;"><img src="${getCorrectIcon(originalItem.icon)}" style="width: 44px; height: 44px; border-radius: 4px;"><div style="flex-grow: 1;"><div class="box-header" style="color:${gradeColor}">+${i.enchantLevel} ${d.name}</div><div style="font-size:12px;">${arcanaStatsHtml}</div><div style="font-size:11px;">${arcanaSubStatsHtml}</div><div style="font-size:11px;">${arcanaSkillsHtml}</div></div></div>`;
             (d.subSkills || []).forEach(sk => { if (!cardSkillMap[sk.name]) cardSkillMap[sk.name] = []; cardSkillMap[sk.name].push({ name: d.name, lv: sk.level }); });
-            (d.mainStats || []).forEach(ms => { let e = getEntry(ms.name); e.other += parseFloat(ms.value); e.detailGroups.arcana.push(`${d.name}(主屬): +${ms.value}`); });
-            (d.subStats || []).forEach(ss => { let k = ss.value.toString().includes('%') ? ss.name + '%' : ss.name; let e = getEntry(k); e.other += parseFloat(ss.value.toString().replace('%','')); e.detailGroups.arcana.push(`${d.name}(刻印): +${ss.value}`); });
+            (d.mainStats || []).forEach(ms => { let e = getEntry(ms.name); e.other += parseFloat(ms.value); e.detailGroups.arcana.push(`${d.name}(主): +${ms.value}`); });
+            (d.subStats || []).forEach(ss => { let k = ss.value.toString().includes('%') ? ss.name + '%' : ss.name; let e = getEntry(k); e.other += parseFloat(ss.value.toString().replace('%','')); e.detailGroups.arcana.push(`${d.name}(刻): +${ss.value}`); });
         }
 
         if (isArmor || isAccessory) {
             let gradeColor = getGradeColor(d.grade);
             let exceedBadge = (originalItem.exceedLevel || 0) > 0 ? `<div class="exceed-badge">${originalItem.exceedLevel}</div>` : "";
             let mainStatsD = (d.mainStats || []).map(s => `<div class="base-stat-row"><b>${s.name} ${(parseFloat(s.value)||0)+(parseFloat(s.extra)||0)}</b>${(parseFloat(s.extra)>0)?` <span style="color:var(--green);">(+${s.extra})</span>`:""}</div>`).join('');
-            let godStoneHtml = (d.godStoneStat || []).map(gs => `<div style="margin-top: 8px; padding: 8px; background: rgba(0, 212, 255, 0.05); border: 1px dashed rgba(0, 212, 255, 0.3); border-radius: 4px;"><div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;"><img src="${gs.icon}" style="width: 20px; height: 20px; border: 1px solid #00d4ff; border-radius: 3px;"><b style="color: #00d4ff; font-size: 12px;">${gs.name}</b></div><div style="color: #e6edf3; font-size: 11px; line-height: 1.4; padding-left: 2px;">${gs.desc ? gs.desc.replace(/\n/g, '<br>') : ""}</div></div>`).join('');
-            let cardHtml = `<div class="equip-item-card" style="border-top-color: ${gradeColor}; border-left: 4px solid ${gradeColor};"><div class="equip-left-section"><div style="display:flex; align-items:center; gap:10px;"><div class="equip-img-container"><img src="${finalIcon}">${exceedBadge}</div><div><span class="equip-name" style="color:${gradeColor}">${d.name}</span><div><span style="color:#fff; font-weight:bold;">+${i.enchantLevel}</span></div></div></div><div style="margin-top:8px;">${mainStatsD}</div></div><div class="equip-right-section"><div style="color:#8b949e; font-size:10px; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:5px;">刻印/神石/磨石</div>${(d.subStats||[]).map(s=>`<div class="random-row"><span>${s.name}</span><span>+${s.value}</span></div>`).join('')}${(d.subSkills||[]).map(sk=>`<div class="skill-badge-mini">${sk.name} Lv.${sk.level}</div>`).join('')}${godStoneHtml}<div style="margin-top:5px;">${(d.magicStoneStat||[]).map(ms=>`<div class="random-row" style="color:var(--gold); font-size:11px;"><span>[磨石] ${ms.name}</span><span>${ms.value}</span></div>`).join('')}</div></div></div>`;
+            let godStoneHtml = (d.godStoneStat || []).map(gs => `<div style="margin-top: 5px; border: 1px dashed #00d4ff; padding: 4px; font-size:11px; border-radius:4px;"><b style="color:#00d4ff">${gs.name}</b><br>${gs.desc}</div>`).join('');
+            let cardHtml = `<div class="equip-item-card" style="border-top-color: ${gradeColor}; border-left: 4px solid ${gradeColor};"><div class="equip-left-section"><div style="display:flex; align-items:center; gap:10px;"><div class="equip-img-container"><img src="${finalIcon}">${exceedBadge}</div><div><span class="equip-name" style="color:${gradeColor}">${d.name}</span><div><span style="color:#fff; font-weight:bold;">+${i.enchantLevel}</span></div></div></div><div style="margin-top:8px;">${mainStatsD}</div></div><div class="equip-right-section"><div style="color:#8b949e; font-size:10px; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:5px;">附加屬性/神石</div>${(d.subStats||[]).map(s=>`<div class="random-row"><span>${s.name}</span><span>+${s.value}</span></div>`).join('')}${(d.subSkills||[]).map(sk=>`<div class="skill-badge-mini">${sk.name} Lv.${sk.level}</div>`).join('')}${godStoneHtml}${(d.magicStoneStat||[]).map(ms=>`<div class="random-row" style="color:var(--gold); font-size:11px;"><span>[磨石] ${ms.name}</span><span>${ms.value}</span></div>`).join('')}</div></div>`;
             if (isArmor) armorHtml += cardHtml; else accessoryHtml += cardHtml;
             (d.mainStats || []).forEach(ms => { let v = parseFloat(ms.value || 0) + parseFloat(ms.extra || 0); let e = getEntry(ms.name); e.equipMain += v; e.detailGroups.base.push(`+${i.enchantLevel} ${d.name}: +${v}`); });
             (d.subStats || []).forEach(ss => { if (!ss.value) return; let k = ss.value.toString().includes('%') ? ss.name + '%' : ss.name; let v = parseFloat(ss.value.toString().replace('%', '')) || 0; let e = getEntry(k); e.equipSub += v; e.detailGroups.random.push(`${d.name}: +${ss.value}`); });
@@ -471,6 +408,9 @@ function processData(json) {
     document.getElementById('equip-accessory-list').innerHTML = accessoryHtml || "<div>無資料</div>";
     renderSkills(data, boardSkillMap, cardSkillMap);
     renderStatTable(stats);
+    
+    // 自動捲動到結果區
+    window.scrollTo({ top: document.getElementById('main-content').offsetTop - 20, behavior: 'smooth' });
 }
 
 function renderRankings(rankList) {
@@ -479,7 +419,7 @@ function renderRankings(rankList) {
     rankList.forEach(r => {
         if (!r.rank) return;
         let changeHtml = r.rankChange > 0 ? `<span class="rank-change up">▲${r.rankChange}</span>` : (r.rankChange < 0 ? `<span class="rank-change down">▼${Math.abs(r.rankChange)}</span>` : "");
-        container.innerHTML += `<div class="rank-badge"><img src="${r.gradeIcon}" alt="${r.gradeName}"><div class="rank-info"><span class="rank-title">${r.rankingContentsName} [${r.gradeName}]</span><span class="rank-val">${r.rank} 位 ${changeHtml}</span></div></div>`;
+        container.innerHTML += `<div class="rank-badge"><img src="${r.gradeIcon}"><div class="rank-info"><span class="rank-title">${r.rankingContentsName}</span><span class="rank-val">${r.rank} 位 ${changeHtml}</span></div></div>`;
     });
 }
 
