@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>Aion2 高階解析 - API 串接增強版</title>
+    <style>
+        :root {
+            --bg: #0b0e14;
+            --panel: #1a1f29;
+            --border: #333c4d;
+            --gold: #d4b483;
+            --blue: #58a6ff;
+            --green: #3fb950;
+            --nezakan: #e06c75;
+            --zikel: #98c379;
+            --triniel: #61afef;
+            --ariel: #ff9f1c;
+            --asphel: #bf40bf;
+            --baizel: #ff6c6c;
+            --arcana: #4ec9b0;
+            --profile-bg: linear-gradient(135deg, #1e2533 0%, #0b0e14 100%);
+        }
+        body {
+            background: var(--bg);
+            color: #e6edf3;
+            font-family: "Segoe UI", "Microsoft JhengHei", sans-serif;
+            margin: 0;
+            padding: 15px;
+            font-size: 15px;
+        }
+        .container { max-width: 1900px; margin: auto; }
+        
+        /* 強化後的匯入區塊 */
+        .input-area {
+            background: var(--panel);
+            border: 2px solid var(--gold);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .import-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .api-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .api-input-group input {
+            flex: 1;
+            background: #010409;
+            border: 1px solid var(--border);
+            color: var(--blue);
+            padding: 12px;
+            border-radius: 6px;
+            font-family: monospace;
+        }
+        .import-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+        }
+        textarea {
+            width: 100%;
+            height: 80px;
+            background: #010409;
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: monospace;
+            resize: vertical;
+        }
+        input[type="file"] { display: none; }
+        .file-label {
+            background: #30363d;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        .btn-api {
+            background: linear-gradient(135deg, #58a6ff, #1f6feb);
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button#parseBtn {
+            background: linear-gradient(135deg, #d4b483, #aa8a59);
+            color: #000;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            color: var(--gold);
+            font-size: 24px;
+        }
+
+        /* 原始樣式保持不變 */
+        .dashboard { display: none; flex-direction: column; gap: 20px; }
+        .profile-card { background: var(--profile-bg); border: 1px solid var(--gold); border-radius: 12px; padding: 25px; display: flex; align-items: center; gap: 30px; flex-wrap: wrap; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); }
+        .profile-img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--gold); padding: 3px; background: #000; }
+        .profile-name { font-size: 32px; font-weight: 800; color: #fff; text-shadow: 0 0 10px rgba(212, 180, 131, 0.3); }
+        .rank-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+        .rank-badge { background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; gap: 10px; min-width: 160px; }
+        .rank-badge img { width: 32px; height: 32px; }
+        .rank-info { display: flex; flex-direction: column; }
+        .rank-title { font-size: 14px; color: #f1eae8; }
+        .rank-val { font-weight: bold; font-size: 14px; color: var(--gold); }
+        .rank-change { font-size: 10px; margin-left: 5px; }
+        .up { color: #ff6c6c; }
+        .down { color: #3fb950; }
+        .card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); margin-bottom: 20px; position: relative; }
+        h3 { color: var(--gold); margin: 0 0 15px 0; font-size: 19px; border-left: 5px solid var(--gold); padding-left: 12px; }
+        .sk-label { font-size: 14px; color: #8b949e; margin-bottom: 12px; border-bottom: 1px solid #333c4d; padding-bottom: 5px; font-weight: bold; }
+        .stat-grid-main { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 10px; }
+        .stat-mini-card { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 10px; padding: 15px; text-align: center; position: relative; cursor: help; transition: all 0.2s; }
+        .stat-mini-card:hover { background: rgba(88, 166, 255, 0.08); transform: translateY(-3px); z-index: 100; border-color: var(--blue); }
+        .stat-mini-val { display: block; font-size: 22px; font-weight: bold; color: var(--gold); margin-top: 5px; }
+        .main-layout-wrapper { display: grid; grid-template-columns: 4fr 6fr; gap: 20px; align-items: flex-start; }
+        .skill-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 25px; }
+        .skill-card { position: relative; display: flex; align-items: center; gap: 8px; padding: 10px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); border-radius: 8px; cursor: help; transition: 0.2s; }
+        .skill-card img { width: 34px; height: 34px; border-radius: 4px; border: 1px solid var(--gold); }
+        .sk-name { font-size: 13px; font-weight: bold; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 85px; }
+        .tooltip { visibility: hidden; width: 220px; background: #4c4d49 !important; border: 1px solid var(--gold); border-radius: 8px; padding: 12px; position: absolute; z-index: 9999 !important; bottom: 115%; left: 60%; transform: translateX(-50%); opacity: 0; transition: opacity 0.15s; box-shadow: 0 10px 40px rgb(0, 0, 0); color: #ffffff !important; pointer-events: none; white-space: normal; font-size: 12px; line-height: 1.5; border-top: 3px solid var(--gold); }
+        .th-hover, .hover-calc, .skill-card, .stat-mini-card { position: relative; }
+        .th-hover:hover .tooltip, .hover-calc:hover .tooltip, .skill-card:hover .tooltip, .stat-mini-card:hover .tooltip { visibility: visible; opacity: 1; bottom: 165%; }
+        .table-wrapper { overflow: visible !important; }
+        table { border-collapse: separate; border-spacing: 0; font-size: 14px; width: 100%; white-space: nowrap; }
+        thead th { position: sticky; top: 0; background: #212631; z-index: 10; padding: 12px 5px; border-bottom: 2px solid var(--gold); border-right: 1px solid var(--border); }
+        td { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 10px 5px; text-align: center; }
+        .td-left { text-align: left !important; font-weight: bold; color: #fff; padding-left: 15px; position: sticky; left: 0; background: #1a1f29; z-index: 5; min-width: 140px; }
+        .hover-calc { border-bottom: 1px dashed var(--blue); cursor: help; display: inline-block; }
+        .grid-box-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .info-box { background: rgba(212, 180, 131, 0.05); border: 1px solid var(--gold); border-radius: 8px; padding: 15px; }
+        .box-header { border-bottom: 1px solid var(--border); padding-bottom: 5px; margin-bottom: 8px; font-weight: bold; color: var(--gold); font-size: 14px; }
+        .title-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 15px; }
+        .title-box { background: rgba(88, 166, 255, 0.08); border: 1px solid var(--blue); border-radius: 8px; padding: 12px; }
+        .title-label { font-size: 11px; color: var(--blue); display: block; border-bottom: 1px solid rgba(88, 166, 255, 0.2); margin-bottom: 5px; padding-bottom: 3px; }
+        .title-val { font-size: 15px; font-weight: bold; color: #fff; display: block; margin-bottom: 5px; }
+        .title-desc { font-size: 12px; color: #aaa; line-height: 1.4; }
+        .section-header { display: flex; align-items: center; gap: 10px; margin: 25px 0 15px 0; color: var(--gold); font-size: 1.3em; border-bottom: 1px solid var(--border); padding-bottom: 8px; font-weight: bold; }
+        #equip-armor-list, #equip-accessory-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 12px; }
+        .equip-item-card { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 8px; display: flex; min-height: 120px; border-top: 3px solid var(--gold); transition: 0.2s; }
+        .equip-left-section { flex: 1.3; padding: 12px; display: flex; flex-direction: column; gap: 8px; border-right: 1px solid rgba(255, 255, 255, 0.05); }
+        .equip-right-section { flex: 1; background: rgba(0, 0, 0, 0.2); padding: 12px; font-size: 12px; }
+        .equip-img-container { position: relative; width: 44px; height: 44px; flex-shrink: 0; }
+        .equip-img-container img { width: 44px; height: 44px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .exceed-badge { position: absolute; top: -7px; right: -7px; background: #ff3e3e; color: white; border: 1px solid #ffd700; font-size: 10px; padding: 1px 4px; border-radius: 4px; font-weight: bold; box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); z-index: 2; }
+        .equip-name { font-weight: bold; font-size: 14px; line-height: 1.2; display: block; }
+        .base-stat-row { border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding: 3px 0; font-size: 12px; }
+        .random-row { display: flex; justify-content: space-between; color: var(--green); margin-bottom: 3px; }
+        .skill-badge-mini { color: var(--blue); margin-top: 5px; display: block; font-weight: bold; border-left: 2px solid var(--blue); padding-left: 6px; font-size: 11px; }
+    </style>
+</head>
+<body>
+    <div id="loading" class="loading-overlay">⌛ 正在從伺服器獲取數據，請稍候...</div>
+
+    <div class="container">
+        <div class="input-area">
+            <h2 style="color:var(--gold); margin-top:0; text-align: center;">💎 Aion2 數據中心</h2>
+            
+            <div class="import-section">
+                <div style="font-size: 14px; color: var(--gold); font-weight: bold;">🔗 方法 A：貼上 API 網址直接讀取</div>
+                <div class="api-input-group">
+                    <input type="text" id="apiUrlInput" placeholder="請貼上完整的 API 請求網址 (包含 characterId 與 Token)...">
+                    <button class="btn-api" onclick="fetchFromApi()">讀取 API</button>
+                </div>
+
+                <div style="font-size: 14px; color: var(--gold); font-weight: bold;">📝 方法 B：手動貼上 JSON 或選擇檔案</div>
+                <textarea id="jsonInput" placeholder="請在此處貼上從 API 獲取的完整 JSON 內容..."></textarea>
+                
+                <div class="import-controls">
+                    <label class="file-label" for="fileInput">📁 選擇檔案</label>
+                    <input type="file" id="fileInput" accept=".json">
+                    <button id="parseBtn" onclick="handleTextImport()">立即解析文字內容</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="main-content" class="dashboard">
+            <div class="profile-card">
+                <img id="p-img" class="profile-img" src="">
+                <div style="flex:1">
+                    <span id="p-name" class="profile-name"></span>
+                    <span id="p-title-disp" style="color:var(--blue); margin-left:15px; font-weight:bold;"></span>
+                    <div style="display:flex; flex-wrap:wrap; gap:20px; margin-top:10px; color:#8b949e">
+                        <span>伺服器：<b id="p-server" style="color:var(--gold)"></b></span>
+                        <span>等級：<b id="p-lv" style="color:var(--gold)"></b></span>
+                        <span>職業：<b id="p-class" style="color:var(--gold)"></b></span>
+                        <span>道具等級：<b id="p-itemlv" style="color:#58a6ff"></b></span>
+                        <span>數據讀取時間：<b id="p-update" style="color:#3fb950"></b></span>
+                    </div>
+                    <div id="p-ranking-container" class="rank-container"></div>
+                </div>
+            </div>
+
+            <div class="main-layout-wrapper">
+                <div class="left-column">
+                    <div class="card">
+                        <h3>📊 主要能力值概覽</h3>
+                        <div id="stat-main-grid" class="stat-grid-main"></div>
+                    </div>
+                    <div class="card">
+                        <h3>⚔️ 技能等級分解</h3>
+                        <div class="sk-label">▶ 主動技能</div><div id="sk-act" class="skill-list"></div>
+                        <div class="sk-label">▶ 被動技能</div><div id="sk-pas" class="skill-list"></div>
+                        <div class="sk-label">▶ 特殊/烙印技能</div><div id="sk-stigma" class="skill-list"></div>
+                    </div>
+                    <div class="card">
+                        <h3>🎴 魔力聖物系統細項</h3>
+                        <div id="arcana-grid" class="grid-box-container"></div>
+                        <h3>🔱 套裝效果全覽</h3>
+                        <div id="set-bonus-grid" class="grid-box-container" style="grid-template-columns: 1fr;"></div>
+                        <h3>🎖️ 稱號系統加成細項</h3>
+                        <div id="title-grid" class="title-grid"></div>
+                    </div>
+                </div>
+                <div class="right-column">
+                    <div class="card" style="padding:0">
+                        <h3 style="padding: 25px 25px 0 25px;">🛡️ 屬性全來源對帳總表</h3>
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="td-left">屬性項目</th>
+                                        <th style="color:var(--nezakan)">奈薩肯</th>
+                                        <th style="color:var(--zikel)">吉凱爾</th>
+                                        <th style="color:var(--baizel)">白傑爾</th>
+                                        <th style="color:var(--triniel)">崔妮爾</th>
+                                        <th style="color:var(--ariel)">艾瑞爾</th>
+                                        <th style="color:var(--asphel)">阿斯佩爾</th>
+                                        <th style="color:var(--gold)">武防強化</th>
+                                        <th style="color:var(--blue)">刻印/磨石</th>
+                                        <th>聖物/稱號</th>
+                                        <th style="color:var(--green)">最終加總</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="stat-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="section-header">🛡️ 武器與防具</div>
+                <div id="equip-armor-list"></div>
+                <div class="section-header">💍 飾品與配件</div>
+                <div id="equip-accessory-list"></div>
+            </div>
+        </div>
+    </div>
+
+<script>
+// 初始化：讀取上次使用的 API 網址
+window.onload = function() {
+    const savedUrl = localStorage.getItem('last_aion2_api_url');
+    if (savedUrl) {
+        document.getElementById('apiUrlInput').value = savedUrl;
+    }
+}
+
+// --- API 請求邏輯 ---
+async function fetchFromApi() {
+    const fullUrl = document.getElementById('apiUrlInput').value.trim();
+    if (!fullUrl) {
+        alert("請貼上 API 網址");
+        return;
+    }
+
+    // 儲存網址以便下次使用
+    localStorage.setItem('last_aion2_api_url', fullUrl);
+    
+    document.getElementById('loading').style.display = 'flex';
+
+    try {
+        // 使用你的 Proxy 解決跨域問題
+        const proxyUrl = `https://proxy.kk69347321.workers.dev/?url=${encodeURIComponent(fullUrl)}`;
+        
+        const response = await fetch(proxyUrl);
+        if (!response.ok) throw new Error(`HTTP 錯誤: ${response.status}`);
+        
+        const json = await response.json();
+        processData(json);
+        document.getElementById('jsonInput').value = "API 數據讀取成功！";
+    } catch (err) {
+        console.error(err);
+        alert("讀取 API 失敗，請確認網址是否正確或 Proxy 是否正常。\n錯誤：" + err.message);
+    } finally {
+        document.getElementById('loading').style.display = 'none';
+    }
+}
+
+// --- 原有匯入邏輯 ---
+
+document.getElementById('fileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const json = JSON.parse(e.target.result);
+            processData(json);
+            document.getElementById('jsonInput').value = "檔案讀取成功！";
+        } catch (err) { alert("JSON 檔案格式錯誤！"); }
+    };
+    reader.readAsText(file);
+});
+
+function handleTextImport() {
+    const text = document.getElementById('jsonInput').value.trim();
+    if (!text) { alert("請先貼上 JSON 內容！"); return; }
+    try {
+        const json = JSON.parse(text);
+        processData(json);
+    } catch (err) { alert("JSON 格式有誤。"); }
+}
+
+// --- 核心解析邏輯 (維持你原本的邏輯) ---
+
+function getCorrectIcon(path) {
+    if (!path) return "";
+    if (path.startsWith('http')) return path;
+    let cleanPath = path.replace(/^\//, '');
+    if (!cleanPath.includes('.')) cleanPath += '.png';
+    return `https://proxy.kk69347321.workers.dev/?url=${encodeURIComponent(cleanPath)}`;
+}
+
+function getGradeColor(grade) {
+    const colors = { 'Myth': '#ff3e3e', 'Unique': '#f90', 'Legend': '#d4b483', 'Epic': '#a335ee', 'Rare': '#0070dd', 'Ancient': '#3fb950' };
+    return colors[grade] || 'white';
+}
+
+function processData(json) {
+    const data = json.queryResult ? json.queryResult.data : (json.data ? json.data : null);
+    if (!data) { alert("無法在 JSON 中找到角色數據！"); return; }
+
+    document.getElementById('main-content').style.display = 'flex';
+    document.getElementById('arcana-grid').innerHTML = "";
+    document.getElementById('set-bonus-grid').innerHTML = "";
+    document.getElementById('stat-body').innerHTML = "";
+
+    document.getElementById('p-name').innerText = data.profile.characterName;
+    document.getElementById('p-title-disp').innerText = `[${data.profile.titleName || "無稱號"}]`;
+    document.getElementById('p-img').src = getCorrectIcon(data.profile.profileImage);
+    document.getElementById('p-server').innerText = data.profile.serverName;
+    document.getElementById('p-lv').innerText = `Lv.${data.profile.characterLevel}`;
+    document.getElementById('p-class').innerText = data.profile.className;
+    const itemLvObj = data.stat.statList.find(s => s.type === "ItemLevel");
+    document.getElementById('p-itemlv').innerText = itemLvObj ? itemLvObj.value : "--";
+    document.getElementById('p-update').innerText = new Date().toLocaleString('zh-TW', { hour12: false });
+
+    renderRankings(data.ranking ? data.ranking.rankingList : []);
+
+    let stats = {};
+    let boardSkillMap = {};
+    let cardSkillMap = {};
+    let processedSets = new Set();
+    let armorHtml = "";
+    let accessoryHtml = "";
+    let titleHtml = "";
+
+    const getEntry = (k) => {
+        if (!stats[k]) {
+            stats[k] = { 
+                nezakan: 0, zikel: 0, baizel: 0, triniel: 0, ariel: 0, asphel: 0, 
+                equipMain: 0, equipSub: 0, other: 0, 
+                isPerc: k.includes('%'),
+                detailGroups: { base: [], random: [], stone: [], arcana: [], title: [], etc: [] }
+            };
+        }
+        return stats[k];
+    };
+
+    let mainStatHtml = "";
+    (data.stat.statList || []).forEach(s => {
+        if (s.type === "ItemLevel") return;
+        let details = s.statSecondList ? s.statSecondList.map(d => `▹ ${d}`).join('<br>') : "無額外數據";
+        mainStatHtml += `<div class="stat-mini-card"><span style="font-size:12px;color:#8b949e;display:block;">${s.name}</span><span class="stat-mini-val">${s.value}</span><div class="tooltip"><b>${s.name} 詳細轉換:</b><br>${details}</div></div>`;
+    });
+    document.getElementById('stat-main-grid').innerHTML = mainStatHtml;
+
+    (data.daevanionDetails || []).forEach(b => {
+        (b.detail?.openStatEffectList || []).forEach(ef => {
+            let parts = ef.desc.split(' +'); if (parts.length < 2) return;
+            let n = parts[0], vS = parts[1];
+            let k = vS.includes('%') ? n.trim() + '%' : n.trim(), v = parseFloat(vS.replace('%', '')), e = getEntry(k);
+            if (b.boardName.includes("奈薩肯")) e.nezakan += v;
+            else if (b.boardName.includes("吉凱爾")) e.zikel += v;
+            else if (b.boardName.includes("白傑爾")) e.baizel += v;
+            else if (b.boardName.includes("崔妮爾")) e.triniel += v;
+            else if (b.boardName.includes("艾瑞爾")) e.ariel += v;
+            else if (b.boardName.includes("阿斯佩爾")) e.asphel += v;
+        });
+        (b.detail?.openSkillEffectList || []).forEach(sk => {
+            let [sn, sv] = sk.desc.split(' +');
+            boardSkillMap[sn] = (boardSkillMap[sn] || 0) + parseInt(sv);
+        });
+    });
+
+    (data.title?.titleList || []).forEach(t => {
+        if (t.equipCategory) { 
+            let catName = t.equipCategory === "Attack" ? "⚔️ 攻擊稱號" : "🛡️ 防禦稱號";
+            titleHtml += `<div class="title-box"><span class="title-label">${catName}</span><span class="title-val">${t.name}</span><div class="title-desc">${(t.equipStatList || []).map(ef => `▹ ${ef.desc}`).join('<br>')}</div></div>`;
+            (t.equipStatList || []).forEach(ef => {
+                let parts = ef.desc.split(' +'); if (parts.length < 2) return;
+                let n = parts[0], vS = parts[1];
+                let k = vS.includes('%') ? n.trim() + '%' : n.trim(), v = parseFloat(vS.replace('%', '')), e = getEntry(k);
+                e.other += v; e.detailGroups.title.push(`[${t.name}]: +${vS}`);
+            });
+        }
+    });
+    document.getElementById('title-grid').innerHTML = titleHtml || "<div style='color:#8b949e; padding:10px;'>未裝備稱號</div>";
+
+    const equipMap = {};
+    (data.equipment ? data.equipment.equipmentList : []).forEach(item => { equipMap[item.slotPos] = item; });
+    (data.itemDetails || []).forEach(i => {
+        const d = i.detail; if (!d) return;
+        const slot = i.slotPos;
+        const isArmor = (slot >= 1 && slot <= 8) || slot === 21;
+        const isAccessory = (slot >= 9 && slot <= 20) || (slot >= 22 && slot <= 40);
+        const isArcana = (slot >= 41 && slot <= 45);
+        const originalItem = equipMap[slot] || i;
+        const finalIcon = getCorrectIcon(originalItem.icon);
+
+        if (d.set && !processedSets.has(d.set.name)) {
+            processedSets.add(d.set.name);
+            document.getElementById('set-bonus-grid').innerHTML += `<div class="info-box"><div class="box-header">🔱 套裝：${d.set.name}</div>${d.set.bonuses.map(b => `<div style="margin-bottom:8px; padding-left:10px; border-left:2px solid var(--blue)"><span style="color:var(--blue); font-weight:bold;">[${b.degree}件效果]</span><br><span style="color:#e6edf3; font-size:12px;">${b.descriptions.join('、')}</span></div>`).join('')}</div>`;
+        }
+
+        if (isArcana) {
+            const gradeColor = getGradeColor(d.grade); 
+            let arcanaStatsHtml = (d.mainStats || []).map(ms => `<div>${ms.name} +${ms.value}</div>`).join('');
+            let arcanaSubStatsHtml = (d.subStats || []).map(ss => `<div style="color:var(--green)">刻印: ${ss.name} +${ss.value}</div>`).join('');
+            let arcanaSkillsHtml = (d.subSkills || []).map(sk => `<div style="color:var(--blue)">${sk.name} Lv.${sk.level}</div>`).join('');
+            document.getElementById('arcana-grid').innerHTML += `<div class="info-box" style="border-left: 4px solid ${gradeColor}; display: flex; gap: 10px;"><img src="${getCorrectIcon(originalItem.icon)}" style="width: 44px; height: 44px; border-radius: 4px;"><div style="flex-grow: 1;"><div class="box-header" style="color:${gradeColor}">+${i.enchantLevel} ${d.name}</div><div style="font-size:12px;">${arcanaStatsHtml}</div><div style="font-size:11px;">${arcanaSubStatsHtml}</div><div style="font-size:11px;">${arcanaSkillsHtml}</div></div></div>`;
+            (d.subSkills || []).forEach(sk => { if (!cardSkillMap[sk.name]) cardSkillMap[sk.name] = []; cardSkillMap[sk.name].push({ name: d.name, lv: sk.level }); });
+            (d.mainStats || []).forEach(ms => { let e = getEntry(ms.name); e.other += parseFloat(ms.value); e.detailGroups.arcana.push(`${d.name}(主): +${ms.value}`); });
+            (d.subStats || []).forEach(ss => { let k = ss.value.toString().includes('%') ? ss.name + '%' : ss.name; let e = getEntry(k); e.other += parseFloat(ss.value.toString().replace('%','')); e.detailGroups.arcana.push(`${d.name}(刻): +${ss.value}`); });
+        }
+
+        if (isArmor || isAccessory) {
+            let gradeColor = getGradeColor(d.grade);
+            let exceedBadge = (originalItem.exceedLevel || 0) > 0 ? `<div class="exceed-badge">${originalItem.exceedLevel}</div>` : "";
+            let mainStatsD = (d.mainStats || []).map(s => `<div class="base-stat-row"><b>${s.name} ${(parseFloat(s.value)||0)+(parseFloat(s.extra)||0)}</b>${(parseFloat(s.extra)>0)?` <span style="color:var(--green);">(+${s.extra})</span>`:""}</div>`).join('');
+            let godStoneHtml = (d.godStoneStat || []).map(gs => `<div style="margin-top: 5px; border: 1px dashed #00d4ff; padding: 4px; font-size:11px; border-radius:4px;"><b style="color:#00d4ff">${gs.name}</b><br>${gs.desc}</div>`).join('');
+            let cardHtml = `<div class="equip-item-card" style="border-top-color: ${gradeColor}; border-left: 4px solid ${gradeColor};"><div class="equip-left-section"><div style="display:flex; align-items:center; gap:10px;"><div class="equip-img-container"><img src="${finalIcon}">${exceedBadge}</div><div><span class="equip-name" style="color:${gradeColor}">${d.name}</span><div><span style="color:#fff; font-weight:bold;">+${i.enchantLevel}</span></div></div></div><div style="margin-top:8px;">${mainStatsD}</div></div><div class="equip-right-section"><div style="color:#8b949e; font-size:10px; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:5px;">附加屬性/神石</div>${(d.subStats||[]).map(s=>`<div class="random-row"><span>${s.name}</span><span>+${s.value}</span></div>`).join('')}${(d.subSkills||[]).map(sk=>`<div class="skill-badge-mini">${sk.name} Lv.${sk.level}</div>`).join('')}${godStoneHtml}${(d.magicStoneStat||[]).map(ms=>`<div class="random-row" style="color:var(--gold); font-size:11px;"><span>[磨石] ${ms.name}</span><span>${ms.value}</span></div>`).join('')}</div></div>`;
+            if (isArmor) armorHtml += cardHtml; else accessoryHtml += cardHtml;
+            (d.mainStats || []).forEach(ms => { let v = parseFloat(ms.value || 0) + parseFloat(ms.extra || 0); let e = getEntry(ms.name); e.equipMain += v; e.detailGroups.base.push(`+${i.enchantLevel} ${d.name}: +${v}`); });
+            (d.subStats || []).forEach(ss => { if (!ss.value) return; let k = ss.value.toString().includes('%') ? ss.name + '%' : ss.name; let v = parseFloat(ss.value.toString().replace('%', '')) || 0; let e = getEntry(k); e.equipSub += v; e.detailGroups.random.push(`${d.name}: +${ss.value}`); });
+            (d.magicStoneStat || []).forEach(ms => { if (!ms.value) return; let k = ms.value.toString().includes('%') ? ms.name + '%' : ms.name; let v = parseFloat(ms.value.toString().replace('%', '')) || 0; let e = getEntry(k); e.equipSub += v; e.detailGroups.stone.push(`${d.name}: ${ms.value}`); });
+        }
+    });
+
+    document.getElementById('equip-armor-list').innerHTML = armorHtml || "<div>無資料</div>";
+    document.getElementById('equip-accessory-list').innerHTML = accessoryHtml || "<div>無資料</div>";
+    renderSkills(data, boardSkillMap, cardSkillMap);
+    renderStatTable(stats);
+    
+    window.scrollTo({ top: document.getElementById('main-content').offsetTop - 20, behavior: 'smooth' });
+}
+
+function renderRankings(rankList) {
+    const container = document.getElementById('p-ranking-container');
+    container.innerHTML = "";
+    rankList.forEach(r => {
+        if (!r.rank) return;
+        let changeHtml = r.rankChange > 0 ? `<span class="rank-change up">▲${r.rankChange}</span>` : (r.rankChange < 0 ? `<span class="rank-change down">▼${Math.abs(r.rankChange)}</span>` : "");
+        container.innerHTML += `<div class="rank-badge"><img src="${r.gradeIcon}"><div class="rank-info"><span class="rank-title">${r.rankingContentsName}</span><span class="rank-val">${r.rank} 位 ${changeHtml}</span></div></div>`;
+    });
+}
+
+function renderSkills(data, boardSkillMap, cardSkillMap) {
+    let act = "", pas = "", sti = "";
+    data.skill.skillList.forEach(s => {
+        let bLv = boardSkillMap[s.name] || 0;
+        let cLv = (cardSkillMap[s.name] || []).reduce((a, b) => a + b.lv, 0);
+        let tip = `<div class="tooltip"><b>${s.name}</b><br>基礎: Lv.${Math.max(0, s.skillLevel - bLv - cLv)}<br>板塊: +${bLv}<br>卡片: +${cLv}</div>`;
+        let h = `<div class="skill-card"><img src="${getCorrectIcon(s.icon)}"><div><span class="sk-name">${s.name}</span><span style="color:var(--blue);font-size:14px">Lv.${s.skillLevel}</span></div>${tip}</div>`;
+        if (s.category === "Active") act += h; else if (s.category === "Passive") pas += h; else sti += h;
+    });
+    document.getElementById('sk-act').innerHTML = act; document.getElementById('sk-pas').innerHTML = pas; document.getElementById('sk-stigma').innerHTML = sti;
+}
+
+function renderStatTable(stats) {
+    document.getElementById('stat-body').innerHTML = Object.keys(stats).sort().map(k => {
+        const d = stats[k];
+        const sum = d.nezakan + d.zikel + d.baizel + d.triniel + d.ariel + d.asphel + d.equipMain + d.equipSub + d.other;
+        if (sum === 0) return '';
+        const fmt = (v) => v === 0 ? '--' : (Math.round(v * 100) / 100 + (d.isPerc ? '%' : ''));
+        const makeGroup = (title, items, color) => items.length === 0 ? "" : `<div style="margin-top:6px;"><b style="color:${color}; border-bottom:1px solid rgba(255,255,255,0.2); display:block; margin-bottom:2px;">${title}</b>${items.map(i => `<div style="font-size:11px; color:#eee; padding-left:5px;">▹ ${i}</div>`).join('')}</div>`;
+        let tooltip = `<b style="font-size:14px; color:var(--gold); border-bottom:2px solid var(--gold); display:block; margin-bottom:5px;">${k} 來源對帳表</b>`;
+        tooltip += makeGroup("🛡️ 基礎屬性與強化", d.detailGroups.base, "var(--blue)");
+        tooltip += makeGroup("💎 磨石鑲嵌", d.detailGroups.stone, "var(--gold)");
+        tooltip += makeGroup("✨ 隨機刻印", d.detailGroups.random, "var(--green)");
+        tooltip += makeGroup("🎖️ 稱號加成", d.detailGroups.title, "var(--nezakan)");
+        tooltip += makeGroup("🎴 聖物/其他", d.detailGroups.arcana.concat(d.detailGroups.etc), "var(--arcana)");
+        const cell = (val) => val === 0 ? '<td>--</td>' : `<td><div class="hover-calc">${fmt(val)}<div class="tooltip">${tooltip}</div></div></td>`;
+        return `<tr><td class="td-left">${k}</td><td>${fmt(d.nezakan)}</td><td>${fmt(d.zikel)}</td><td>${fmt(d.baizel)}</td><td>${fmt(d.triniel)}</td><td>${fmt(d.ariel)}</td><td>${fmt(d.asphel)}</td>${cell(d.equipMain)}${cell(d.equipSub)}${cell(d.other)}<td style="color:var(--green);font-weight:bold;">+${Math.round(sum * 100) / 100}${d.isPerc ? '%' : ''}</td></tr>`;
+    }).join('');
+}
+</script>
+</body>
+</html>
