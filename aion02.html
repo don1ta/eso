@@ -143,11 +143,11 @@
         .card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); margin-bottom: 20px; position: relative; }
         h3 { color: var(--gold); margin: 0 0 15px 0; font-size: 19px; border-left: 5px solid var(--gold); padding-left: 12px; }
         .sk-label { font-size: 14px; color: #8b949e; margin-bottom: 12px; border-bottom: 1px solid #333c4d; padding-bottom: 5px; font-weight: bold; }
-        .stat-grid-main { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 10px; }
-        .stat-mini-card { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 10px; padding: 15px; text-align: center; position: relative; cursor: help; transition: all 0.2s; }
-        .stat-mini-card:hover { background: rgba(88, 166, 255, 0.08); transform: translateY(-3px); z-index: 100; border-color: var(--blue); }
+         .stat-grid-main { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 10px; } 
+       .stat-mini-card { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 10px; padding: 15px; text-align: center; position: relative; cursor: help; transition: all 0.2s; }
+      .stat-mini-card:hover { background: rgba(88, 166, 255, 0.08); transform: translateY(-3px); z-index: 100; border-color: var(--blue); }
         .stat-mini-val { display: block; font-size: 22px; font-weight: bold; color: var(--gold); margin-top: 5px; }
-        .main-layout-wrapper { display: grid; grid-template-columns: 4fr 6fr; gap: 20px; align-items: flex-start; }
+        .main-layout-wrapper {  align-items: flex-start; }
         .skill-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 25px; }
         .skill-card { position: relative; display: flex; align-items: center; gap: 8px; padding: 10px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); border-radius: 8px; cursor: help; transition: 0.2s; }
         .skill-card img { width: 34px; height: 34px; border-radius: 4px; border: 1px solid var(--gold); }
@@ -184,31 +184,47 @@
         
     
         /* RWD 調整 */
-        @media (max-width: 1200px) { .main-layout-wrapper { grid-template-columns: 1fr; } }
+        @media (min-width: 1200px) { .main-layout-wrapper { display: grid; grid-template-columns: 4fr 6fr; gap: 20px; } }
         @media (max-width: 768px) { .profile-card { flex-direction: column; text-align: center; } .api-input-group { flex-direction: column; align-items: stretch; } .api-input-group input, .api-input-group select, .btn-api {  min-width: unset; } .stat-grid-main { grid-template-columns: repeat(2, 1fr); } #equip-armor-list, #equip-accessory-list { grid-template-columns: 1fr; } .skill-list { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); } .grid-box-container { grid-template-columns: 1fr; } .title-grid { grid-template-columns: 1fr; } .rank-badge{ width:100%} }
-   
-        @media (max-width: 768px) {
-    /* 讓主要能力值概覽在手機版變成一行四欄 */
+
+
+ 
+
+/* 在 @media (max-width: 768px) 區塊內修改 */
+@media (max-width: 768px) {
+    /* ... 原本的其他設定 ... */
+
     .stat-grid-main {
-        grid-template-columns: repeat(4, 1fr); /* 強制四欄 */
-        gap: 5px; /* 縮小間隙，否則手機螢幕會太擠 */
+        /* 將原本的 2 欄改為自動填充，確保不會擠壓 */
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+        gap: 10px;
+        width: 100%;
+        box-sizing: border-box;
     }
 
-    /* 調整卡片內的間距與字體，避免文字溢出 */
-    .stat-mini-card {        padding: 8px 4px; /* 縮減內距 */    }
-
-    .stat-mini-card span[style*="font-size:12px"] {
-        font-size: 10px !important; /* 縮小標籤文字 */
-        white-space: nowrap; /* 避免標籤換行 */
+    .stat-mini-card {
+        /* 縮小手機版的內距與字體，避免撐開容器 */
+        padding: 10px 5px;
+        min-width: 0; /* 防止內容撐開 grid */
     }
 
     .stat-mini-val {
-        font-size: 14px !important; /* 縮小數值文字，確保一行塞得下 */
-        margin-top: 3px;
+        font-size: 18px; /* 稍微調小手機版的數值字體 */
+    }
+
+    /* 確保容器本身不會溢出 */
+    .card {
+        padding: 15px;
+        overflow: hidden; /* 防止內部元件溢出 */
     }
 }
 
-
+/* 確保表格在手機上獨立捲動，不影響整頁寬度 */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto !important; /* 強制表格內部捲動 */
+    -webkit-overflow-scrolling: touch;
+}
 
     </style>
 </head>
