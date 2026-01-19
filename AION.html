@@ -31,7 +31,7 @@
             padding: 15px;
             font-size: 15px;
         }
-        .container { max-width: 1900px; margin: auto; }
+        .container { max-width: 1400px; margin: auto; }
         
         /* 強化後的匯入區塊 */
         .input-area {
@@ -126,7 +126,8 @@
             font-size: 24px;
         }
 
-        /* 儀表板樣式 */
+   
+     /* 儀表板樣式 */
         .dashboard { display: none; flex-direction: column; gap: 20px; }
         .profile-card { background: var(--profile-bg); border: 1px solid var(--gold); border-radius: 12px; padding: 25px; display: flex; align-items: center; gap: 30px; flex-wrap: wrap; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); }
         .profile-img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--gold); padding: 3px; background: #000; }
@@ -152,7 +153,34 @@
         .skill-card { position: relative; display: flex; align-items: center; gap: 8px; padding: 10px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); border-radius: 8px; cursor: help; transition: 0.2s; }
         .skill-card img { width: 34px; height: 34px; border-radius: 4px; border: 1px solid var(--gold); }
         .sk-name { font-size: 13px; font-weight: bold; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 85px; }
-        .tooltip { visibility: hidden; width: 220px; background: #4c4d49 !important; border: 1px solid var(--gold); border-radius: 8px; padding: 12px; position: absolute; z-index: 9999 !important; bottom: 115%; left: 60%; transform: translateX(-50%); opacity: 0; transition: opacity 0.15s; box-shadow: 0 10px 40px rgb(0, 0, 0); color: #ffffff !important; pointer-events: none; white-space: normal; font-size: 12px; line-height: 1.5; border-top: 3px solid var(--gold); }
+        .tooltip { 
+    display: none; /* 1. 平時完全移除佔位，防止撐開寬度 */
+    width: 220px; 
+    background: #4c4d49 !important; 
+    border: 1px solid var(--gold); 
+    border-radius: 8px; 
+    padding: 12px; 
+    position: absolute; 
+    z-index: 9999 !important; 
+    bottom: 115%; 
+    left: 50%; /* 2. 建議改回 50% 配合 translateX(-50%) 居中 */
+    transform: translateX(-50%); 
+    opacity: 0; 
+    transition: opacity 0.15s; 
+    box-shadow: 0 10px 40px rgb(0, 0, 0); 
+    color: #ffffff !important; 
+    pointer-events: none; 
+    white-space: normal; 
+    font-size: 12px; 
+    line-height: 1.5; 
+    border-top: 3px solid var(--gold); 
+}
+
+/* 3. 當滑鼠移入觸發時，才顯示 display */
+.hover-calc:hover .tooltip {
+    display: block;
+    opacity: 1;
+}
         .th-hover, .hover-calc, .skill-card, .stat-mini-card { position: relative; }
         .th-hover:hover .tooltip, .hover-calc:hover .tooltip, .skill-card:hover .tooltip, .stat-mini-card:hover .tooltip { visibility: visible; opacity: 1; bottom: 165%; }
         .table-wrapper { overflow: visible !important; }
@@ -182,13 +210,24 @@
         .random-row { display: flex; justify-content: space-between; color: var(--green); margin-bottom: 3px; }
         .skill-badge-mini { color: var(--blue); margin-top: 5px; display: block; font-weight: bold; border-left: 2px solid var(--blue); padding-left: 6px; font-size: 11px; }
         
-    
         /* RWD 調整 */
-        @media (min-width: 1200px) { .main-layout-wrapper { display: grid; grid-template-columns: 4fr 6fr; gap: 20px; } }
+        @media (min-width: 1400px) { .main-layout-wrapper { display: grid; grid-template-columns: 4fr 6fr; gap: 20px; } }
         @media (max-width: 768px) { .profile-card { flex-direction: column; text-align: center; } .api-input-group { flex-direction: column; align-items: stretch; } .api-input-group input, .api-input-group select, .btn-api {  min-width: unset; } .stat-grid-main { grid-template-columns: repeat(2, 1fr); } #equip-armor-list, #equip-accessory-list { grid-template-columns: 1fr; } .skill-list { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); } .grid-box-container { grid-template-columns: 1fr; } .title-grid { grid-template-columns: 1fr; } .rank-badge{ width:100%} }
 
+       
+   /*在 @media (max-width: 768px) 區塊內修改*/
+@media (max-width: 768px) {    
+    /* 修改屬性全來源對帳總表的容器 */
+.table-wrapper {
+    width: 100%;
+    max-height: 600px; /* 重要：設定一個最大高度，表頭才會固定 */
+    overflow: auto !important; /* 同時允許水平與垂直捲動 */
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+}
 
- 
+}
+
 
 /* 容器：防止破版 */
 .table-wrapper {
@@ -259,104 +298,13 @@ tbody tr:hover td {
 
 
 
-/* 修復手機版捲動條外觀 */
-.table-wrapper::-webkit-scrollbar {
-    height: 8px;
-}
-.table-wrapper::-webkit-scrollbar-thumb {
-    background: var(--gold);
-    border-radius: 4px;
-} 
-    
-
-
-
-
-/* 在 @media (max-width: 768px) 區塊內修改 */
-@media (max-width: 768px) {
-    
-
-    /* 修改屬性全來源對帳總表的容器 */
-.table-wrapper {
-    width: 100%;
-    max-height: 500px; /* 重要：設定一個最大高度，表頭才會固定 */
-    overflow: auto !important; /* 同時允許水平與垂直捲動 */
-    -webkit-overflow-scrolling: touch;
-    position: relative;
-}
-
-/* 確保表格內容不會被截斷 */
-table {
-    border-collapse: separate;
-    border-spacing: 0;
-    min-width: 900px; 
-}
-
-/* 強制表頭 z-index 優先級 */
-thead th {
-    position: sticky;
-    top: 0; /* 黏在容器頂部 */
-    z-index: 120; /* 確保高於左側凍結欄位 */
-    background: #212631;
-}
-
-/* 強制左側欄位 z-index */
-.td-left {
-    position: sticky;
-    left: 0; /* 黏在容器左側 */
-    z-index: 110; 
-    background: #1a1f29 !important;
-}
-
-/* 左上角交叉點（最關鍵：要同時固定 top 和 left） */
-thead th.td-left {
-    position: sticky;
-    top: 0;
-    left: 0;
-    z-index: 130;
-}
-
-    .stat-grid-main {
-        /* 將原本的 2 欄改為自動填充，確保不會擠壓 */
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
-        gap: 10px;
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    .stat-mini-card {
-        /* 縮小手機版的內距與字體，避免撐開容器 */
-        padding: 10px 5px;
-        min-width: 0; /* 防止內容撐開 grid */
-    }
-
-    .stat-mini-val {
-        font-size: 18px; /* 稍微調小手機版的數值字體 */
-    }
-
-    /* 確保容器本身不會溢出 */
-    .card {
-        padding: 15px;
-        
-    }
-
-/* 確保表格在手機上獨立捲動，不影響整頁寬度 */
-.table-wrapper {
-    width: 100%;
-    overflow-x: auto !important; /* 強制表格內部捲動 */
-    -webkit-overflow-scrolling: touch;
-}
-
-
-
-}
-
-
-
 
 
 
     </style>
+
+
+
 </head>
 <body>
     <div id="loading" class="loading-overlay">⌛ 正在從伺服器獲取數據，請稍候...</div>
@@ -529,6 +477,7 @@ async function fetchFromApi() {
     
     document.getElementById('loading').style.display = 'flex';
 
+    
     try {
         // 構造原始 API 網址
         const baseUrl = `https://aion-api.bnshive.com/character/query?name=${encodeURIComponent(charName)}&server=${encodeURIComponent(serverName)}`;
@@ -570,136 +519,7 @@ function getGradeColor(grade) {
     return colors[grade] || 'white';
 }
 
-// function processData(json) {
-//     // 兼容不同的數據結構層次
-//     const data = json.queryResult ? json.queryResult.data : (json.data ? json.data : json);
-//     if (!data || !data.profile) { alert("無法在結果中找到有效的角色數據！"); return; }
 
-//     document.getElementById('main-content').style.display = 'flex';
-//     document.getElementById('arcana-grid').innerHTML = "";
-//     document.getElementById('set-bonus-grid').innerHTML = "";
-//     document.getElementById('stat-body').innerHTML = "";
-
-//     document.getElementById('p-name').innerText = data.profile.characterName;
-//     document.getElementById('p-title-disp').innerText = `[${data.profile.titleName || "無稱號"}]`;
-//     document.getElementById('p-img').src = getCorrectIcon(data.profile.profileImage);
-//     document.getElementById('p-server').innerText = data.profile.serverName;
-//     document.getElementById('p-lv').innerText = `Lv.${data.profile.characterLevel}`;
-//     document.getElementById('p-class').innerText = data.profile.className;
-//     const itemLvObj = data.stat.statList.find(s => s.type === "ItemLevel");
-//     document.getElementById('p-itemlv').innerText = itemLvObj ? itemLvObj.value : "--";
-//     document.getElementById('p-update').innerText = new Date().toLocaleString('zh-TW', { hour12: false });
-
-//     renderRankings(data.ranking ? data.ranking.rankingList : []);
-
-//     let stats = {};
-//     let boardSkillMap = {};
-//     let cardSkillMap = {};
-//     let processedSets = new Set();
-//     let armorHtml = "";
-//     let accessoryHtml = "";
-//     let titleHtml = "";
-
-//     const getEntry = (k) => {
-//         if (!stats[k]) {
-//             stats[k] = { 
-//                 nezakan: 0, zikel: 0, baizel: 0, triniel: 0, ariel: 0, asphel: 0, 
-//                 equipMain: 0, equipSub: 0, other: 0, 
-//                 isPerc: k.includes('%'),
-//                 detailGroups: { base: [], random: [], stone: [], arcana: [], title: [], etc: [] }
-//             };
-//         }
-//         return stats[k];
-//     };
-
-//     let mainStatHtml = "";
-//     (data.stat.statList || []).forEach(s => {
-//         if (s.type === "ItemLevel") return;
-//         let details = s.statSecondList ? s.statSecondList.map(d => `▹ ${d}`).join('<br>') : "無額外數據";
-//         mainStatHtml += `<div class="stat-mini-card"><span style="font-size:12px;color:#8b949e;display:block;">${s.name}</span><span class="stat-mini-val">${s.value}</span><div class="tooltip"><b>${s.name} 詳細轉換:</b><br>${details}</div></div>`;
-//     });
-//     document.getElementById('stat-main-grid').innerHTML = mainStatHtml;
-
-//     (data.daevanionDetails || []).forEach(b => {
-
-//         (b.detail?.openStatEffectList || []).forEach(ef => {
-//             let parts = ef.desc.split(' +'); if (parts.length < 2) return;
-//             let n = parts[0], vS = parts[1];
-//             let k = vS.includes('%') ? n.trim() + '%' : n.trim(), v = parseFloat(vS.replace('%', '')), e = getEntry(k);
-//             if (b.boardName.includes("奈薩肯")) e.nezakan += v;
-//             else if (b.boardName.includes("吉凱爾")) e.zikel += v;
-//             else if (b.boardName.includes("白傑爾")) e.baizel += v;
-//             else if (b.boardName.includes("崔妮爾")) e.triniel += v;
-//             else if (b.boardName.includes("艾瑞爾")) e.ariel += v;
-//             else if (b.boardName.includes("阿斯佩爾")) e.asphel += v;
-//         });
-//         (b.detail?.openSkillEffectList || []).forEach(sk => {
-//             let [sn, sv] = sk.desc.split(' +');
-//             boardSkillMap[sn] = (boardSkillMap[sn] || 0) + parseInt(sv);
-//         });
-//     });
-
-//     (data.title?.titleList || []).forEach(t => {
-//         if (t.equipCategory) { 
-//             let catName = t.equipCategory === "Attack" ? "⚔️ 攻擊稱號" : "🛡️ 防禦稱號";
-//             titleHtml += `<div class="title-box"><span class="title-label">${catName}</span><span class="title-val">${t.name}</span><div class="title-desc">${(t.equipStatList || []).map(ef => `▹ ${ef.desc}`).join('<br>')}</div></div>`;
-//             (t.equipStatList || []).forEach(ef => {
-//                 let parts = ef.desc.split(' +'); if (parts.length < 2) return;
-//                 let n = parts[0], vS = parts[1];
-//                 let k = vS.includes('%') ? n.trim() + '%' : n.trim(), v = parseFloat(vS.replace('%', '')), e = getEntry(k);
-//                 e.other += v; e.detailGroups.title.push(`[${t.name}]: +${vS}`);
-//             });
-//         }
-//     });
-//     document.getElementById('title-grid').innerHTML = titleHtml || "<div style='color:#8b949e; padding:10px;'>未裝備稱號</div>";
-
-//     const equipMap = {};
-//     (data.equipment ? data.equipment.equipmentList : []).forEach(item => { equipMap[item.slotPos] = item; });
-//     (data.itemDetails || []).forEach(i => {
-//         const d = i.detail; if (!d) return;
-//         const slot = i.slotPos;
-//         const isArmor = (slot >= 1 && slot <= 8) || slot === 21;
-//         const isAccessory = (slot >= 9 && slot <= 20) || (slot >= 22 && slot <= 40);
-//         const isArcana = (slot >= 41 && slot <= 45);
-//         const originalItem = equipMap[slot] || i;
-//         const finalIcon = getCorrectIcon(originalItem.icon);
-
-//         if (d.set && !processedSets.has(d.set.name)) {
-//             processedSets.add(d.set.name);
-//             document.getElementById('set-bonus-grid').innerHTML += `<div class="info-box"><div class="box-header">🔱 套裝：${d.set.name}</div>${d.set.bonuses.map(b => `<div style="margin-bottom:8px; padding-left:10px; border-left:2px solid var(--blue)"><span style="color:var(--blue); font-weight:bold;">[${b.degree}件效果]</span><br><span style="color:#e6edf3; font-size:12px;">${b.descriptions.join('、')}</span></div>`).join('')}</div>`;
-//         }
-
-//         if (isArcana) {
-//             const gradeColor = getGradeColor(d.grade); 
-//             let arcanaStatsHtml = (d.mainStats || []).map(ms => `<div>${ms.name} +${ms.value}</div>`).join('');
-//             let arcanaSubStatsHtml = (d.subStats || []).map(ss => `<div style="color:var(--green)">刻印: ${ss.name} +${ss.value}</div>`).join('');
-//             let arcanaSkillsHtml = (d.subSkills || []).map(sk => `<div style="color:var(--blue)">${sk.name} Lv.${sk.level}</div>`).join('');
-//             document.getElementById('arcana-grid').innerHTML += `<div class="info-box" style="border-left: 4px solid ${gradeColor}; display: flex; gap: 10px;"><img src="${getCorrectIcon(originalItem.icon)}" style="width: 44px; height: 44px; border-radius: 4px;"><div style="flex-grow: 1;"><div class="box-header" style="color:${gradeColor}">+${i.enchantLevel} ${d.name}</div><div style="font-size:12px;">${arcanaStatsHtml}</div><div style="font-size:11px;">${arcanaSubStatsHtml}</div><div style="font-size:11px;">${arcanaSkillsHtml}</div></div></div>`;
-//             (d.subSkills || []).forEach(sk => { if (!cardSkillMap[sk.name]) cardSkillMap[sk.name] = []; cardSkillMap[sk.name].push({ name: d.name, lv: sk.level }); });
-//             (d.mainStats || []).forEach(ms => { let e = getEntry(ms.name); e.other += parseFloat(ms.value); e.detailGroups.arcana.push(`${d.name}(主): +${ms.value}`); });
-//             (d.subStats || []).forEach(ss => { let k = ss.value.toString().includes('%') ? ss.name + '%' : ss.name; let e = getEntry(k); e.other += parseFloat(ss.value.toString().replace('%','')); e.detailGroups.arcana.push(`${d.name}(刻): +${ss.value}`); });
-//         }
-
-//         if (isArmor || isAccessory) {
-//             let gradeColor = getGradeColor(d.grade);
-//             let exceedBadge = (originalItem.exceedLevel || 0) > 0 ? `<div class="exceed-badge">${originalItem.exceedLevel}</div>` : "";
-//             let mainStatsD = (d.mainStats || []).map(s => `<div class="base-stat-row"><b>${s.name} ${(parseFloat(s.value)||0)+(parseFloat(s.extra)||0)}</b>${(parseFloat(s.extra)>0)?` <span style="color:var(--green);">(+${s.extra})</span>`:""}</div>`).join('');
-//             let godStoneHtml = (d.godStoneStat || []).map(gs => `<div style="margin-top: 5px; border: 1px dashed #00d4ff; padding: 4px; font-size:11px; border-radius:4px;"><b style="color:#00d4ff">${gs.name}</b><br>${gs.desc}</div>`).join('');
-//             let cardHtml = `<div class="equip-item-card" style="border-top-color: ${gradeColor}; border-left: 4px solid ${gradeColor};"><div class="equip-left-section"><div style="display:flex; align-items:center; gap:10px;"><div class="equip-img-container"><img src="${finalIcon}">${exceedBadge}</div><div><span class="equip-name" style="color:${gradeColor}">${d.name}</span><div><span style="color:#fff; font-weight:bold;">+${i.enchantLevel}</span></div></div></div><div style="margin-top:8px;">${mainStatsD}</div></div><div class="equip-right-section"><div style="color:#8b949e; font-size:10px; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:5px;">附加屬性/神石</div>${(d.subStats||[]).map(s=>`<div class="random-row"><span>${s.name}</span><span>+${s.value}</span></div>`).join('')}${(d.subSkills||[]).map(sk=>`<div class="skill-badge-mini">${sk.name} Lv.${sk.level}</div>`).join('')}${godStoneHtml}${(d.magicStoneStat||[]).map(ms=>`<div class="random-row" style="color:var(--gold); font-size:11px;"><span>[磨石] ${ms.name}</span><span>${ms.value}</span></div>`).join('')}</div></div>`;
-//             if (isArmor) armorHtml += cardHtml; else accessoryHtml += cardHtml;
-//             (d.mainStats || []).forEach(ms => { let v = parseFloat(ms.value || 0) + parseFloat(ms.extra || 0); let e = getEntry(ms.name); e.equipMain += v; e.detailGroups.base.push(`+${i.enchantLevel} ${d.name}: +${v}`); });
-//             (d.subStats || []).forEach(ss => { if (!ss.value) return; let k = ss.value.toString().includes('%') ? ss.name + '%' : ss.name; let v = parseFloat(ss.value.toString().replace('%', '')) || 0; let e = getEntry(k); e.equipSub += v; e.detailGroups.random.push(`${d.name}: +${ss.value}`); });
-//             (d.magicStoneStat || []).forEach(ms => { if (!ms.value) return; let k = ms.value.toString().includes('%') ? ms.name + '%' : ms.name; let v = parseFloat(ms.value.toString().replace('%', '')) || 0; let e = getEntry(k); e.equipSub += v; e.detailGroups.stone.push(`${d.name}: ${ms.value}`); });
-//         }
-//     });
-
-//     document.getElementById('equip-armor-list').innerHTML = armorHtml || "<div>無資料</div>";
-//     document.getElementById('equip-accessory-list').innerHTML = accessoryHtml || "<div>無資料</div>";
-//     renderSkills(data, boardSkillMap, cardSkillMap);
-//     renderStatTable(stats);
-    
-//     window.scrollTo({ top: document.getElementById('main-content').offsetTop - 20, behavior: 'smooth' });
-// }
 
 // 輔助渲染函數 (維持不變)
 
