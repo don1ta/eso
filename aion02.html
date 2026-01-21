@@ -461,10 +461,10 @@
             background: var(--card-bg);
             border: 2px solid var(--border);
             border-radius: 16px;
-            padding: 25px;
+            padding: 25px 25px 80px 25px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
                 inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            margin-bottom: 20px;
+            margin-bottom: 40px;
             position: relative;
         }
 
@@ -819,16 +819,17 @@
             /* 極高的 z-index 確保在最上層 */
         }
 
-        /* 💡 修正：針對「主要能力值概覽」區塊，將 Tooltip 改為向下顯示 */
+        /* 💡 修正：針對「主要能力值概覽」區塊,將 Tooltip 改為向下顯示 */
         .stat-mini-card .tooltip {
             max-width: min(300px, calc(100vw - 40px));
             /* 改為向下顯示 */
-            bottom: auto;
-            top: 100%;
-            margin-top: 10px;
+            bottom: auto !important;
+            top: calc(100% + 5px) !important;
+            margin-top: 0;
             margin-bottom: 0;
             border-top: none;
             border-bottom: 3px solid var(--primary);
+            z-index: 10000 !important;
         }
 
         /* 技能等級分解 - tooltip 最大寬度 */
@@ -842,14 +843,15 @@
             max-height: 500px;
         }
 
-        /* 💡 修正：針對表格前兩行，將 Tooltip 改為向下顯示，避免被頂部邊界或表頭裁切 */
-        tbody tr:nth-child(-n+2) .hover-calc .tooltip {
-            bottom: auto;
-            top: 100%;
-            margin-top: 10px;
+        /* 💡 修正:針對表格前 5 行,將 Tooltip 改為向下顯示,避免被基本盤區塊遮擋 */
+        tbody tr:nth-child(-n+5) .hover-calc .tooltip {
+            bottom: auto !important;
+            top: calc(100% + 5px) !important;
+            margin-top: 0;
             margin-bottom: 0;
             border-top: none;
-            border-bottom: 3px solid var(--gold);
+            border-bottom: 3px solid var(--primary);
+            z-index: 10000 !important;
         }
 
         /* 4. 表格基礎設定 */
