@@ -6,23 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
     <title>Aion2 高階解析 - 角色名稱快速查詢版</title>
+
+
     <style>
         /* 保留你原本的所有 CSS 樣式 */
         :root {
-            --bg: #0b0e14;
-            --panel: #1a1f29;
-            --border: #333c4d;
-            --gold: #d4b483;
-            --blue: #58a6ff;
-            --green: #3fb950;
-            --nezakan: #e06c75;
-            --zikel: #98c379;
-            --triniel: #61afef;
-            --ariel: #ff9f1c;
-            --asphel: #bf40bf;
-            --baizel: #ff6c6c;
-            --arcana: #4ec9b0;
-            --profile-bg: linear-gradient(135deg, #1e2533 0%, #0b0e14 100%);
+            /* 🎨 現代深色主題配色 */
+            --bg: #0a0e17;
+            --bg-secondary: #0f1419;
+            --panel: #151b26;
+            --panel-elevated: #1a2332;
+            --border: #2d3748;
+            --border-bright: #4a5568;
+
+            /* 🌟 主要品牌色 - 霓虹藍金漸變 */
+            --primary: #00d4ff;
+            --primary-dark: #0099cc;
+            --primary-glow: rgba(0, 212, 255, 0.3);
+
+            /* 💎 金色系 - 更亮眼的賽博金 */
+            --gold: #ffd93d;
+            --gold-bright: #ffe66d;
+            --gold-dark: #d4af37;
+            --gold-glow: rgba(255, 217, 61, 0.3);
+
+            /* 🔵 藍色系 - 電光藍 */
+            --blue: #00d4ff;
+            --blue-bright: #33ddff;
+            --blue-dark: #0099cc;
+            --blue-glow: rgba(0, 212, 255, 0.25);
+
+            /* 🟢 綠色系 - 霓虹綠 */
+            --green: #00ff88;
+            --green-bright: #33ffaa;
+            --green-glow: rgba(0, 255, 136, 0.25);
+
+            /* 🎮 遊戲陣營色 - 更鮮豔 */
+            --nezakan: #ff4757;
+            --zikel: #7bed9f;
+            --triniel: #70a1ff;
+            --ariel: #ffa502;
+            --asphel: #d63aff;
+            --baizel: #ff6348;
+            --arcana: #1dd1a1;
+
+            /* 🌈 漸變背景 */
+            --profile-bg: linear-gradient(135deg, #1a2332 0%, #0f1922 50%, #0a0e17 100%);
+            --card-bg: linear-gradient(145deg, rgba(26, 35, 50, 0.6), rgba(15, 25, 34, 0.4));
+            --accent-gradient: linear-gradient(135deg, var(--primary), var(--gold));
+            --glow-gradient: radial-gradient(circle at center, var(--primary-glow), transparent);
         }
 
         body {
@@ -41,12 +73,38 @@
 
         /* 強化後的匯入區塊 */
         .input-area {
-            background: var(--panel);
+            background: var(--card-bg);
             border: 2px solid var(--gold);
             padding: 25px;
-            border-radius: 12px;
+            border-radius: 16px;
             margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6),
+                0 0 40px var(--gold-glow),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .input-area::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--glow-gradient);
+            opacity: 0.05;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .import-section {
@@ -64,12 +122,23 @@
 
         .api-input-group input,
         .api-input-group select {
-            background: #010409;
-            border: 1px solid var(--border);
-            color: var(--blue);
-            padding: 12px;
-            border-radius: 6px;
+            background: rgba(10, 14, 23, 0.8);
+            border: 2px solid var(--border);
+            color: var(--blue-bright);
+            padding: 12px 16px;
+            border-radius: 8px;
             font-family: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+        }
+
+        .api-input-group input:focus,
+        .api-input-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow),
+                0 0 20px var(--blue-glow);
+            background: rgba(10, 14, 23, 1);
         }
 
         #charNameInput {
@@ -95,13 +164,22 @@
         textarea {
             width: 90%;
             height: 80px;
-            background: #010409;
-            border: 1px solid var(--border);
-            color: #fff;
+            background: rgba(10, 14, 23, 0.8);
+            border: 2px solid var(--border);
+            color: var(--blue-bright);
             padding: 12px;
-            border-radius: 6px;
-            font-family: monospace;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
             resize: vertical;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow),
+                0 0 20px var(--blue-glow);
+            background: rgba(10, 14, 23, 1);
         }
 
         input[type="file"] {
@@ -109,35 +187,131 @@
         }
 
         .file-label {
-            background: #30363d;
-            color: #fff;
+            background: linear-gradient(135deg, var(--panel-elevated), var(--panel));
+            color: var(--blue-bright);
             padding: 12px 20px;
-            border-radius: 6px;
+            border-radius: 8px;
+            border: 2px solid var(--border);
             cursor: pointer;
             font-weight: bold;
-            transition: 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-label::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .file-label:hover {
+            background: linear-gradient(135deg, var(--panel-elevated), var(--border));
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4),
+                0 0 20px var(--blue-glow);
+        }
+
+        .file-label:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .file-label:active {
+            transform: translateY(0);
         }
 
         .btn-api {
-            background: linear-gradient(135deg, #58a6ff, #1f6feb);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            border: none;
+            border: 2px solid var(--primary);
             padding: 0 30px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
             min-height: 45px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-api::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-api:hover {
+            background: linear-gradient(135deg, var(--blue-bright), var(--primary));
+            border-color: var(--blue-bright);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--blue-glow),
+                0 0 30px var(--primary-glow);
+        }
+
+        .btn-api:hover::before {
+            left: 100%;
+        }
+
+        .btn-api:active {
+            transform: translateY(0);
         }
 
         button#parseBtn {
-            background: linear-gradient(135deg, #d4b483, #aa8a59);
-            color: #000;
-            border: none;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: #0a0e17;
+            border: 2px solid var(--gold-bright);
             padding: 12px 40px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
             font-size: 18px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button#parseBtn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button#parseBtn:hover {
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+            border-color: var(--gold-bright);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px var(--gold-glow),
+                0 0 40px var(--gold-glow);
+        }
+
+        button#parseBtn:hover::after {
+            width: 400px;
+            height: 400px;
+        }
+
+        button#parseBtn:active {
+            transform: translateY(-1px) scale(1);
         }
 
         .loading-overlay {
@@ -165,14 +339,41 @@
 
         .profile-card {
             background: var(--profile-bg);
-            border: 1px solid var(--gold);
-            border-radius: 12px;
+            border: 2px solid var(--gold);
+            border-radius: 16px;
             padding: 25px;
             display: flex;
             align-items: center;
             gap: 30px;
             flex-wrap: wrap;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7),
+                0 0 40px var(--gold-glow),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+
+            0%,
+            100% {
+                left: -100%;
+            }
+
+            50% {
+                left: 100%;
+            }
         }
 
         .profile-img {
@@ -181,14 +382,18 @@
             border-radius: 50%;
             border: 3px solid var(--gold);
             padding: 3px;
-            background: #000;
+            background: linear-gradient(135deg, var(--gold), var(--primary));
+            box-shadow: 0 0 30px var(--gold-glow);
         }
 
         .profile-name {
             font-size: 32px;
             font-weight: 800;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(212, 180, 131, 0.3);
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px var(--gold-glow));
         }
 
         .rank-container {
@@ -199,14 +404,22 @@
         }
 
         .rank-badge {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 8px 12px;
+            background: linear-gradient(145deg, rgba(26, 35, 50, 0.6), rgba(15, 25, 34, 0.4));
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 14px;
             display: flex;
             align-items: center;
             gap: 10px;
             min-width: 160px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .rank-badge:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px var(--blue-glow);
+            transform: translateY(-2px);
         }
 
         .rank-badge img {
@@ -227,7 +440,8 @@
         .rank-val {
             font-weight: bold;
             font-size: 14px;
-            color: var(--gold);
+            color: var(--gold-bright);
+            text-shadow: 0 0 10px var(--gold-glow);
         }
 
         .rank-change {
@@ -244,30 +458,37 @@
         }
 
         .card {
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 16px;
             padding: 25px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
             margin-bottom: 20px;
             position: relative;
         }
 
         h3 {
-            color: var(--gold);
+            color: var(--gold-bright);
             margin: 0 0 15px 0;
             font-size: 19px;
             border-left: 5px solid var(--gold);
             padding-left: 12px;
+            text-shadow: 0 0 20px var(--gold-glow);
+            font-weight: 700;
         }
 
         .sk-label {
             font-size: 14px;
-            color: #8b949e;
+            color: var(--blue-bright);
             margin-bottom: 12px;
-            border-bottom: 1px solid #333c4d;
-            padding-bottom: 5px;
-            font-weight: bold;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
         }
 
         .stat-grid-main {
@@ -275,32 +496,46 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 12px;
             margin-bottom: 10px;
+            align-items: stretch;
         }
 
         .stat-mini-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            border-radius: 10px;
+            background: linear-gradient(145deg, rgba(26, 35, 50, 0.5), rgba(15, 25, 34, 0.3));
+            border: 2px solid var(--border);
+            border-radius: 12px;
             padding: 15px;
             text-align: center;
             position: relative;
             cursor: help;
-            transition: all 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
         }
 
         .stat-mini-card:hover {
-            background: rgba(88, 166, 255, 0.08);
-            transform: translateY(-3px);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(0, 212, 255, 0.05));
+            transform: translateY(-5px) scale(1.03);
             z-index: 100;
-            border-color: var(--blue);
+            border-color: var(--primary);
+            box-shadow: 0 12px 35px var(--blue-glow),
+                0 0 30px var(--primary-glow),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         .stat-mini-val {
             display: block;
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--gold);
+            font-size: 24px;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-top: 5px;
+            filter: drop-shadow(0 0 10px var(--gold-glow));
         }
 
         .main-layout-wrapper {
@@ -309,8 +544,8 @@
 
         .skill-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 8px;
             margin-bottom: 25px;
         }
 
@@ -320,59 +555,196 @@
             align-items: center;
             gap: 8px;
             padding: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            background: linear-gradient(145deg, rgba(26, 35, 50, 0.4), rgba(15, 25, 34, 0.2));
+            border: 2px solid var(--border);
+            border-radius: 10px;
             cursor: help;
-            transition: 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(5px);
+        }
+
+        .skill-card:hover {
+            background: linear-gradient(135deg, rgba(255, 217, 61, 0.2), rgba(255, 217, 61, 0.05));
+            border-color: var(--gold);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px var(--gold-glow),
+                0 0 20px var(--gold-glow);
+        }
+
+        .skill-card:hover img {
+            transform: scale(1.1) rotate(3deg);
+            box-shadow: 0 4px 15px rgba(212, 180, 131, 0.5);
+        }
+
+        .skill-card img {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .skill-card img {
             width: 34px;
             height: 34px;
-            border-radius: 4px;
-            border: 1px solid var(--gold);
+            border-radius: 6px;
+            border: 2px solid var(--gold);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px var(--gold-glow);
         }
 
         .sk-name {
-            font-size: 13px;
-            font-weight: bold;
-            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--blue-bright);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 85px;
+            max-width: 80px;
+            text-shadow: 0 0 10px var(--blue-glow);
         }
 
         .tooltip {
-            display: none;
-            /* 1. 平時完全移除佔位，防止撐開寬度 */
-            width: 220px;
-            background: #4c4d49 !important;
-            border: 1px solid var(--gold);
-            border-radius: 8px;
-            padding: 12px;
+            visibility: hidden;
+            min-width: 180px;
+            max-width: min(350px, calc(100vw - 40px));
+            width: max-content;
+            /* 💎 現代化深色質感配色 */
+            background: linear-gradient(145deg, rgba(26, 35, 50, 0.98), rgba(15, 25, 34, 0.98)) !important;
+            backdrop-filter: blur(20px) saturate(180%);
+            /* 強化磨砂玻璃效果 */
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-top: 3px solid var(--primary);
+            border-radius: 12px;
+            padding: 16px;
             position: absolute;
             z-index: 9999 !important;
-            bottom: 115%;
+            /* 顯示位置 */
+            bottom: 100%;
             left: 50%;
-            /* 2. 建議改回 50% 配合 translateX(-50%) 居中 */
             transform: translateX(-50%);
+            margin-bottom: 10px;
             opacity: 0;
-            transition: opacity 0.15s;
-            box-shadow: 0 10px 40px rgb(0, 0, 0);
-            color: #ffffff !important;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            /* 柔和深邃陰影 + 霓虹光暈 */
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9),
+                0 0 30px var(--primary-glow),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            color: #e8f0ff !important;
             pointer-events: none;
             white-space: normal;
-            font-size: 12px;
-            line-height: 1.5;
-            border-top: 3px solid var(--gold);
+            font-size: 13px;
+            line-height: 1.6;
+            max-height: 400px;
+            overflow-y: auto;
         }
 
-        /* 3. 當滑鼠移入觸發時，才顯示 display */
-        .hover-calc:hover .tooltip {
-            display: block;
-            opacity: 1;
+        /* Tooltip 內部的標題樣式優化 */
+        .tooltip b {
+            color: var(--gold-bright) !important;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 10px var(--gold-glow);
+        }
+
+        /* 自定義滾動條樣式 (Tooltip 內部) */
+        .tooltip::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .tooltip::-webkit-scrollbar-thumb {
+            background: rgba(197, 160, 89, 0.5);
+            border-radius: 10px;
+        }
+
+        .tooltip::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Tooltip 關閉按鈕樣式 */
+        .tooltip-close-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 22px;
+            height: 22px;
+            background: rgba(255, 60, 60, 0.8);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+            transition: all 0.2s;
+            padding: 0;
+        }
+
+        .tooltip-close-btn:hover {
+            background: rgba(255, 0, 0, 1);
+            transform: scale(1.1);
+        }
+
+        /* 當 tooltip 被固定時顯示關閉按鈕 */
+        .tooltip.tooltip-pinned {
+            visibility: visible !important;
+            opacity: 1 !important;
+            pointer-events: auto !important;
+        }
+
+        .tooltip.tooltip-pinned .tooltip-close-btn {
+            display: flex;
+        }
+
+        /* 防止 tooltip 超出左邊界 - 針對 grid 佈局 */
+        /* 主要能力值概覽是 4 欄 grid,所以每行第 1, 5, 9... 個元素需要左對齊 */
+        .stat-mini-card:nth-child(4n+1) .tooltip {
+            left: 0;
+            transform: translateX(0);
+        }
+
+        /* 防止 tooltip 超出右邊界 - 針對 grid 佈局 */
+        /* 主要能力值概覽是 4 欄 grid,所以每行第 4, 8, 12... 個元素需要右對齊 */
+        .stat-mini-card:nth-child(4n) .tooltip {
+            left: auto;
+            right: 0;
+            transform: translateX(0);
+        }
+
+        /* 🛡️ 技能卡片邊界處理 (針對網頁版一排 3 欄) */
+        /* 每排第 1 個 (1, 4, 7...) - 靠左 */
+        .skill-card:nth-child(3n+1) .tooltip {
+            left: 0;
+            transform: translateX(0);
+        }
+
+        /* 每排第 2 個 (2, 5, 8...) - 保持居中 (預設) */
+        .skill-card:nth-child(3n+2) .tooltip {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 每排第 3 個 (3, 6, 9...) - 靠右 */
+        .skill-card:nth-child(3n) .tooltip {
+            left: auto;
+            right: 0;
+            transform: translateX(0);
+        }
+
+        /* 🛡️ 對帳總表邊界處理 - 讓右側欄位的 tooltip 靠右顯示,避免超出邊界 */
+        table td:nth-last-child(-n+4) .tooltip {
+            left: auto;
+            right: 0;
+            transform: translateX(0);
+        }
+
+        /* 表格中的 td 需要確保 z-index 與溢出設定正確 */
+        table td {
+            overflow: visible !important;
+        }
+
+        /* 確保 .hover-calc 容器也允許溢出 */
+        .hover-calc {
+            overflow: visible !important;
         }
 
         .th-hover,
@@ -382,60 +754,150 @@
             position: relative;
         }
 
+        /* 統一的 hover 效果 */
         .th-hover:hover .tooltip,
         .hover-calc:hover .tooltip,
         .skill-card:hover .tooltip,
         .stat-mini-card:hover .tooltip {
             visibility: visible;
             opacity: 1;
-            bottom: 165%;
         }
 
+        /* 💡 核心修正：懸停時提升容器層級，防止 Tooltip 被後方元素 (如表格的下一行) 遮擋 */
+        .th-hover:hover,
+        .hover-calc:hover,
+        .skill-card:hover,
+        .stat-mini-card:hover {
+            z-index: 2000;
+        }
+
+        /* 為三個區塊設置容器限制 */
+        .stat-grid-main,
+        .skill-list {
+            position: relative;
+            overflow: visible;
+        }
+
+
+        /* 表格容器:統一設定最大高度與自動滾動,以實現固定表頭 */
         .table-wrapper {
-            overflow: visible !important;
+            position: relative;
+            max-height: 70vh;
+            /* 設定最大高度使表頭能固定在容器頂部 */
+            overflow: auto !important;
+            /* 同時支援水平與垂直滾動 */
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 80px;
+            /* 增加底部間距,讓 tooltip 有空間顯示 */
+            border: 1px solid var(--border);
+            border-radius: 8px;
         }
 
+        /* 網頁版表頭凍結調整:黏在螢幕頂部,並留下一點頂部間距 */
+        thead th {
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 100;
+            background: linear-gradient(145deg, #1a2332, #151b26);
+            box-shadow: inset 0 -2px 0 var(--primary);
+            vertical-align: middle !important;
+        }
+
+        /* 表頭的 tooltip 使用 fixed 定位,確保在最上層 */
+        thead th.th-hover .tooltip {
+            position: fixed !important;
+            /* 使用 fixed 避免被 sticky 元素遮擋 */
+            bottom: auto;
+            top: auto;
+            /* 位置由 JavaScript 動態計算 */
+            left: auto;
+            transform: none;
+            margin: 0;
+            border-top: none;
+            border-bottom: 3px solid var(--gold);
+            z-index: 99999 !important;
+            /* 極高的 z-index 確保在最上層 */
+        }
+
+        /* 💡 修正：針對「主要能力值概覽」區塊，將 Tooltip 改為向下顯示 */
+        .stat-mini-card .tooltip {
+            max-width: min(300px, calc(100vw - 40px));
+            /* 改為向下顯示 */
+            bottom: auto;
+            top: 100%;
+            margin-top: 10px;
+            margin-bottom: 0;
+            border-top: none;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        /* 技能等級分解 - tooltip 最大寬度 */
+        .skill-card .tooltip {
+            max-width: min(250px, calc(100vw - 40px));
+        }
+
+        /* 屬性全來源對帳總表 - tooltip 最大寬度 */
+        .hover-calc .tooltip {
+            max-width: min(400px, calc(100vw - 40px));
+            max-height: 500px;
+        }
+
+        /* 💡 修正：針對表格前兩行，將 Tooltip 改為向下顯示，避免被頂部邊界或表頭裁切 */
+        tbody tr:nth-child(-n+2) .hover-calc .tooltip {
+            bottom: auto;
+            top: 100%;
+            margin-top: 10px;
+            margin-bottom: 0;
+            border-top: none;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        /* 4. 表格基礎設定 */
         table {
             border-collapse: separate;
             border-spacing: 0;
-            font-size: 14px;
             width: 100%;
-            white-space: nowrap;
+            min-width: 900px;
         }
 
-        thead th {
-            position: sticky;
-            top: 0;
-            background: #212631;
-            z-index: 10;
-            padding: 12px 5px;
-            border-bottom: 2px solid var(--gold);
-            border-right: 1px solid var(--border);
-        }
-
-        td {
+        table td,
+        table th {
             border-right: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
-            padding: 10px 5px;
+            padding: 12px 10px;
             text-align: center;
+            white-space: nowrap;
+            vertical-align: middle !important;
         }
 
+        /* 凍結首欄基礎樣式 */
         .td-left {
             text-align: left !important;
             font-weight: bold;
             color: #fff;
-            padding-left: 15px;
+            padding-left: 15px !important;
             position: sticky;
             left: 0;
-            background: #1a1f29;
-            z-index: 5;
+            background: #1a1f29 !important;
+            z-index: 90;
             min-width: 140px;
+            box-shadow: 3px 0 6px rgba(0, 0, 0, 0.4);
+        }
+
+        /* 表頭樣式移至上方 table-wrapper 區塊統一管理 */
+
+        /* 左上角交叉點：需同時具備 top 與 left 凍結 */
+        thead th.td-left {
+            z-index: 110;
+            top: 0;
+            left: 0;
         }
 
         .hover-calc {
-            border-bottom: 1px dashed var(--blue);
+            border-bottom: 1px dashed var(--primary);
             cursor: help;
             display: inline-block;
+            vertical-align: middle;
         }
 
         .grid-box-container {
@@ -446,19 +908,22 @@
         }
 
         .info-box {
-            background: rgba(212, 180, 131, 0.05);
-            border: 1px solid var(--gold);
-            border-radius: 8px;
+            background: linear-gradient(145deg, rgba(255, 217, 61, 0.08), rgba(255, 217, 61, 0.03));
+            border: 2px solid var(--gold);
+            border-radius: 10px;
             padding: 15px;
+            backdrop-filter: blur(5px);
         }
 
         .box-header {
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 5px;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: var(--gold);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: var(--gold-bright);
             font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .title-grid {
@@ -469,27 +934,37 @@
         }
 
         .title-box {
-            background: rgba(88, 166, 255, 0.08);
-            border: 1px solid var(--blue);
-            border-radius: 8px;
+            background: linear-gradient(145deg, rgba(0, 212, 255, 0.12), rgba(0, 212, 255, 0.05));
+            border: 2px solid var(--primary);
+            border-radius: 10px;
             padding: 12px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .title-box:hover {
+            border-color: var(--blue-bright);
+            box-shadow: 0 4px 15px var(--blue-glow);
+            transform: translateY(-2px);
         }
 
         .title-label {
             font-size: 11px;
-            color: var(--blue);
+            color: var(--primary);
             display: block;
-            border-bottom: 1px solid rgba(88, 166, 255, 0.2);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
             margin-bottom: 5px;
             padding-bottom: 3px;
+            font-weight: 600;
         }
 
         .title-val {
             font-size: 15px;
             font-weight: bold;
-            color: #fff;
+            color: var(--blue-bright);
             display: block;
             margin-bottom: 5px;
+            text-shadow: 0 0 10px var(--blue-glow);
         }
 
         .title-desc {
@@ -503,11 +978,12 @@
             align-items: center;
             gap: 10px;
             margin: 25px 0 15px 0;
-            color: var(--gold);
+            color: var(--gold-bright);
             font-size: 1.3em;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 8px;
-            font-weight: bold;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 0 15px var(--gold-glow);
         }
 
         #equip-armor-list,
@@ -518,13 +994,39 @@
         }
 
         .equip-item-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            background: linear-gradient(145deg, rgba(26, 35, 50, 0.4), rgba(15, 25, 34, 0.2));
+            border: 2px solid var(--border);
+            border-radius: 12px;
             display: flex;
             min-height: 120px;
             border-top: 3px solid var(--gold);
-            transition: 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .equip-item-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 217, 61, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .equip-item-card:hover {
+            background: linear-gradient(145deg, rgba(26, 35, 50, 0.6), rgba(15, 25, 34, 0.4));
+            border-color: var(--gold);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--gold-glow),
+                0 0 25px var(--gold-glow);
+        }
+
+        .equip-item-card:hover::before {
+            left: 100%;
         }
 
         .equip-left-section {
@@ -575,31 +1077,38 @@
         .equip-name {
             font-weight: bold;
             font-size: 14px;
-            line-height: 1.2;
-            display: block;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+            color: var(--blue-bright);
         }
 
         .base-stat-row {
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 3px 0;
+            padding: 4px 0;
             font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .random-row {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             color: var(--green);
             margin-bottom: 3px;
         }
 
         .skill-badge-mini {
-            color: var(--blue);
+            color: var(--primary);
             margin-top: 5px;
             display: block;
             font-weight: bold;
-            border-left: 2px solid var(--blue);
-            padding-left: 6px;
+            border-left: 3px solid var(--primary);
+            padding-left: 8px;
             font-size: 11px;
+            text-shadow: 0 0 10px var(--blue-glow);
         }
 
         /* RWD 調整 */
@@ -632,13 +1141,49 @@
                 grid-template-columns: repeat(2, 1fr);
             }
 
+            /* 手機版：針對能力值卡片 (2 欄) */
+            /* 左側卡片 (1, 3, 5...) */
+            .stat-mini-card:nth-child(odd) .tooltip {
+                left: 0 !important;
+                right: auto !important;
+                transform: translateX(0) !important;
+            }
+
+            /* 右側卡片 (2, 4, 6...) */
+            .stat-mini-card:nth-child(even) .tooltip {
+                left: auto !important;
+                right: 0 !important;
+                transform: translateX(0) !important;
+            }
+
+            /* 手機版：針對技能卡片 (一排 2 欄) */
+            .skill-list {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            /* 🛡️ 手機版技能卡片 Tooltip 邊界處理 (針對一排 2 欄) */
+            /* 每排第 1 個 (1, 3, 5...) - 靠左對齊 */
+            .skill-card:nth-child(2n+1) .tooltip {
+                left: 0 !important;
+                right: auto !important;
+                transform: translateX(0) !important;
+                width: 80vw !important;
+                max-width: 250px !important;
+            }
+
+            /* 每排第 2 個 (2, 4, 6...) - 靠右對齊 (right: 0) */
+            .skill-card:nth-child(2n) .tooltip {
+                left: auto !important;
+                right: 0 !important;
+                transform: translateX(0) !important;
+                width: 80vw !important;
+                max-width: 250px !important;
+            }
+
             #equip-armor-list,
             #equip-accessory-list {
                 grid-template-columns: 1fr;
-            }
-
-            .skill-list {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             }
 
             .grid-box-container {
@@ -652,83 +1197,40 @@
             .rank-badge {
                 width: 100%
             }
+
         }
 
 
-        /*在 @media (max-width: 768px) 區塊內修改*/
-        @media (max-width: 768px) {
 
-            /* 修改屬性全來源對帳總表的容器 */
+        /* 手機版：針對表格設置固定高度與內部捲動 */
+        @media (max-width: 768px) {
             .table-wrapper {
-                width: 100%;
-                max-height: 600px;
-                /* 重要：設定一個最大高度，表頭才會固定 */
+                max-height: 500px;
+                /* 手機版通常螢幕較小，縮減最大高度 */
                 overflow: auto !important;
-                /* 同時允許水平與垂直捲動 */
-                -webkit-overflow-scrolling: touch;
-                position: relative;
             }
 
+            /* 手機版：表頭需黏在容器頂部 */
+            thead th {
+                top: 0 !important;
+            }
         }
 
-
-        /* 容器：防止破版 */
-        .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-            overflow-y: visible;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        /* 表格：確保有足夠寬度產生捲動 */
-        table {
-            border-collapse: separate;
-            border-spacing: 0;
-            width: 100%;
-            min-width: 900px;
-            /* 針對你的多欄位，這行是凍結成功的關鍵 */
-        }
-
-        /* 所有的單元格：避免文字換行毀掉高度 */
-        table th,
-        table td {
-            white-space: nowrap;
-            padding: 10px 8px;
-            box-shadow: inset -1px -1px 0 rgba(255, 255, 255, 0.05);
-            /* 代替 border */
-
-        }
-
-        /* 凍結表頭 */
-        thead th {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: #212631;
-            box-shadow: inset 0 -2px 0 var(--gold);
-        }
-
-        /* 凍結首欄 */
-        .td-left {
-            position: sticky;
-            left: 0;
-            z-index: 90;
-            background: #1a1f29 !important;
-            box-shadow: 3px 0 6px rgba(0, 0, 0, 0.4);
-            /* 增加陰影辨識度 */
-        }
-
-        /* 左上角交叉點 */
-        thead th.td-left {
-            z-index: 110;
-            top: 0;
-            left: 0;
-        }
+        /* 表格腳步輔助樣式已整合至上方 */
 
         /* 7. 行內懸停效果 (Hover) */
-        /* 增加這段能讓使用者在看長表格時，不容易看錯行 */
+        /* 增加這段能讓使用者在看長表格時,不容易看錯行 */
+        tbody tr {
+            position: relative;
+        }
+
         tbody tr:hover td {
             background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        tbody td {
+            position: relative;
+            /* 確保 tooltip 能夠基於 td 定位 */
         }
 
         /* 8. 捲動條美化 */
@@ -745,9 +1247,57 @@
         .table-wrapper::-webkit-scrollbar-track {
             background: rgba(0, 0, 0, 0.1);
         }
+
+        /* 11. 摺疊面板相關樣式 */
+        .collapsible-header {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-top: 25px;
+            border-left: 5px solid var(--gold);
+            transition: all 0.2s;
+        }
+
+        .collapsible-header:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .collapsible-header h3 {
+            margin: 0;
+            border-left: none;
+            padding-left: 0;
+            font-size: 17px;
+        }
+
+        .collapsible-content {
+            overflow: hidden;
+            max-height: 2500px;
+            transition: max-height 0.5s cubic-bezier(0, 1, 0, 1), opacity 0.3s, margin 0.3s;
+            opacity: 1;
+            margin-top: 15px;
+        }
+
+        .collapsible-content.collapsed {
+            max-height: 0;
+            opacity: 0;
+            margin-top: 0;
+        }
+
+        .toggle-icon {
+            color: var(--gold);
+            transition: transform 0.3s;
+            font-size: 12px;
+        }
+
+        .collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
     </style>
-
-
 
 </head>
 
@@ -811,14 +1361,7 @@
                     <button class="btn-api" onclick="fetchFromApi()">立即查詢</button>
                 </div>
 
-                <div style="font-size: 14px; color: var(--gold); font-weight: bold;">📝 方法 B：手動貼上 JSON 或選擇檔案</div>
-                <textarea id="jsonInput" placeholder="請在此處貼上從 API 獲取的完整 JSON 內容..."></textarea>
 
-                <div class="import-controls">
-                    <label class="file-label" for="fileInput">📁 選擇檔案</label>
-                    <input type="file" id="fileInput" accept=".json">
-                    <button id="parseBtn" onclick="handleTextImport()">立即解析文字內容</button>
-                </div>
                 興趣製作非商業用途，請勿用於營利行為，資料有誤依官方為主。
             </div>
         </div>
@@ -861,24 +1404,40 @@
                         <div id="arcana-grid" class="grid-box-container"></div>
                         <h3>🔱 套裝效果全覽</h3>
                         <div id="set-bonus-grid" class="grid-box-container" style="grid-template-columns: 1fr;"></div>
-                        <h3>🎖️ 稱號系統加成細項</h3>
-                        <div id="title-grid" class="title-grid"></div>
                     </div>
                 </div>
                 <div class="right-column">
+                    <!-- 戰鬥數據分析區塊 -->
+                    <div class="card">
+                        <h3>⚔️ 基礎數據分析</h3>
+                        <div id="combat-stats-grid" class="grid-box-container"
+                            style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;"></div>
+                    </div>
                     <div class="card" style="padding:0">
                         <h3 style="padding: 25px 25px 0 25px;">🛡️ 屬性全來源對帳總表</h3>
-                        <div class="table-wrapper">
+                        <div class="table-wrapper" style="margin-bottom: 20px;">
                             <table>
                                 <thead>
                                     <tr>
                                         <th class="td-left">屬性項目</th>
-                                        <th style="color:var(--nezakan)">奈薩肯</th>
-                                        <th style="color:var(--zikel)">吉凱爾</th>
-                                        <th style="color:var(--baizel)">白傑爾</th>
-                                        <th style="color:var(--triniel)">崔妮爾</th>
-                                        <th style="color:var(--ariel)">艾瑞爾</th>
-                                        <th style="color:var(--asphel)">阿斯佩爾</th>
+                                        <th class="th-hover" style="color:var(--nezakan)" data-board="奈薩肯">奈薩肯<div
+                                                class="tooltip" id="tooltip-nezakan"></div>
+                                        </th>
+                                        <th class="th-hover" style="color:var(--zikel)" data-board="吉凱爾">吉凱爾<div
+                                                class="tooltip" id="tooltip-zikel"></div>
+                                        </th>
+                                        <th class="th-hover" style="color:var(--baizel)" data-board="白傑爾">白傑爾<div
+                                                class="tooltip" id="tooltip-baizel"></div>
+                                        </th>
+                                        <th class="th-hover" style="color:var(--triniel)" data-board="崔妮爾">崔妮爾<div
+                                                class="tooltip" id="tooltip-triniel"></div>
+                                        </th>
+                                        <th class="th-hover" style="color:var(--ariel)" data-board="艾瑞爾">艾瑞爾<div
+                                                class="tooltip" id="tooltip-ariel"></div>
+                                        </th>
+                                        <th class="th-hover" style="color:var(--asphel)" data-board="阿斯佩爾">阿斯佩爾<div
+                                                class="tooltip" id="tooltip-asphel"></div>
+                                        </th>
                                         <th style="color:var(--gold)">武防強化</th>
                                         <th style="color:var(--blue)">刻印/磨石</th>
                                         <th>聖物/稱號</th>
@@ -887,6 +1446,30 @@
                                 </thead>
                                 <tbody id="stat-body"></tbody>
                             </table>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>🎖️ 稱號系統加成細項</h3>
+                        <div id="title-grid" class="title-grid"></div>
+                        <h3 style="margin-top: 25px;">🐾 寵物與翅膀</h3>
+                        <div id="petwing-grid" class="grid-box-container"></div>
+
+                        <!-- 翅膀收藏系統摺疊區塊 -->
+                        <div id="wing-collection-header" class="collapsible-header" onclick="toggleWingCollection()">
+                            <h3>🪽 翅膀收藏系統</h3>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span style="font-size: 12px; color: #8b949e;">(點擊展開/收合)</span>
+                                <span id="wing-toggle-icon" class="toggle-icon">▼</span>
+                            </div>
+                        </div>
+                        <div id="wing-collection-wrapper" class="collapsible-content">
+                            <div style="font-size:12px; color:#8b949e; margin-bottom:15px; padding-left: 5px;">
+                                💡 勾選您持有的翅膀，系統將自動計算「持有效果」並加入對帳總表
+                            </div>
+                            <div id="wing-collection-grid"
+                                style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:10px;">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -912,6 +1495,157 @@
         // Proxy 函數
         function getProxyUrl(url) {
             return `https://proxy.kk69347321.workers.dev/?url=${encodeURIComponent(url)}`;
+        }
+
+        // 翅膀手工維護資料庫 (根據使用者提供資料表)
+        const WING_DATABASE = {
+            '黑暗帳幕翅膀': {
+                equip: { '額外攻擊力': 60, '傷害增幅': 0.025, '首領防禦力': 500, '首領傷害耐性': 0.035 },
+                hold: { '飛行力': 200, '傷害增幅': 0.01, '首領防禦力': 300 }
+            },
+            '燦爛的愛之翅膀': {
+                equip: { '額外防禦力': 400, '額外迴避': 35, '精神力自然恢復': 90, '生命力藥水恢復增加': 0.055 },
+                hold: { '飛行力': 200, '額外防禦力': 100, '精神力': 100 }
+            },
+            '守護者下級翅膀': {
+                equip: { '生命力': 200 },
+                hold: { '飛行力': 2000, '生命力': 50 }
+            },
+            '守護者中級翅膀': {
+                equip: { '額外防禦力': 200, '生命力': 300 },
+                hold: { '飛行力': 500, '額外攻擊力': 10 }
+            },
+            '守護者上級翅膀': {
+                equip: { '額外防禦力': 300, '精神力': 200, '生命力': 400 },
+                hold: { '飛行力': 500, '額外防禦力': 100 }
+            },
+            '守護者最上級翅膀': {
+                equip: { '額外防禦力': 400, '生命力': 500, '精神力': 250, '貫穿': 500 },
+                hold: { '飛行力': 500, '額外命中': 20, '貫穿': 100 }
+            },
+            '阿爾拉烏翅膀': {
+                equip: { '額外迴避': 25, '生命力': 300 },
+                hold: { '飛行力': 200, '生命力': 50 }
+            },
+            '征服者翅膀': {
+                equip: { '首領攻擊力': 80, '首領防禦力': 400, '額外防禦力': 300, },
+                hold: { '飛行力': 200, '首領攻擊力': 10, }
+            },
+            '封印翅膀': {
+                equip: { '生命力': 400, '生命力自然恢復': 200, '所受治癒量': 0.05, },
+                hold: { '飛行力': 200, '生命力': 50, }
+            },
+            '光榮翅膀': {
+                equip: { '精神力消耗量減少': 0.03, '精神力': 200, '精神力自然恢復': 80, },
+                hold: { '飛行力': 200, '精神力消耗量減少': 0.01, }
+            },
+            '克羅梅德翅膀': {
+                equip: { '額外防禦力': 200, '暴擊': 35, '生命力': 500, '生命力自然恢復': 250, },
+                hold: { '飛行力': 200, '生命力': 50, '生命力自然恢復': 50, }
+
+            },
+            '紫花蝴蝶翅膀': {
+                equip: { '額外攻擊力': 40, '額外防禦力': 200, },
+                hold: { '飛行力': 200, '生命力': 50 }
+            },
+            '妖精之夢翅膀': {
+                equip: { '生命力自然恢復': 0.05, '生命力藥水恢復': 300, },
+                hold: { '飛行力': 200, '額外攻擊力': 10, }
+            },
+            '勇士翅膀': {
+                equip: { '額外防禦力': 300, '精神力': 200, '衝擊系擊中': 0.04, },
+                hold: { '飛行力': 200, '衝擊系抵抗': 0.025 }
+            },
+            '奧德翅膀': {
+                equip: { '生命力': 400, '精神力自然恢復': 80, '精神力': 200 },
+                hold: { '飛行力': 200, '額外防禦力': 100 }
+            },
+            '精靈翅膀': {
+                equip: { '額外防禦力': 300, '生命力': 400, '格擋': 50, },
+                hold: { '飛行力': 200, '額外防禦力': 100 }
+            },
+            '古代阿爾拉屋翅膀': {
+                equip: { '額外攻擊力': 60, '額外防禦力': 400, '生命力': 500, '生命力自然恢復': 250 },
+                hold: { '飛行力': 200, '額外命中': 20, '後方攻擊力': 10 }
+            },
+            '闇黑碎片翅膀': {
+                equip: { '暴擊': 35, '暴擊攻擊力': 95, '生命力': 500, '生命力自然恢復': 250 },
+                hold: { '飛行力': 200, '額外迴避': 20, '格擋': 10 }
+            },
+            '藍色波濤翅膀': {
+                equip: { '額外迴避': 35, '暴擊抵抗': 35, '精神力': 250, '精神力自然恢復': 90 },
+                hold: { '飛行力': 200, '暴擊抵抗': 20, '後方暴擊抵抗': 40 }
+            },
+            '森林精靈翅膀': {
+                equip: { '首領攻擊力': 95, '首領傷害增幅': 0.035, '傷害耐性': 0.025, '額外防禦力': 400 },
+                hold: { '飛行力': 200, '傷害耐性': 0.01, '首領攻擊力': 30 },
+            },
+            '惡夢翅膀': {
+                equip: { '額外攻擊力': 60, '傷害增幅': 0.035, '暴擊': 35, '首領傷害增幅': 0.035 },
+                hold: { '飛行力': 200, '首領攻擊力': 30, '首領防禦力': 250 }
+            },
+            '鬥士翅膀': {
+                equip: { '額外防禦力': 400, '生命力': 500, '衝擊系擊中': 0.03, '異常狀態擊中': 0.03 },
+                hold: { '飛行力': 200, '傷害耐性': 0.01, '衝擊系擊中': 0.025 }
+            },
+            '藍蝴蝶翅膀': {
+                equip: { '額外防禦力': 400, '生命力藥水恢復': 300, '生命力藥水恢復增加': 0.05, '生命力': 500 },
+                hold: { '飛行力': 200, '額外命中': 20, '額外迴避': 20 }
+            },
+            '春花蝴蝶翅膀': {
+                equip: { '額外攻擊力': 60, '額外命中': 35, '格擋貫穿': 60, '貫穿': 500 },
+                hold: { '飛行力': 200, '額外攻擊力': 10, '格擋貫穿': 10 }
+            },
+            '空虛塔里斯拉翅膀': {
+                equip: { '額外攻擊力': 60, '額外防禦力': 400, '額外命中': 35, '冷卻時間減少': 0.04 },
+                hold: { '飛行力': 200, '額外命中': 20, '額外防禦力': 100 }
+            }
+        };
+
+        // Helper function to fetch all titles with pagination
+        async function fetchAllTitles(serverId, characterId, initialTitleList, ownedCount) {
+            let allTitles = [...initialTitleList]; // Start with the titles already fetched
+            let currentPage = 1; // Assuming initialTitleList is from page 1
+
+            // If ownedCount is not available or initial list is already complete, no need to paginate
+            if (!ownedCount || allTitles.length >= ownedCount) {
+                return allTitles;
+            }
+
+            // Loop until all titles are fetched or an error occurs
+            while (allTitles.length < ownedCount) {
+                currentPage++;
+                const titlesUrl = `https://aion-api.bnshive.com/v1/characters/${serverId}/${encodeURIComponent(characterId)}/titles?page=${currentPage}`;
+                const titlesProxyUrl = getProxyUrl(titlesUrl);
+
+                console.log(`Fetching titles page ${currentPage} from:`, titlesProxyUrl);
+
+                try {
+                    const response = await fetch(titlesProxyUrl);
+                    if (!response.ok) {
+                        console.error(`Failed to fetch titles page ${currentPage}: ${response.status}`);
+                        break; // Stop if a page fails
+                    }
+                    const json = await response.json();
+
+                    // Assuming the API returns a structure like { result: "Success", data: { titleList: [...] } }
+                    const newTitles = json.data && json.data.titleList ? json.data.titleList : [];
+
+                    if (newTitles.length === 0) {
+                        // No more titles to fetch, or an issue with the API response
+                        console.log(`No new titles found on page ${currentPage}. Stopping pagination.`);
+                        break;
+                    }
+
+                    allTitles = allTitles.concat(newTitles);
+                    console.log(`Fetched ${newTitles.length} titles on page ${currentPage}. Total titles: ${allTitles.length}/${ownedCount}`);
+
+                } catch (error) {
+                    console.error(`Error fetching titles page ${currentPage}:`, error);
+                    break; // Stop on error
+                }
+            }
+            return allTitles;
         }
 
         // --- 核心 API 請求邏輯 ---
@@ -970,7 +1704,7 @@
                     console.warn('⚠ 無法獲取 characterId,跳過更新步驟');
                     // 如果無法獲取 characterId,直接顯示第一次查詢的結果
                     processData(firstJson);
-                    document.getElementById('jsonInput').value = `角色 [${charName}] 數據讀取成功!`;
+                    // document.getElementById('jsonInput').value = `角色 [${charName}] 數據讀取成功!`;
                     return;
                 }
 
@@ -1017,7 +1751,7 @@
 
                 // 顯示資料
                 processData(finalJson);
-                document.getElementById('jsonInput').value = `角色 [${charName}] 數據讀取成功! (已從官方 API 更新)`;
+                // document.getElementById('jsonInput').value = `角色 [${charName}] 數據讀取成功! (已從官方 API 更新)`;
                 console.log('✓ 完成!已顯示最新資料');
 
             } catch (err) {
@@ -1042,11 +1776,112 @@
             return colors[grade] || 'white';
         }
 
+        // 渲染排名資訊
+        function renderRankings(rankingList, gameRankings) {
+            const container = document.getElementById('p-ranking-container');
+            if (!container) return;
+
+            // 清空容器
+            container.innerHTML = '';
+
+            // 排名類型對應表
+            const rankingTypes = {
+                1: '深淵',
+                3: '惡夢',
+                4: '超越',
+                5: '孤獨競技場',
+                6: '協力競技場',
+                20: '討伐戰',
+                21: '覺醒戰'
+            };
+
+            const rankingIcons = {
+                '深淵': '⚔️',
+                '惡夢': '👹',
+                '超越': '⭐',
+                '孤獨競技場': '🎯',
+                '協力競技場': '🤝',
+                '討伐戰': '⚡',
+                '覺醒戰': '💫'
+            };
+
+            let hasValidRanking = false;
+            let rankings = [];
+
+            // 優先使用新格式的 gameRankings
+            if (gameRankings && Object.keys(gameRankings).length > 0) {
+                Object.entries(gameRankings).forEach(([typeId, data]) => {
+                    if (data && data.rank) {
+                        const typeName = rankingTypes[typeId] || `類型${typeId}`;
+                        rankings.push({
+                            rankingContentsName: typeName,
+                            rank: data.rank,
+                            score: data.score,
+                            seasonId: data.seasonId
+                        });
+                        hasValidRanking = true;
+                    }
+                });
+            }
+            // 如果沒有新格式,嘗試使用舊格式的 rankingList
+            else if (rankingList && rankingList.length > 0) {
+                rankingList.forEach(ranking => {
+                    if (ranking.rank !== null && ranking.rank !== undefined) {
+                        rankings.push(ranking);
+                        hasValidRanking = true;
+                    }
+                });
+            }
+
+            if (!hasValidRanking) {
+                container.innerHTML = '<div style="color: #8b949e; font-size: 14px; margin-top: 10px;">📊 暫無排名資料</div>';
+                return;
+            }
+
+            // 渲染排名資料
+            rankings.forEach(ranking => {
+                const badge = document.createElement('div');
+                badge.className = 'rank-badge';
+
+                // 根據排名類型設定圖示
+                const icon = rankingIcons[ranking.rankingContentsName] || '🏆';
+
+                // 計算排名變化 (新格式沒有 rankChange,暫時不顯示)
+                let rankChangeHtml = '';
+                if (ranking.rankChange !== null && ranking.rankChange !== undefined && ranking.rankChange !== 0) {
+                    const changeClass = ranking.rankChange > 0 ? 'up' : 'down';
+                    const changeSymbol = ranking.rankChange > 0 ? '▲' : '▼';
+                    rankChangeHtml = `<span class="rank-change ${changeClass}">${changeSymbol} ${Math.abs(ranking.rankChange)}</span>`;
+                }
+
+                badge.innerHTML = `
+                    <div style="font-size: 24px;">${icon}</div>
+                    <div class="rank-info">
+                        <span class="rank-title">${ranking.rankingContentsName}</span>
+                        <span class="rank-val">#${ranking.rank}${rankChangeHtml}</span>
+                    </div>
+                `;
+
+                container.appendChild(badge);
+            });
+        }
 
 
         // 輔助渲染函數 (維持不變)
 
-        function processData(json) {
+        function processData(json, skipScroll = false, skipWingRender = false) {
+            // 儲存當前數據以利即時重新渲染
+            window.__LAST_DATA_JSON__ = json;
+
+            // 初始化摺疊狀態（預設收合）
+            const wingCollapsed = localStorage.getItem('wingCollectionCollapsed') !== 'false';
+            const wrapper = document.getElementById('wing-collection-wrapper');
+            const header = document.getElementById('wing-collection-header');
+            if (wingCollapsed && wrapper && header) {
+                wrapper.classList.add('collapsed');
+                header.classList.add('collapsed');
+            }
+
             // 從 API 回傳的結果中抓取時間
             const apiUpdateTime = json.queryTimestamp || (json.queryResult ? json.queryResult.queryTimestamp : null);
 
@@ -1086,7 +1921,12 @@
                 document.getElementById('p-update').innerText = "API 未提供時間";
             }
 
-            renderRankings(data.ranking ? data.ranking.rankingList : []);
+            // 渲染排名 - 支援新舊兩種格式
+            // 新格式: json.gameRankings 或 json.queryResult.gameRankings
+            // 舊格式: data.ranking.rankingList
+            const gameRankings = json.gameRankings || (json.queryResult ? json.queryResult.gameRankings : null);
+            renderRankings(data.ranking ? data.ranking.rankingList : [], gameRankings);
+
 
             let stats = {};
             let boardSkillMap = {};
@@ -1102,10 +1942,22 @@
                         nezakan: 0, zikel: 0, baizel: 0, triniel: 0, ariel: 0, asphel: 0,
                         equipMain: 0, equipSub: 0, other: 0,
                         isPerc: k.includes('%'),
-                        detailGroups: { base: [], random: [], stone: [], arcana: [], title: [], etc: [] }
+                        detailGroups: { base: [], random: [], stone: [], arcana: [], title: [], etc: [], mainStat: [], wing: [], wingHold: [] },
+                        subtotals: { title: 0, mainStat: 0, arcana: 0, stone: 0, random: 0, wing: 0, wingHold: 0 }
                     };
                 }
                 return stats[k];
+            };
+
+            // 輔助函數：標準化屬性名稱 (強制將速度類屬性歸類為百分比)
+            const normalizeKey = (name, valStr) => {
+                const alwaysPercent = ['戰鬥速度', '移動速度', '攻擊速度'];
+                // 檢查名稱是否包含關鍵字，或者數值是否包含 %
+                let isPerc = valStr.toString().includes('%') || alwaysPercent.some(k => name.includes(k));
+                // 移除名稱中既有的 % 以避免重複 (例如 "移動速度%" -> "移動速度")
+                // 但如果 isPerc 為真，最後會加回 %
+                let cleanName = name.replace('%', '');
+                return isPerc ? cleanName + '%' : cleanName;
             };
 
             let mainStatHtml = "";
@@ -1113,8 +1965,106 @@
                 if (s.type === "ItemLevel") return;
                 let details = s.statSecondList ? s.statSecondList.map(d => `▹ ${d}`).join('<br>') : "無額外數據";
                 mainStatHtml += `<div class="stat-mini-card"><span style="font-size:12px;color:#8b949e;display:block;">${s.name}</span><span class="stat-mini-val">${s.value}</span><div class="tooltip"><b>${s.name} 詳細轉換:</b><br>${details}</div></div>`;
+
+                // 解析 statSecondList 並加入到屬性對帳總表
+                if (s.statSecondList && s.statSecondList.length > 0) {
+                    if (s.type !== 'ItemLevel') {
+                        s.statSecondList.forEach(statDesc => {
+                            // 解析格式: "屬性名稱 +數值%" 或 "屬性名稱 -數值%"
+                            const match = statDesc.match(/^(.+?)\s+([\+\-][\d\.]+%?)$/);
+                            if (match) {
+                                let statName = match[1].trim();
+                                let valueStr = match[2].trim();
+
+                                // 使用 normalizeKey 確保 key 的一致性 (解決 戰鬥速度 vs 戰鬥速度% 分離問題)
+                                let key = normalizeKey(statName, valueStr);
+                                let value = parseFloat(valueStr.replace('%', ''));
+
+                                // 取得或建立屬性項目
+                                let entry = getEntry(key);
+
+                                // 加入到 other 欄位
+                                entry.other += value;
+                                // 根據來源記錄小計 (如果是板塊屬性 s.type 是特殊的)
+                                // 判斷是否為六大板塊或屬性
+                                const isAttribute = ['STR', 'DEX', 'INT', 'CON', 'AGI', 'WIS'].includes(s.type);
+                                if (isAttribute) {
+                                    entry.subtotals.mainStat += value;
+                                    entry.detailGroups.mainStat.push(`[${s.name}]轉化: ${valueStr}`);
+                                } else {
+                                    // 假設其餘為板塊 (Time, Justice...)
+                                    // 這裡無法區分具體是哪個板塊，但可以歸類為 Board
+                                    // 由於 entry.other 已經加了，我們只需要確保它顯示在對的地方
+                                    // 暫時推入 mainStat 以顯示在頂部，或是 random
+                                    entry.detailGroups.base.push(`[${s.name.split('[')[0]}]: ${valueStr}`);
+                                }
+                            }
+                        });
+                    }
+                }
             });
             document.getElementById('stat-main-grid').innerHTML = mainStatHtml;
+
+            // 處理板塊完成度資訊
+            console.log('檢查 data.daevanionBoard:', data.daevanionBoard);
+            console.log('檢查 data.daevanionBoardList:', data.daevanionBoardList);
+
+            // 先設定預設內容
+            const boardNames = {
+                'nezakan': '奈薩肯',
+                'zikel': '吉凱爾',
+                'baizel': '白傑爾',
+                'triniel': '崔妮爾',
+                'ariel': '艾瑞爾',
+                'asphel': '阿斯佩爾'
+            };
+
+            // 為每個板塊設定預設提示
+            Object.keys(boardNames).forEach(key => {
+                const tooltipEl = document.getElementById(`tooltip-${key}`);
+                if (tooltipEl) {
+                    tooltipEl.innerHTML = `<b>${boardNames[key]} 板塊</b><br>載入中...`;
+                }
+            });
+
+            // 嘗試從多個可能的路徑獲取板塊列表
+            let boardList = null;
+            if (data.daevanionBoardList) {
+                boardList = data.daevanionBoardList;
+                console.log('從 data.daevanionBoardList 找到資料');
+            } else if (data.daevanionBoard && data.daevanionBoard.daevanionBoardList) {
+                boardList = data.daevanionBoard.daevanionBoardList;
+                console.log('從 data.daevanionBoard.daevanionBoardList 找到資料');
+            }
+
+            // 如果有實際資料,則更新
+            if (boardList && boardList.length > 0) {
+                const boardMap = {
+                    '奈薩肯': 'nezakan',
+                    '吉凱爾': 'zikel',
+                    '白傑爾': 'baizel',
+                    '崔妮爾': 'triniel',
+                    '艾瑞爾': 'ariel',
+                    '阿斯佩爾': 'asphel'
+                };
+
+                console.log('板塊列表:', boardList);
+                boardList.forEach(board => {
+                    const boardKey = boardMap[board.name];
+                    if (boardKey) {
+                        const tooltipEl = document.getElementById(`tooltip-${boardKey}`);
+                        if (tooltipEl) {
+                            const content = `<b>${board.name} 板塊完成度</b><br>已開啟節點: ${board.openNodeCount} / ${board.totalNodeCount}<br>完成度: ${board.openPercent}%`;
+                            tooltipEl.innerHTML = content;
+                            console.log(`✓ 已設定 ${board.name} tooltip`);
+                        } else {
+                            console.warn(`✗ 找不到 tooltip 元素: tooltip-${boardKey}`);
+                        }
+                    }
+                });
+            } else {
+                console.warn('API 未提供 daevanionBoardList 資料');
+            }
 
             (data.daevanionDetails || []).forEach(b => {
 
@@ -1128,6 +2078,26 @@
                     else if (b.boardName.includes("崔妮爾")) e.triniel += v;
                     else if (b.boardName.includes("艾瑞爾")) e.ariel += v;
                     else if (b.boardName.includes("阿斯佩爾")) e.asphel += v;
+                    else {
+                        // 其他新板塊 (希埃爾、瑪爾庫坦、凱西內爾等) 
+                        // 暫時歸入 other，但在詳細資訊中標明
+                        e.other += v;
+                        // 不加入 subtotals.wing 或其他分類，讓它顯示在"其他加成"
+                        // 或者我們可以新增一個 subtotals.boardOther
+
+                        // 為了讓 tooltip 顯示，我們手動加入到 board 的詳細資訊中
+                        // 這裡比較特殊，因為我們沒有 boardOther 的分類，
+                        // 所以我們將由 detailGroups.etc 收集，或者直接在 otherMisc 計算時會顯示
+
+                        // 更好的方式：直接當作"其他板塊"加入
+                        // 但這需要修改 renderStatTable 的邏輯
+
+                        // 目前先確保數據有被加總：
+                        // 這些數據會進入 stats[k].other -> getStatObj -> total
+                        // 所以戰鬥分析會正確
+
+                        // 在對帳表的 tooltip 中，它會出現在"其他加成"
+                    }
                 });
                 (b.detail?.openSkillEffectList || []).forEach(sk => {
                     let [sn, sv] = sk.desc.split(' +');
@@ -1143,11 +2113,139 @@
                         let parts = ef.desc.split(' +'); if (parts.length < 2) return;
                         let n = parts[0], vS = parts[1];
                         let k = vS.includes('%') ? n.trim() + '%' : n.trim(), v = parseFloat(vS.replace('%', '')), e = getEntry(k);
-                        e.other += v; e.detailGroups.title.push(`[${t.name}]: +${vS}`);
+                        e.other += v;
+                        e.subtotals.title += v;
+                        e.detailGroups.title.push(`[${t.name}]: +${vS}`);
                     });
                 }
             });
             document.getElementById('title-grid').innerHTML = titleHtml || "<div style='color:#8b949e; padding:10px;'>未裝備稱號</div>";
+
+            // 處理寵物與翅膀
+            let petwingHtml = "";
+            if (data.petwing) {
+                // 處理寵物
+                if (data.petwing.pet) {
+                    const pet = data.petwing.pet;
+                    const petName = pet.name || "暫無";
+                    const petLevel = pet.level ? `Lv.${pet.level}` : "暫無";
+                    const petIcon = pet.icon ? getCorrectIcon(pet.icon) : "";
+
+                    petwingHtml += `<div class="info-box" style="border-left: 4px solid var(--blue); display: flex; gap: 10px;">
+                        ${petIcon ? `<img src="${petIcon}" style="width: 64px; height: 64px; border-radius: 8px; border: 2px solid var(--blue);">` : ''}
+                        <div style="flex-grow: 1;">
+                            <div class="box-header" style="color:var(--blue)">🐾 寵物</div>
+                            <div style="font-size:14px; font-weight:bold; color:#fff; margin-top:5px;">${petName}</div>
+                            <div style="font-size:12px; color:var(--gold); margin-top:3px;">等級: ${petLevel}</div>
+                        </div>
+                    </div>`;
+                }
+
+                // 處理翅膀
+                if (data.petwing.wing) {
+                    const wing = data.petwing.wing;
+                    const wingName = wing.name || "暫無";
+
+                    // 品質翻譯對應表
+                    const gradeTranslation = {
+                        'Myth': '神話', 'Unique': '唯一', 'Legend': '傳說', 'Epic': '史詩', 'Rare': '稀有', 'Ancient': '古代'
+                    };
+                    const wingGrade = wing.grade ? (gradeTranslation[wing.grade] || wing.grade) : "暫無";
+                    const wingEnchant = (wing.enchantLevel !== undefined && wing.enchantLevel !== null) ? `+${wing.enchantLevel}` : "";
+                    const gradeColor = wing.grade ? getGradeColor(wing.grade) : "var(--gold)";
+                    const wingIcon = wing.icon ? getCorrectIcon(wing.icon) : "";
+
+                    // 比對資料庫獲取屬性
+                    let wingBonusHtml = "";
+                    let matchedWing = null;
+                    for (let key in WING_DATABASE) {
+                        if (wingName.includes(key)) {
+                            matchedWing = WING_DATABASE[key];
+                            break;
+                        }
+                    }
+
+                    if (matchedWing) {
+                        const applyStats = (statObj, typeLabel) => {
+                            for (let statName in statObj) {
+                                let val = statObj[statName];
+                                let absVal = Math.abs(val);
+                                let isDecimal = (absVal > 0 && absVal < 1);
+
+                                // 根據關鍵字強制視為百分比 (除了小數判定外)
+                                const percentKeywords = ['增幅', '增加', '減少', '率', '耐性'];
+                                const matchesKeyword = percentKeywords.some(k => statName.includes(k));
+
+                                if (isDecimal) val = val * 100;
+
+                                // 標準化屬性名稱 (去除 "額外" 前綴)
+                                let normName = statName.replace(/^額外/, '');
+
+                                // 若是小數轉換而來，或名稱包含百分比關鍵字，則確保名稱有 %
+                                if ((isDecimal || matchesKeyword) && !normName.includes('%')) {
+                                    normName += '%';
+                                }
+
+                                let entry = getEntry(normName);
+                                entry.other += val;
+                                entry.subtotals.wing += val;
+
+                                const unit = normName.includes('%') ? '%' : '';
+                                entry.detailGroups.wing.push(`[${wingName}](${typeLabel}): +${parseFloat(val.toFixed(2))}${unit}`);
+                                wingBonusHtml += `<div style="font-size:11px; color:var(--green)">⚡ ${typeLabel}-${normName}: +${parseFloat(val.toFixed(2))}${unit}</div>`;
+                            }
+                        };
+                        if (matchedWing.equip) applyStats(matchedWing.equip, "裝備");
+                    } else {
+                        wingBonusHtml = `<div style="font-size:11px; color:#8b949e">⚡ 此翅膀暫無資料庫加成 (僅外型)</div>`;
+                    }
+
+                    petwingHtml += `<div class="info-box" style="border-left: 4px solid ${gradeColor}; display: flex; gap: 10px;">
+                        ${wingIcon ? `<img src="${wingIcon}" style="width: 64px; height: 64px; border-radius: 8px; border: 2px solid ${gradeColor};">` : ''}
+                        <div style="flex-grow: 1;">
+                            <div class="box-header" style="color:${gradeColor}">🪽 翅膀</div>
+                            <div style="font-size:14px; font-weight:bold; color:${gradeColor}; margin-top:5px;">${wingEnchant} ${wingName}</div>
+                            <div style="font-size:12px; color:#8b949e; margin-top:3px;">品質: ${wingGrade}</div>
+                            ${wingBonusHtml}
+                        </div>
+                    </div>`;
+                }
+            }
+            document.getElementById('petwing-grid').innerHTML = petwingHtml || "<div style='color:#8b949e; padding:10px;'>無寵物或翅膀資料</div>";
+
+            // 處理持有翅膀的效果（從收藏系統）
+            const ownedWings = JSON.parse(localStorage.getItem('ownedWings') || '[]');
+            ownedWings.forEach(wingName => {
+                const wing = WING_DATABASE[wingName];
+                if (wing && wing.hold) {
+                    for (let statName in wing.hold) {
+                        let val = wing.hold[statName];
+                        let absVal = Math.abs(val);
+                        let isDecimal = (absVal > 0 && absVal < 1);
+
+                        // 根據關鍵字強制視為百分比 (除了小數判定外)
+                        const percentKeywords = ['增幅', '增加', '減少', '率', '耐性'];
+                        const matchesKeyword = percentKeywords.some(k => statName.includes(k));
+
+                        if (isDecimal) val = val * 100;
+
+                        // 標準化屬性名稱 (去除 "額外" 前綴)
+                        let normName = statName.replace(/^額外/, '');
+
+                        // 若是小數轉換而來，或名稱包含百分比關鍵字，則確保名稱有 %
+                        if ((isDecimal || matchesKeyword) && !normName.includes('%')) {
+                            normName += '%';
+                        }
+
+                        let entry = getEntry(normName);
+                        entry.other += val;
+                        entry.subtotals.wingHold += val;
+
+                        const unit = normName.includes('%') ? '%' : '';
+                        entry.detailGroups.wingHold.push(`[${wingName}](持有): +${parseFloat(val.toFixed(2))}${unit}`);
+                    }
+                }
+            });
 
             const equipMap = {};
             (data.equipment ? data.equipment.equipmentList : []).forEach(item => { equipMap[item.slotPos] = item; });
@@ -1172,8 +2270,21 @@
                     let arcanaSkillsHtml = (d.subSkills || []).map(sk => `<div style="color:var(--blue)">${sk.name} Lv.${sk.level}</div>`).join('');
                     document.getElementById('arcana-grid').innerHTML += `<div class="info-box" style="border-left: 4px solid ${gradeColor}; display: flex; gap: 10px;"><img src="${getCorrectIcon(originalItem.icon)}" style="width: 44px; height: 44px; border-radius: 4px;"><div style="flex-grow: 1;"><div class="box-header" style="color:${gradeColor}">+${i.enchantLevel} ${d.name}</div><div style="font-size:12px;">${arcanaStatsHtml}</div><div style="font-size:11px;">${arcanaSubStatsHtml}</div><div style="font-size:11px;">${arcanaSkillsHtml}</div></div></div>`;
                     (d.subSkills || []).forEach(sk => { if (!cardSkillMap[sk.name]) cardSkillMap[sk.name] = []; cardSkillMap[sk.name].push({ name: d.name, lv: sk.level }); });
-                    (d.mainStats || []).forEach(ms => { let e = getEntry(ms.name); e.other += parseFloat(ms.value); e.detailGroups.arcana.push(`${d.name}(主): +${ms.value}`); });
-                    (d.subStats || []).forEach(ss => { let k = ss.value.toString().includes('%') ? ss.name + '%' : ss.name; let e = getEntry(k); e.other += parseFloat(ss.value.toString().replace('%', '')); e.detailGroups.arcana.push(`${d.name}(刻): +${ss.value}`); });
+                    (d.mainStats || []).forEach(ms => {
+                        let e = getEntry(ms.name);
+                        let val = parseFloat(ms.value);
+                        e.other += val;
+                        e.subtotals.arcana += val;
+                        e.detailGroups.arcana.push(`${d.name}(主): +${ms.value}`);
+                    });
+                    (d.subStats || []).forEach(ss => {
+                        let k = ss.value.toString().includes('%') ? ss.name + '%' : ss.name;
+                        let e = getEntry(k);
+                        let val = parseFloat(ss.value.toString().replace('%', ''));
+                        e.other += val;
+                        e.subtotals.arcana += val;
+                        e.detailGroups.arcana.push(`${d.name}(刻): +${ss.value}`);
+                    });
                 }
 
                 if (isArmor || isAccessory) {
@@ -1183,22 +2294,104 @@
                     let godStoneHtml = (d.godStoneStat || []).map(gs => `<div style="margin-top: 5px; border: 1px dashed #00d4ff; padding: 4px; font-size:11px; border-radius:4px;"><b style="color:#00d4ff">${gs.name}</b><br>${gs.desc}</div>`).join('');
                     let cardHtml = `<div class="equip-item-card" style="border-top-color: ${gradeColor}; border-left: 4px solid ${gradeColor};"><div class="equip-left-section"><div style="display:flex; align-items:center; gap:10px;"><div class="equip-img-container"><img src="${finalIcon}">${exceedBadge}</div><div><span class="equip-name" style="color:${gradeColor}">${d.name}</span><div><span style="color:#fff; font-weight:bold;">+${i.enchantLevel}</span></div></div></div><div style="margin-top:8px;">${mainStatsD}</div></div><div class="equip-right-section"><div style="color:#8b949e; font-size:10px; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:5px;">附加屬性/神石</div>${(d.subStats || []).map(s => `<div class="random-row"><span>${s.name}</span><span>+${s.value}</span></div>`).join('')}${(d.subSkills || []).map(sk => `<div class="skill-badge-mini">${sk.name} Lv.${sk.level}</div>`).join('')}${godStoneHtml}${(d.magicStoneStat || []).map(ms => `<div class="random-row" style="color:var(--gold); font-size:11px;"><span>[磨石] ${ms.name}</span><span>${ms.value}</span></div>`).join('')}</div></div>`;
                     if (isArmor) armorHtml += cardHtml; else accessoryHtml += cardHtml;
-                    (d.mainStats || []).forEach(ms => { let v = parseFloat(ms.value || 0) + parseFloat(ms.extra || 0); let e = getEntry(ms.name); e.equipMain += v; e.detailGroups.base.push(`+${i.enchantLevel} ${d.name}: +${v}`); });
-                    (d.subStats || []).forEach(ss => { if (!ss.value) return; let k = ss.value.toString().includes('%') ? ss.name + '%' : ss.name; let v = parseFloat(ss.value.toString().replace('%', '')) || 0; let e = getEntry(k); e.equipSub += v; e.detailGroups.random.push(`${d.name}: +${ss.value}`); });
-                    (d.magicStoneStat || []).forEach(ms => { if (!ms.value) return; let k = ms.value.toString().includes('%') ? ms.name + '%' : ms.name; let v = parseFloat(ms.value.toString().replace('%', '')) || 0; let e = getEntry(k); e.equipSub += v; e.detailGroups.stone.push(`${d.name}: ${ms.value}`); });
+                    let mainStatAcc = {};
+
+                    // 輔助函數：標準化屬性名稱 (強制將速度類屬性歸類為百分比)
+                    const normalizeKey = (name, valStr) => {
+                        const alwaysPercent = ['戰鬥速度', '移動速度'];
+                        // 檢查名稱是否包含關鍵字，或者數值是否包含 %
+                        let isPerc = valStr.toString().includes('%') || alwaysPercent.some(k => name.includes(k));
+                        // 移除名稱中既有的 % 以避免重複 (例如 "移動速度%" -> "移動速度")
+                        let cleanName = name.replace('%', '');
+                        return isPerc ? cleanName + '%' : cleanName;
+                    };
+
+                    (d.mainStats || []).forEach(ms => {
+                        // 處理基礎值
+                        let baseVal = parseFloat(ms.value.toString().replace('%', '') || 0);
+                        let baseKey = normalizeKey(ms.name, ms.value);
+                        let isBasePerc = baseKey.includes('%'); // 重新確認最終 key 是否為 %
+
+                        // 處理額外值 (強化等)
+                        let extraVal = parseFloat(ms.extra?.toString().replace('%', '') || 0);
+                        let extraKey = normalizeKey(ms.name, ms.extra || '');
+                        let isExtraPerc = extraKey.includes('%');
+
+                        // --- 1. 累加到全局統計 (用於計算總數) ---
+                        let eBase = getEntry(baseKey);
+                        eBase.equipMain += baseVal;
+
+                        if (extraVal > 0) {
+                            let eExtra = getEntry(extraKey);
+                            eExtra.equipMain += extraVal;
+                        }
+
+                        // --- 2. 累加到單品項統計 (用於 Tooltip 顯示整合) ---
+                        // 處理 Base
+                        if (!mainStatAcc[baseKey]) mainStatAcc[baseKey] = { total: 0, base: 0, enchant: 0, exceed: 0, isPerc: isBasePerc };
+                        mainStatAcc[baseKey].total += baseVal;
+                        mainStatAcc[baseKey].base += baseVal;
+
+                        // 處理 Extra
+                        if (extraVal > 0) {
+                            if (!mainStatAcc[extraKey]) mainStatAcc[extraKey] = { total: 0, base: 0, enchant: 0, exceed: 0, isPerc: isExtraPerc };
+                            mainStatAcc[extraKey].total += extraVal;
+                            if (ms.exceed) mainStatAcc[extraKey].exceed += extraVal;
+                            else mainStatAcc[extraKey].enchant += extraVal;
+                        }
+                    });
+
+                    // 將整合後的單品項數據寫入 detailGroups
+                    for (let k in mainStatAcc) {
+                        let info = mainStatAcc[k];
+                        let parts = [];
+                        // 僅當有細項時才顯示括號內容
+                        if (info.base > 0) parts.push(`基+${parseFloat(info.base.toFixed(2))}`);
+                        if (info.enchant > 0) parts.push(`強+${parseFloat(info.enchant.toFixed(2))}`);
+                        if (info.exceed > 0) parts.push(`突+${parseFloat(info.exceed.toFixed(2))}`); // 突破
+
+                        let unit = info.isPerc ? '%' : '';
+                        let str = `+${i.enchantLevel} ${d.name}: +${parseFloat(info.total.toFixed(2))}${unit}`;
+
+                        // 如果有細項且總數不等於單一細項(避免單一來源時重複顯示)
+                        if (parts.length > 0 && !(parts.length === 1 && info.total === (info.base || info.enchant || info.exceed))) {
+                            str += ` <span style="font-size:11px; color:#8b949e">(${parts.join(' ')})</span>`;
+                        }
+
+                        getEntry(k).detailGroups.base.push(str);
+                    }
+                    (d.subStats || []).forEach(ss => {
+                        if (!ss.value) return;
+                        let k = normalizeKey(ss.name, ss.value);
+                        let v = parseFloat(ss.value.toString().replace('%', '')) || 0;
+                        let e = getEntry(k);
+                        e.equipSub += v;
+                        e.subtotals.random += v;
+                        e.detailGroups.random.push(`${d.name}: +${ss.value}`);
+                    });
+                    (d.magicStoneStat || []).forEach(ms => {
+                        if (!ms.value) return;
+                        let k = normalizeKey(ms.name, ms.value);
+                        let v = parseFloat(ms.value.toString().replace('%', '')) || 0;
+                        let e = getEntry(k);
+                        e.equipSub += v;
+                        e.subtotals.stone += v;
+                        e.detailGroups.stone.push(`${d.name}: ${ms.value}`);
+                    });
                 }
             });
 
             document.getElementById('equip-armor-list').innerHTML = armorHtml || "<div>無資料</div>";
             document.getElementById('equip-accessory-list').innerHTML = accessoryHtml || "<div>無資料</div>";
             renderSkills(data, boardSkillMap, cardSkillMap);
+            if (!skipWingRender) renderWingCollection(stats);
             renderStatTable(stats);
+            renderCombatAnalysis(stats, data);
 
-            window.scrollTo({ top: document.getElementById('main-content').offsetTop - 20, behavior: 'smooth' });
+            if (!skipScroll) {
+                window.scrollTo({ top: document.getElementById('main-content').offsetTop - 20, behavior: 'smooth' });
+            }
         }
-
-
-
 
         function renderRankings(rankList) {
             const container = document.getElementById('p-ranking-container');
@@ -1208,6 +2401,90 @@
                 let changeHtml = r.rankChange > 0 ? `<span class="rank-change up">▲${r.rankChange}</span>` : (r.rankChange < 0 ? `<span class="rank-change down">▼${Math.abs(r.rankChange)}</span>` : "");
                 container.innerHTML += `<div class="rank-badge"><img src="${r.gradeIcon}"><div class="rank-info"><span class="rank-title">${r.rankingContentsName}</span><span class="rank-val">${r.rank} 位 ${changeHtml}</span></div></div>`;
             });
+        }
+
+        // 翅膀收藏系統渲染函數
+        function renderWingCollection(stats) {
+            const grid = document.getElementById('wing-collection-grid');
+            if (!grid) return;
+
+            // 從 localStorage 讀取已勾選的翅膀
+            const savedWings = JSON.parse(localStorage.getItem('ownedWings') || '[]');
+
+            let html = '';
+            Object.keys(WING_DATABASE).forEach(wingName => {
+                const wing = WING_DATABASE[wingName];
+                const isChecked = savedWings.includes(wingName);
+                const checkboxId = `wing-${wingName.replace(/\s+/g, '-')}`;
+
+                // 生成持有效果細項
+                let holdStatsHtml = '';
+                if (wing.hold && Object.keys(wing.hold).length > 0) {
+                    holdStatsHtml = Object.entries(wing.hold).map(([statName, value]) => {
+                        return `<div style="font-size:10px; color:var(--green);">▹ ${statName}: +${value}${statName.includes('%') ? '' : ''}</div>`;
+                    }).join('');
+                }
+
+                html += `
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:8px; padding:12px;">
+                        <label style="display:flex; align-items:flex-start; gap:8px; cursor:pointer;">
+                            <input type="checkbox" 
+                                   id="${checkboxId}" 
+                                   value="${wingName}" 
+                                   ${isChecked ? 'checked' : ''}
+                                   onchange="toggleWingOwnership('${wingName}', this.checked)"
+                                   style="margin-top:2px; cursor:pointer;">
+                            <div style="flex:1;">
+                                <div style="font-weight:bold; color:#fff; margin-bottom:5px;">🪽 ${wingName}</div>
+                                ${holdStatsHtml || '<div style="font-size:10px; color:#8b949e;">無持有效果</div>'}
+                            </div>
+                        </label>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+        }
+
+        // 切換翅膀持有狀態
+        function toggleWingOwnership(wingName, isOwned) {
+            let ownedWings = JSON.parse(localStorage.getItem('ownedWings') || '[]');
+
+            if (isOwned) {
+                if (!ownedWings.includes(wingName)) {
+                    ownedWings.push(wingName);
+                }
+            } else {
+                ownedWings = ownedWings.filter(w => w !== wingName);
+            }
+
+            localStorage.setItem('ownedWings', JSON.stringify(ownedWings));
+
+            // 如果已有快取數據，立即重新處理 UI，但不重新渲染翅膀清單以防閃爍
+            if (window.__LAST_DATA_JSON__) {
+                processData(window.__LAST_DATA_JSON__, true, true);
+            } else {
+                // 提示使用者重新查詢以更新數據
+                const btn = document.querySelector('.btn-api');
+                if (btn) {
+                    btn.style.animation = 'pulse 0.5s ease-in-out 3';
+                    btn.textContent = '🔄 請重新查詢以更新數據';
+                    setTimeout(() => {
+                        btn.textContent = '立即查詢';
+                    }, 3000);
+                }
+            }
+        }
+
+        // 切換翅膀收藏系統摺疊狀態
+        function toggleWingCollection() {
+            const wrapper = document.getElementById('wing-collection-wrapper');
+            const header = document.getElementById('wing-collection-header');
+            if (!wrapper || !header) return;
+
+            const isNowCollapsed = wrapper.classList.toggle('collapsed');
+            header.classList.toggle('collapsed');
+            localStorage.setItem('wingCollectionCollapsed', isNowCollapsed);
         }
 
         function renderSkills(data, boardSkillMap, cardSkillMap) {
@@ -1222,46 +2499,465 @@
             document.getElementById('sk-act').innerHTML = act; document.getElementById('sk-pas').innerHTML = pas; document.getElementById('sk-stigma').innerHTML = sti;
         }
 
+
+        function renderCombatAnalysis(stats, data) {
+            const grid = document.getElementById('combat-stats-grid');
+            if (!grid) return;
+
+            const getStatObj = (key) => {
+                // 智能匹配: 嘗試精確匹配,如果失敗則嘗試移除%後匹配
+                let s = stats[key];
+
+                // 如果找不到,嘗試移除或添加 % 符號
+                if (!s) {
+                    if (key.includes('%')) {
+                        // 如果查詢的 key 有 %,嘗試移除 % 查找
+                        const keyWithoutPercent = key.replace(/%/g, '').trim();
+                        s = stats[keyWithoutPercent];
+                    } else {
+                        // 如果查詢的 key 沒有 %,嘗試添加 % 查找
+                        const keyWithPercent = key + '%';
+                        s = stats[keyWithPercent];
+                    }
+                }
+
+                // 如果還是找不到該屬性，回傳 0
+                if (!s) {
+                    return {
+                        total: 0,
+                        s: {
+                            base: 0, equipMain: 0, equipSub: 0, other: 0,
+                            subtotals: { mainStat: 0, random: 0, stone: 0, wing: 0, wingHold: 0, arcana: 0, set: 0, title: 0 },
+                            detailGroups: { base: [], random: [], stone: [], wing: [], wingHold: [], arcana: [], set: [], title: [], other: [] }
+                        }
+                    };
+                }
+
+                // 複製 s (包含板塊數值)
+                let e = {
+                    base: s.base || 0,
+                    equipMain: s.equipMain || 0,
+                    equipSub: s.equipSub || 0,
+                    other: s.other || 0,
+                    nezakan: s.nezakan || 0,
+                    zikel: s.zikel || 0,
+                    baizel: s.baizel || 0,
+                    triniel: s.triniel || 0,
+                    ariel: s.ariel || 0,
+                    asphel: s.asphel || 0,
+                    subtotals: { ...(s.subtotals || {}) },
+                    detailGroups: { ...(s.detailGroups || {}) }
+                };
+                if (!e.detailGroups.other) e.detailGroups.other = [];
+
+                // 計算最終總和 (包含板塊)
+                const boardTotal = e.nezakan + e.zikel + e.baizel + e.triniel + e.ariel + e.asphel;
+                const total = e.base + e.equipMain + e.equipSub + e.other + boardTotal;
+
+                return {
+                    total: parseFloat(total.toFixed(2)),
+                    s: {
+                        ...e,
+                        subtotals: {
+                            ...e.subtotals
+                        },
+                        isPerc: key.includes('%') || (s.isPerc || false)
+                    }
+                };
+            };
+
+            // 修正 fmt 函數以避免報錯
+            const fmt = (v, isPerc) => (Number(parseFloat(v || 0).toFixed(2)) + (isPerc ? '%' : ''));
+
+            const analysisItems = [
+                { title: "攻擊力", baseKey: "攻擊力", percKey: "攻擊力增加%", icon: "⚔️", desc: "最終攻擊表現 = 基礎固定值 × (1 + 攻擊增加%)" },
+                { title: "命中", baseKey: "命中", percKey: "命中增加%", icon: "🎯", desc: "影響物理與魔法攻擊的命中率。" },
+                { title: "暴擊", baseKey: "暴擊", percKey: "暴擊增加%", icon: "💥", desc: "影響致命一擊的發動機率。" },
+                { title: "生命力", baseKey: "生命力", percKey: "生命力增加%", icon: "❤️", desc: "角色的最大生存點數。" },
+                { title: "戰鬥速度", baseKey: "戰鬥速度%", percKey: null, icon: "⚡", desc: "攻擊速度與施法速度的表現。" },
+                { title: "防禦力", baseKey: "防禦力", percKey: "防禦力增加%", icon: "🛡️", desc: "減免受到物理傷害的能力。" },
+                { title: "迴避", baseKey: "迴避", percKey: "迴避增加%", icon: "🍃", desc: "完全閃避敵方攻擊的機率。" },
+                { title: "格擋", baseKey: "格擋", percKey: "格擋增加%", icon: "🛡️", desc: "使用武器或盾牌抵擋傷害。" },
+                { title: "暴擊抵抗", baseKey: "暴擊抵抗", percKey: "暴擊抵抗增加%", icon: "🛡️", desc: "降低受到暴擊的機率與傷害。" },
+                { title: "異常狀態擊中", baseKey: "異常狀態擊中", percKey: null, icon: "🎯", desc: "成功對敵人施加狀態異常的機率。" },
+                { title: "異常狀態抵抗", baseKey: "異常狀態抵抗", percKey: null, icon: "🛡️", desc: "抵抗暈眩、擊倒等狀態異常的能力。" },
+                { title: "精神力", baseKey: "精神力", percKey: "精神力增加%", icon: "🔮", desc: "角色的最大法力資源。" },
+                { title: "移動速度", baseKey: "移動速度", percKey: "移動速度%", icon: "🏃", desc: "角色的移動快慢。" },
+                { title: "PVE攻擊力", baseKey: "PVE攻擊力", percKey: null, icon: "🐉", desc: "對一般怪物造成的額外攻擊力。" },
+                { title: "PVE防禦力", baseKey: "PVE防禦力", percKey: null, icon: "🛡️", desc: "受到一般怪物攻擊時的額外防禦力。" },
+                { title: "PVE傷害增幅", baseKey: "PVE傷害增幅", percKey: null, icon: "🔥", desc: "對一般怪物造成的傷害額外增幅。" },
+                { title: "首領攻擊力", baseKey: "首領攻擊力", percKey: null, icon: "👹", desc: "對首領怪物造成的額外攻擊力。" },
+                { title: "首領防禦力", baseKey: "首領防禦力", percKey: null, icon: "🛡️", desc: "受到首領怪物攻擊時的額外防禦力。" },
+                { title: "首領傷害增幅", baseKey: "首領傷害增幅", percKey: null, icon: "💥", desc: "對首領怪物造成的傷害額外增幅。" }
+            ];
+
+            let html = "";
+
+            // 綜合評分卡片 (如果有 API 資料)
+            if (data.rating && data.rating.scores) {
+                const score = data.rating.scores.score;
+                const model = data.rating.modelType || "PVE";
+                const ver = data.rating.modelVersion || "1.2";
+                html += `
+                    <div class="stat-mini-card" style="grid-column: 1 / -1; background: linear-gradient(135deg, rgba(230, 185, 103, 0.15) 0%, rgba(255, 255, 255, 0.03) 100%); border: 1px solid rgba(230, 185, 103, 0.3); padding: 20px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div style="text-align:left;">
+                                <div style="font-size:14px; color:#8b949e;">綜合戰鬥評分</div>
+                                <div style="font-size:36px; font-weight:bold; color:var(--gold); margin-top:5px;">${Math.round(score * 100) / 100}</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <div style="font-size:12px; color:#8b949e;">模型類型: <span style="color:#fff;">${model}</span></div>
+                                <div style="font-size:12px; color:#8b949e;">模型版本: <span style="color:#fff;">${ver}</span></div>
+                            </div>
+                        </div>
+                        <div style="font-size:12px; color:#636e7b; text-align:left; margin-top:10px; border-top:1px solid rgba(255,255,255,0.05); padding-top:10px;">
+                            基於目前的角色屬性、裝備組合與系統加成計算之期望值評分。
+                        </div>
+                    </div>
+                `;
+            }
+
+            html += analysisItems.map(item => {
+                const base = getStatObj(item.baseKey);
+                const perc = item.percKey ? getStatObj(item.percKey) : { total: 0, s: null };
+
+                // 嘗試抓取官方面板數值 (作為真值參考)
+                const officialStat = (data.stat.statList || []).find(s => s.name === item.title || s.name === item.baseKey);
+
+                let officialVal = 0;
+                let hasOfficial = false;
+                let isDisplayPercent = false;
+
+                if (officialStat) {
+                    const valStr = officialStat.value.toString();
+                    officialVal = parseFloat(valStr.replace(/,/g, '').replace('%', ''));
+                    if (valStr.includes('%')) isDisplayPercent = true;
+                    hasOfficial = true;
+                }
+
+                // 如果官方數值沒有%，則檢查基礎屬性定義是否為百分比
+                if (!isDisplayPercent) {
+                    if (item.baseKey.includes('%') || (base.s && base.s.isPerc)) {
+                        isDisplayPercent = true;
+                    }
+                }
+
+                // 計算目前的計算總值 (不含百分比加成前的基礎累加狀態)
+                // 這裡的 base.total 是所有來源(裝備、板塊等)的平盤數值總和
+                const calculatedFlat = base.total;
+
+                // 計算預期最終值
+                let estimated = calculatedFlat;
+                if (item.percKey) {
+                    estimated = calculatedFlat * (1 + (perc.total / 100));
+                }
+
+                // 計算此屬性是否存在 (有官方數值 或 有計算數值)
+                if (calculatedFlat === 0 && perc.total === 0 && !hasOfficial) return "";
+
+                let mainValueHtml = "";
+                let subValueHtml = "";
+                let formulaHtml = `<div style="margin-top:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.1);">`;
+
+                // 產生詳細拆解的輔助函數
+                const getBreakdown = (statObj, title) => {
+                    if (!statObj.s) return "";
+                    const s = statObj.s;
+                    const isP = s.isPerc;
+                    let bHtml = `<div style="margin-bottom:12px; background:rgba(255,255,255,0.03); border-radius:6px; padding:10px; border:1px solid rgba(255,255,255,0.05);">
+                                    <b style="color:var(--gold); display:block; padding-bottom:6px; border-bottom:1px solid rgba(230, 185, 103, 0.2); margin-bottom:8px; font-size:14px;">📍 ${title} 構成:</b>`;
+
+                    // 1. 主要能力值轉換 (已停用 statSecondList 解析後，這裡通常為 0，除非有其他來源)
+                    if (s.subtotals.mainStat !== 0) {
+                        bHtml += `<div style="font-size:13px; color:#fff; font-weight:bold; margin-bottom:4px; display:flex; justify-content:space-between;"><span>▹ 主要能力值轉換:</span><span style="color:var(--blue);">+${fmt(s.subtotals.mainStat, isP)}</span></div>`;
+                    }
+
+                    // 2. 六大板塊加成
+                    const boardSum = s.nezakan + s.zikel + s.baizel + s.triniel + s.ariel + s.asphel;
+                    if (boardSum !== 0) bHtml += `<div style="font-size:13px; color:#e0e0e0; margin-bottom:4px; display:flex; justify-content:space-between;"><span>▹ 六大板塊:</span><span>+${fmt(boardSum, isP)}</span></div>`;
+
+                    // 3. 裝備加成
+                    if (s.equipMain !== 0) bHtml += `<div style="font-size:13px; color:#e0e0e0; margin-bottom:4px; display:flex; justify-content:space-between;"><span>▹ 武防基礎/強化:</span><span>+${fmt(s.equipMain, isP)}</span></div>`;
+                    if (s.equipSub !== 0) bHtml += `<div style="font-size:13px; color:#e0e0e0; margin-bottom:4px; display:flex; justify-content:space-between;"><span>▹ 隨機屬性/磨石:</span><span>+${fmt(s.equipSub, isP)}</span></div>`;
+
+                    // 4. 特殊系統加成
+                    if (s.subtotals.title !== 0) bHtml += `<div style="font-size:13px; color:var(--gold); margin-bottom:4px; display:flex; justify-content:space-between;"><span>▹ 🎖️ 稱號系統:</span><span>+${fmt(s.subtotals.title, isP)}</span></div>`;
+                    if (s.subtotals.arcana !== 0) bHtml += `<div style="font-size:13px; color:#58a6ff; margin-bottom:4px; display:flex; justify-content:space-between;"><span>▹ 🎴 魔力聖物:</span><span>+${fmt(s.subtotals.arcana, isP)}</span></div>`;
+                    if (s.subtotals.wing !== 0) bHtml += `<div style="font-size:13px; color:#3fb950; margin-bottom:4px; display:flex; justify-content:space-between;"><span>▹ 🪽 翅膀裝備:</span><span>+${fmt(s.subtotals.wing, isP)}</span></div>`;
+                    if (s.subtotals.wingHold !== 0) bHtml += `<div style="font-size:13px; color:#9d7cbf; margin-bottom:4px; display:flex; justify-content:space-between;"><span>▹ 🪽 翅膀持有:</span><span>+${fmt(s.subtotals.wingHold, isP)}</span></div>`;
+
+                    // 5. 其他雜項
+                    const otherMisc = s.other - (s.subtotals.mainStat || 0) - (s.subtotals.wing || 0) - (s.subtotals.wingHold || 0) - (s.subtotals.arcana || 0) - (s.subtotals.title || 0);
+                    if (Math.abs(otherMisc) > 0.01) {
+                        bHtml += `<div style="font-size:13px; color:#8b949e; margin-top:4px; padding-top:4px; border-top:1px dashed rgba(255,255,255,0.1); display:flex; justify-content:space-between;"><span>▹ 其他加成:</span><span>+${fmt(otherMisc, isP)}</span></div>`;
+                    }
+
+                    // 6. 顯示該屬性的小計
+                    const subtotal = (s.base || 0) + (s.equipMain || 0) + (s.equipSub || 0) + (s.other || 0) + boardSum;
+                    bHtml += `<div style="font-size:14px; color:var(--gold); font-weight:bold; margin-top:8px; padding-top:8px; border-top:2px solid rgba(230, 185, 103, 0.3); display:flex; justify-content:space-between;"><span>📊 ${title} 小計:</span><span>${fmt(subtotal, isP)}</span></div>`;
+
+                    bHtml += `</div>`;
+                    return bHtml;
+                };
+
+                // 處理基礎屬性差異 (Base/Passives)
+                let baseDiff = 0;
+                if (hasOfficial && !item.percKey) {
+                    // 如果沒有百分比加成，直接比較
+                    baseDiff = officialVal - calculatedFlat;
+                } else if (hasOfficial && item.percKey) {
+                    // 如果有百分比加成，回推基礎值差異
+                    // Official = (CalculatedBase + Diff) * (1 + Perc/100)
+                    // Diff = (Official / (1 + Perc/100)) - CalculatedBase
+                    const multiplier = 1 + (perc.total / 100);
+                    const officialFlat = officialVal / multiplier;
+                    baseDiff = officialFlat - calculatedFlat;
+                }
+
+                // 渲染主數值顯示 (加入 isDisplayPercent 參數)
+                if (hasOfficial) {
+                    mainValueHtml = `<div style="font-size:28px; font-weight:bold; color:var(--gold);">${fmt(officialVal, isDisplayPercent)}</div>`;
+                } else {
+                    mainValueHtml = `<div style="font-size:28px; font-weight:bold; color:var(--gold);">${fmt(estimated, isDisplayPercent)}</div>`;
+                }
+
+                // 恢復綠色計算介面 (顯示基礎 x 倍率的公式)
+                if (item.percKey && base.total > 0 && perc.total > 0) {
+                    formulaHtml += `<b style="color:var(--green); font-size:14px;">∑ 加成邏輯 (乘算):</b><br>`;
+                    formulaHtml += `<div style="font-size:14px; background:rgba(63,185,80,0.1); border-left:3px solid var(--green); padding:8px; margin:8px 0; font-family:monospace; color:#fff;">${fmt(base.total)} × (1 + ${fmt(perc.total, true)}) = <span style="color:var(--green); font-weight:bold;">${fmt(estimated, isDisplayPercent)}</span></div>`;
+                }
+
+                // 渲染公式與差異 (如果有差異，顯示藍色提示框)
+                if (Math.abs(baseDiff) > 1 && hasOfficial) {
+                    // 有差異，顯示為基礎/被動
+                    formulaHtml += `<div style="font-size:13px; color:#c9d1d9; margin-bottom:10px; padding:8px; background:rgba(0,100,255,0.1); border-radius:4px; border-left:3px solid var(--blue);">
+                        <b>ℹ️ 數值校正:</b><br>
+                        系統偵測到額外 <b>${fmt(baseDiff, isDisplayPercent)}</b> 點屬性。<br>
+                        <span style="font-size:11px; opacity:0.8;">(推測為角色基礎值、被動技能或未統計來源)</span>
+                    </div>`;
+
+                    // 將差異加回 base 用於傳給 getBreakdown 顯示 (雖然 getBreakdown 只顯示 s 的內容，這裡我們手動補一行)
+                    // 這裡不修改 base 物件，而是直接在下方 formulaHtml 補充
+                }
+
+                formulaHtml += `<div style="margin-top:10px;"></div>`;
+
+                // 顯示 Breakdown
+                let baseBreakdown = getBreakdown(base, item.baseKey);
+                // 為了讓 Breakdown 完整，如果 baseDiff 存在，我們「注入」到顯示 HTML 中
+                if (Math.abs(baseDiff) > 1 && hasOfficial) {
+                    // 尋找小計行並插入 基礎值
+                    const insertPoint = baseBreakdown.lastIndexOf('<div style="font-size:14px;');
+                    if (insertPoint !== -1) {
+                        const addedRow = `<div style="font-size:13px; color:#fff; margin-bottom:4px; display:flex; justify-content:space-between;"><span>▹ 角色基礎/被動:</span><span>+${fmt(baseDiff, isDisplayPercent)}</span></div>`;
+                        baseBreakdown = baseBreakdown.substring(0, insertPoint) + addedRow + baseBreakdown.substring(insertPoint);
+                    }
+                }
+                formulaHtml += baseBreakdown;
+
+                if (perc.total > 0) formulaHtml += getBreakdown(perc, item.percKey);
+                formulaHtml += `</div>`;
+
+                return `
+                    <div class="stat-mini-card hover-calc" style="height:auto; min-height:110px; cursor:help; padding:15px; background:rgba(255,255,255,0.02); text-align:center;">
+                        <div style="font-size:12px;color:#8b949e;display:flex;align-items:center;justify-content:center;gap:6px; margin-bottom:10px;">
+                            ${item.icon} ${item.title}
+                        </div>
+                        ${mainValueHtml}
+                        ${subValueHtml}
+                        <div class="tooltip" style="bottom:100px; top:auto; width:300px; text-align:left; padding:15px; background:rgba(33, 39, 54, 0.98); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.15); box-shadow:0 10px 30px rgba(0,0,0,0.5);">
+                            <button class="tooltip-close-btn" onclick="this.parentElement.classList.remove('tooltip-pinned'); event.stopPropagation();">✕</button>
+                            <b style="color:var(--gold); border-bottom:2px solid var(--gold); display:block; margin-bottom:12px; font-size:16px; padding-bottom:4px;">📊 ${item.title} 深度分析</b>
+                            <div style="font-size:13px; color:#eee; margin-bottom:12px; line-height:1.6; background:rgba(255,255,255,0.03); padding:8px; border-radius:4px;">${item.desc}</div>
+                            ${formulaHtml}
+                            <div style="margin-top:12px; color:#8b949e; font-size:12px; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px; font-style:italic;">* 以上數據由當前所有系統加總得出</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            grid.innerHTML = html;
+        }
+
         function renderStatTable(stats) {
-            document.getElementById('stat-body').innerHTML = Object.keys(stats).sort().map(k => {
+            // 定義屬性分類與順序
+            const statOrder = {
+                '基本盤': ['攻擊力', '命中', '暴擊', '生命力', '戰鬥速度', '防禦力', '迴避', '暴擊抵抗', '精神力', '移動速度'],
+                '戰鬥': ['貫穿', '暴擊攻擊力', '暴擊防禦力', '後方攻擊力', '後方防禦力', '傷害增幅', '傷害耐性', '武器傷害增幅', '武器傷害耐性', '暴擊傷害增幅', '暴擊傷害耐性', '後方傷害增幅', '後方傷害耐性', '封魂石額外傷害'],
+                '判定': ['多段打擊擊中', '多段打擊抵抗', '後方暴擊', '後方暴擊抵抗', '格擋貫穿', '格擋', '鐵壁貫穿', '鐵壁', '再生貫穿', '再生', '完美', '完美抵抗', '強擊', '強擊抵抗'],
+                'PVP': ['PVP攻擊力', 'PVP防禦力', 'PVP傷害增幅', 'PVP傷害耐性', 'PVP命中', 'PVP迴避', 'PVP暴擊', 'PVP暴擊抵抗'],
+                'PVE': ['PVE攻擊力', 'PVE防禦力', 'PVE命中', 'PVE迴避', 'PVE傷害增幅', 'PVE傷害耐性', '首領攻擊力', '首領傷害增幅', '首領防禦力', '首領傷害耐性'],
+                '特殊': ['疾走速度', '飛行速度', '治療增幅', '所受制治癒量', '冷卻時間', '坐騎疾走行動力消耗'],
+                '資源': ['行動力', '飛行力', '戰鬥生命力自然恢復', '非戰鬥生命力自然恢復', '生命力藥水恢復', '生命力藥水恢復增加', '戰鬥精神力自然恢復', '非戰鬥精神力自然恢復', '精神力消耗量', '精神力獲得增加', '戰鬥行動力自然恢復', '非戰鬥行動力自然恢復', '戰鬥飛行力自然恢復', '非戰鬥飛行力自然恢復']
+            };
+
+            // 建立屬性到分類的映射 (移除%後精確匹配)
+            const findCategory = (statName) => {
+                // 移除 % 符號進行比對
+                const normalizedName = statName.replace(/%/g, '').trim();
+
+                for (const [category, statList] of Object.entries(statOrder)) {
+                    for (let i = 0; i < statList.length; i++) {
+                        const definedName = statList[i].replace(/%/g, '').trim();
+                        // 精確匹配(移除%後完全相同)
+                        if (normalizedName === definedName) {
+                            return { category, index: i };
+                        }
+                    }
+                }
+                return { category: '其他', index: 999 };
+            };
+
+            // 自訂排序函數
+            const sortedKeys = Object.keys(stats).sort((a, b) => {
+                const resultA = findCategory(a);
+                const resultB = findCategory(b);
+
+                // 定義分類順序
+                const categoryOrder = ['基本盤', '戰鬥', '判定', 'PVP', 'PVE', '特殊', '資源', '其他'];
+                const catIndexA = categoryOrder.indexOf(resultA.category);
+                const catIndexB = categoryOrder.indexOf(resultB.category);
+
+                // 先按分類排序
+                if (catIndexA !== catIndexB) {
+                    return catIndexA - catIndexB;
+                }
+
+                // 同分類內按指定順序排序
+                if (resultA.category !== '其他') {
+                    return resultA.index - resultB.index;
+                }
+
+                // 其他分類按字母排序
+                return a.localeCompare(b, 'zh-TW');
+            });
+
+            let lastCategory = null;
+            const categoryIcons = {
+                '基本盤': '⚔️',
+                '戰鬥': '💥',
+                '判定': '🎲',
+                'PVP': '⚡',
+                'PVE': '🐉',
+                '特殊': '✨',
+                '資源': '💧',
+                '其他': '📦'
+            };
+
+            const categoryColors = {
+                '基本盤': { bg: 'linear-gradient(90deg, rgba(99, 102, 241, 0.15) 0%, rgba(99, 102, 241, 0.05) 100%)', border: 'rgba(99, 102, 241, 0.5)', text: '#818cf8' },
+                '戰鬥': { bg: 'linear-gradient(90deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.05) 100%)', border: 'rgba(239, 68, 68, 0.5)', text: '#f87171' },
+                '判定': { bg: 'linear-gradient(90deg, rgba(168, 85, 247, 0.15) 0%, rgba(168, 85, 247, 0.05) 100%)', border: 'rgba(168, 85, 247, 0.5)', text: '#c084fc' },
+                'PVP': { bg: 'linear-gradient(90deg, rgba(234, 179, 8, 0.15) 0%, rgba(234, 179, 8, 0.05) 100%)', border: 'rgba(234, 179, 8, 0.5)', text: '#fbbf24' },
+                'PVE': { bg: 'linear-gradient(90deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 100%)', border: 'rgba(34, 197, 94, 0.5)', text: '#4ade80' },
+                '特殊': { bg: 'linear-gradient(90deg, rgba(236, 72, 153, 0.15) 0%, rgba(236, 72, 153, 0.05) 100%)', border: 'rgba(236, 72, 153, 0.5)', text: '#f472b6' },
+                '資源': { bg: 'linear-gradient(90deg, rgba(6, 182, 212, 0.15) 0%, rgba(6, 182, 212, 0.05) 100%)', border: 'rgba(6, 182, 212, 0.5)', text: '#22d3ee' },
+                '其他': { bg: 'linear-gradient(90deg, rgba(148, 163, 184, 0.15) 0%, rgba(148, 163, 184, 0.05) 100%)', border: 'rgba(148, 163, 184, 0.5)', text: '#94a3b8' }
+            };
+
+            document.getElementById('stat-body').innerHTML = sortedKeys.map(k => {
                 const d = stats[k];
                 const sum = d.nezakan + d.zikel + d.baizel + d.triniel + d.ariel + d.asphel + d.equipMain + d.equipSub + d.other;
                 if (sum === 0) return '';
+
+                // 檢查是否需要插入分類標題
+                const currentCategory = findCategory(k).category;
+                let categoryHeader = '';
+                if (currentCategory !== lastCategory) {
+                    const icon = categoryIcons[currentCategory] || '📦';
+                    const colors = categoryColors[currentCategory] || categoryColors['其他'];
+                    categoryHeader = `<tr class="category-header"><td colspan="11" style="background: ${colors.bg}; padding: 14px 20px; font-weight: bold; font-size: 14px; color: ${colors.text}; border-top: 2px solid ${colors.border}; border-bottom: 1px solid ${colors.border}; letter-spacing: 0.5px;">${icon} ${currentCategory}</td></tr>`;
+                    lastCategory = currentCategory;
+                }
+
                 const fmt = (v) => v === 0 ? '--' : (Math.round(v * 100) / 100 + (d.isPerc ? '%' : ''));
-                const makeGroup = (title, items, color) => items.length === 0 ? "" : `<div style="margin-top:6px;"><b style="color:${color}; border-bottom:1px solid rgba(255,255,255,0.2); display:block; margin-bottom:2px;">${title}</b>${items.map(i => `<div style="font-size:11px; color:#eee; padding-left:5px;">▹ ${i}</div>`).join('')}</div>`;
+                const makeGroup = (title, items, color, subtotal) => {
+                    if (items.length === 0) return "";
+                    let content = `<div style="margin-top:10px; background:rgba(255,255,255,0.02); padding:8px; border-radius:4px;"><b style="color:${color}; border-bottom:1px solid rgba(255,255,255,0.1); display:block; margin-bottom:6px; font-size:14px;">${title}</b>`;
+                    content += items.map(i => `<div style="font-size:13px; color:#eee; padding-left:5px; margin-bottom:3px;">▹ ${i}</div>`).join('');
+                    // 添加小計
+                    if (subtotal !== undefined && subtotal !== 0) {
+                        content += `<div style="font-size:13px; color:${color}; font-weight:bold; margin-top:6px; padding-left:5px; border-top:1px dashed rgba(255,255,255,0.2); padding-top:4px; display:flex; justify-content:space-between;"><span>小計:</span><span>${fmt(subtotal)}</span></div>`;
+                    }
+                    content += `</div>`;
+                    return content;
+                };
+
                 let tooltip = `<b style="font-size:14px; color:var(--gold); border-bottom:2px solid var(--gold); display:block; margin-bottom:5px;">${k} 來源對帳表</b>`;
-                tooltip += makeGroup("🛡️ 基礎屬性與強化", d.detailGroups.base, "var(--blue)");
-                tooltip += makeGroup("💎 磨石鑲嵌", d.detailGroups.stone, "var(--gold)");
-                tooltip += makeGroup("✨ 隨機刻印", d.detailGroups.random, "var(--green)");
-                tooltip += makeGroup("🎖️ 稱號加成", d.detailGroups.title, "var(--nezakan)");
-                tooltip += makeGroup("🎴 聖物/其他", d.detailGroups.arcana.concat(d.detailGroups.etc), "var(--arcana)");
-                const cell = (val) => val === 0 ? '<td>--</td>' : `<td><div class="hover-calc">${fmt(val)}<div class="tooltip">${tooltip}</div></div></td>`;
-                return `<tr><td class="td-left">${k}</td><td>${fmt(d.nezakan)}</td><td>${fmt(d.zikel)}</td><td>${fmt(d.baizel)}</td><td>${fmt(d.triniel)}</td><td>${fmt(d.ariel)}</td><td>${fmt(d.asphel)}</td>${cell(d.equipMain)}${cell(d.equipSub)}${cell(d.other)}<td style="color:var(--green);font-weight:bold;">+${Math.round(sum * 100) / 100}${d.isPerc ? '%' : ''}</td></tr>`;
+
+                // 計算板塊總和
+                const boardTotal = d.nezakan + d.zikel + d.baizel + d.triniel + d.ariel + d.asphel;
+                if (boardTotal > 0) {
+                    tooltip += `<div style="margin-top:10px; background:rgba(230, 185, 103, 0.05); padding:8px; border-radius:4px;"><b style="color:var(--gold); border-bottom:1px solid rgba(230, 185, 103, 0.2); display:block; margin-bottom:6px; font-size:14px;">🔱 板塊加成</b>`;
+                    if (d.nezakan > 0) tooltip += `<div style="font-size:13px; color:#eee; padding-left:5px; display:flex; justify-content:space-between;"><span>▹ 奈薩肯:</span><span>${fmt(d.nezakan)}</span></div>`;
+                    if (d.zikel > 0) tooltip += `<div style="font-size:13px; color:#eee; padding-left:5px; display:flex; justify-content:space-between;"><span>▹ 吉凱爾:</span><span>${fmt(d.zikel)}</span></div>`;
+                    if (d.baizel > 0) tooltip += `<div style="font-size:13px; color:#eee; padding-left:5px; display:flex; justify-content:space-between;"><span>▹ 白傑爾:</span><span>${fmt(d.baizel)}</span></div>`;
+                    if (d.triniel > 0) tooltip += `<div style="font-size:13px; color:#eee; padding-left:5px; display:flex; justify-content:space-between;"><span>▹ 崔妮爾:</span><span>${fmt(d.triniel)}</span></div>`;
+                    if (d.ariel > 0) tooltip += `<div style="font-size:13px; color:#eee; padding-left:5px; display:flex; justify-content:space-between;"><span>▹ 艾瑞爾:</span><span>${fmt(d.ariel)}</span></div>`;
+                    if (d.asphel > 0) tooltip += `<div style="font-size:13px; color:#eee; padding-left:5px; display:flex; justify-content:space-between;"><span>▹ 阿斯佩爾:</span><span>${fmt(d.asphel)}</span></div>`;
+                    tooltip += `<div style="font-size:13px; color:var(--gold); font-weight:bold; margin-top:6px; padding-left:5px; border-top:1px dashed rgba(230, 185, 103, 0.2); padding-top:4px; display:flex; justify-content:space-between;"><span>小計:</span><span>${fmt(boardTotal)}</span></div></div>`;
+                }
+
+                tooltip += makeGroup("🛡️ 基礎屬性與強化", d.detailGroups.base, "var(--blue)", d.equipMain);
+                tooltip += makeGroup("💎 磨石鑲嵌", d.detailGroups.stone, "var(--gold)", d.subtotals.stone);
+                tooltip += makeGroup("✨ 隨機刻印", d.detailGroups.random, "var(--green)", d.subtotals.random);
+                tooltip += makeGroup("🎖️ 稱號加成", d.detailGroups.title, "var(--nezakan)", d.subtotals.title);
+                tooltip += makeGroup("📊 主要能力值概覽", d.detailGroups.mainStat || [], "var(--blue)", d.subtotals.mainStat);
+                tooltip += makeGroup("🪽 翅膀裝備", d.detailGroups.wing || [], "var(--green)", d.subtotals.wing);
+                tooltip += makeGroup("🪽 翅膀持有", d.detailGroups.wingHold || [], "#9d7cbf", d.subtotals.wingHold);
+                tooltip += makeGroup("🎴 聖物/其他", d.detailGroups.arcana.concat(d.detailGroups.etc), "var(--arcana)", d.subtotals.arcana);
+                const cell = (val) => val === 0 ? '<td>--</td>' : `<td><div class="hover-calc"><div class="tooltip" style="width:320px;"><button class="tooltip-close-btn" onclick="this.parentElement.classList.remove('tooltip-pinned'); event.stopPropagation();">✕</button>${tooltip}</div>${fmt(val)}</div></td>`;
+                return categoryHeader + `<tr><td class="td-left">${k}</td><td>${fmt(d.nezakan)}</td><td>${fmt(d.zikel)}</td><td>${fmt(d.baizel)}</td><td>${fmt(d.triniel)}</td><td>${fmt(d.ariel)}</td><td>${fmt(d.asphel)}</td>${cell(d.equipMain)}${cell(d.equipSub)}${cell(d.other)}<td style="color:var(--green);font-weight:bold;">+${Math.round(sum * 100) / 100}${d.isPerc ? '%' : ''}</td></tr>`;
             }).join('');
         }
 
-        // 支援原本的手動匯入功能
-        function handleTextImport() {
-            const text = document.getElementById('jsonInput').value.trim();
-            if (!text) { alert("請先貼上 JSON 內容！"); return; }
-            try {
-                const json = JSON.parse(text);
-                processData(json);
-            } catch (err) { alert("JSON 格式有誤。"); }
-        }
 
-        document.getElementById('fileInput').addEventListener('change', function (e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                try {
-                    const json = JSON.parse(e.target.result);
-                    processData(json);
-                    document.getElementById('jsonInput').value = "檔案讀取成功！";
-                } catch (err) { alert("JSON 檔案格式錯誤！"); }
-            };
-            reader.readAsText(file);
+
+        // Tooltip 點擊固定功能
+        document.addEventListener('DOMContentLoaded', function () {
+            // 為所有 hover-calc 元素添加點擊事件
+            document.addEventListener('click', function (e) {
+                const hoverCalc = e.target.closest('.hover-calc');
+                if (hoverCalc) {
+                    const tooltip = hoverCalc.querySelector('.tooltip');
+                    if (tooltip) {
+                        // 如果點擊的不是關閉按鈕,則切換固定狀態
+                        if (!e.target.classList.contains('tooltip-close-btn')) {
+                            // 先關閉所有其他固定的 tooltip
+                            document.querySelectorAll('.tooltip.tooltip-pinned').forEach(t => {
+                                if (t !== tooltip) {
+                                    t.classList.remove('tooltip-pinned');
+                                }
+                            });
+                            // 切換當前 tooltip 的固定狀態
+                            tooltip.classList.toggle('tooltip-pinned');
+                            e.stopPropagation();
+                        }
+                    }
+                } else {
+                    // 點擊其他地方時關閉所有固定的 tooltip
+                    if (!e.target.classList.contains('tooltip-close-btn')) {
+                        document.querySelectorAll('.tooltip.tooltip-pinned').forEach(t => {
+                            t.classList.remove('tooltip-pinned');
+                        });
+                    }
+                }
+            });
+
+            // 表頭 tooltip 動態定位 (使用 fixed 定位,顯示在表頭下方)
+            document.addEventListener('mouseover', function (e) {
+                const thHover = e.target.closest('thead th.th-hover');
+                if (thHover) {
+                    const tooltip = thHover.querySelector('.tooltip');
+                    if (tooltip) {
+                        const rect = thHover.getBoundingClientRect();
+                        // 顯示在表頭下方,增加足夠的間距(約一行表格的高度)避免被遮擋
+                        tooltip.style.top = (rect.bottom + 50) + 'px';
+                        tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+                        tooltip.style.transform = 'translateX(-50%)';
+                    }
+                }
+            });
         });
     </script>
 </body>
