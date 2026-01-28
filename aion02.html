@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
     <title>Aion2 高階解析 - 角色名稱快速查詢版</title>
+    <script src="skill-database.js"></script>
 
 
     <style>
@@ -604,7 +605,8 @@
             visibility: hidden;
             min-width: 180px;
             max-width: min(350px, calc(100vw - 40px));
-            width: max-content;
+            width: auto;
+            overflow-wrap: break-word;
             /* 💎 現代化深色質感配色 */
             background: linear-gradient(145deg, rgba(26, 35, 50, 0.98), rgba(15, 25, 34, 0.98)) !important;
             backdrop-filter: blur(20px) saturate(180%);
@@ -710,24 +712,11 @@
             transform: translateX(0);
         }
 
-        /* 🛡️ 技能卡片邊界處理 (針對網頁版一排 3 欄) */
-        /* 每排第 1 個 (1, 4, 7...) - 靠左 */
-        .skill-card:nth-child(3n+1) .tooltip {
+        /* 🛡️ 技能卡片 Tooltip 定位 - 改由 JS 動態計算以支援 RWD */
+        .skill-card .tooltip {
+            /* 預設靠左, JS 會根據螢幕位置調整 */
             left: 0;
-            transform: translateX(0);
-        }
-
-        /* 每排第 2 個 (2, 5, 8...) - 保持居中 (預設) */
-        .skill-card:nth-child(3n+2) .tooltip {
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        /* 每排第 3 個 (3, 6, 9...) - 靠右 */
-        .skill-card:nth-child(3n) .tooltip {
-            left: auto;
-            right: 0;
-            transform: translateX(0);
+            transform: none;
         }
 
         /* 🛡️ 對帳總表邊界處理 - 讓右側欄位的 tooltip 靠右顯示,避免超出邊界 */
@@ -843,8 +832,8 @@
             max-height: 500px;
         }
 
-        /* 💡 修正:針對表格前 5 行,將 Tooltip 改為向下顯示,避免被基本盤區塊遮擋 */
-        tbody tr:nth-child(-n+5) .hover-calc .tooltip {
+        /* 💡 修正:針對表格前 12 行,將 Tooltip 改為向下顯示,避免被基本盤區塊遮擋 */
+        tbody tr:nth-child(-n+12) .hover-calc .tooltip {
             bottom: auto !important;
             top: calc(100% + 5px) !important;
             margin-top: 0;
@@ -1117,7 +1106,7 @@
         @media (min-width: 1400px) {
             .main-layout-wrapper {
                 display: grid;
-                grid-template-columns: 4fr 6fr;
+                grid-template-columns: 4.4fr 5.6fr;
                 gap: 20px;
             }
         }
@@ -1190,6 +1179,12 @@
 
             .grid-box-container {
                 grid-template-columns: 1fr;
+            }
+
+            /* 手機版：基礎數據分析改為 2 欄 */
+            #combat-stats-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 8px !important;
             }
 
             .title-grid {
@@ -1477,9 +1472,9 @@
                 </div>
             </div>
             <div class="card">
-                <div class="section-header">🛡️ 武器與防具</div>
+                <div class="section-header" id="armor-header">🛡️ 武器與防具</div>
                 <div id="equip-armor-list"></div>
-                <div class="section-header">💍 飾品與配件</div>
+                <div class="section-header" id="accessory-header">💍 飾品與配件</div>
                 <div id="equip-accessory-list"></div>
             </div>
         </div>
@@ -1989,17 +1984,9 @@
                                 entry.other += value;
                                 // 根據來源記錄小計 (如果是板塊屬性 s.type 是特殊的)
                                 // 判斷是否為六大板塊或屬性
-                                const isAttribute = ['STR', 'DEX', 'INT', 'CON', 'AGI', 'WIS'].includes(s.type);
-                                if (isAttribute) {
-                                    entry.subtotals.mainStat += value;
-                                    entry.detailGroups.mainStat.push(`[${s.name}]轉化: ${valueStr}`);
-                                } else {
-                                    // 假設其餘為板塊 (Time, Justice...)
-                                    // 這裡無法區分具體是哪個板塊，但可以歸類為 Board
-                                    // 由於 entry.other 已經加了，我們只需要確保它顯示在對的地方
-                                    // 暫時推入 mainStat 以顯示在頂部，或是 random
-                                    entry.detailGroups.base.push(`[${s.name.split('[')[0]}]: ${valueStr}`);
-                                }
+                                // 無論是六大屬性還是特殊板塊(Time, Justice等),只要來自 statSecondList 都歸類為能力值轉化
+                                entry.subtotals.mainStat += value;
+                                entry.detailGroups.mainStat.push(`[${s.name}]轉化: ${valueStr}`);
                             }
                         });
                     }
@@ -2250,6 +2237,9 @@
             });
 
             const equipMap = {};
+            let armorBreakCount = 0; // 初始化武器防具突破件數統計
+            let accessoryBreakCount = 0; // 初始化飾品突破件數統計
+
             (data.equipment ? data.equipment.equipmentList : []).forEach(item => { equipMap[item.slotPos] = item; });
             (data.itemDetails || []).forEach(i => {
                 const d = i.detail; if (!d) return;
@@ -2259,6 +2249,12 @@
                 const isArcana = (slot >= 41 && slot <= 45);
                 const originalItem = equipMap[slot] || i;
                 const finalIcon = getCorrectIcon(originalItem.icon);
+
+                // 統計突破件數
+                if ((originalItem.exceedLevel || 0) > 0) {
+                    if (isArmor) armorBreakCount++;
+                    if (isAccessory) accessoryBreakCount++;
+                }
 
                 if (d.set && !processedSets.has(d.set.name)) {
                     processedSets.add(d.set.name);
@@ -2383,9 +2379,29 @@
                 }
             });
 
+            // 更新突破件數到標題 (武器防具)
+            const armorHeader = document.getElementById('armor-header');
+            if (armorHeader) {
+                if (armorBreakCount > 0) {
+                    armorHeader.innerHTML = `🛡️ 武器與防具 <span style="font-size:15px; color:#ff3e3e; margin-left:15px; background:rgba(255, 62, 62, 0.1); padding:2px 10px; border-radius:12px; border:1px solid rgba(255, 62, 62, 0.3); text-shadow:0 0 10px rgba(255, 62, 62, 0.5);">🔥 突破件數: ${armorBreakCount} 件</span>`;
+                } else {
+                    armorHeader.innerHTML = `🛡️ 武器與防具`;
+                }
+            }
+
+            // 更新突破件數到標題 (飾品配件)
+            const accessoryHeader = document.getElementById('accessory-header');
+            if (accessoryHeader) {
+                if (accessoryBreakCount > 0) {
+                    accessoryHeader.innerHTML = `💍 飾品與配件 <span style="font-size:15px; color:#ff3e3e; margin-left:15px; background:rgba(255, 62, 62, 0.1); padding:2px 10px; border-radius:12px; border:1px solid rgba(255, 62, 62, 0.3); text-shadow:0 0 10px rgba(255, 62, 62, 0.5);">🔥 突破件數: ${accessoryBreakCount} 件</span>`;
+                } else {
+                    accessoryHeader.innerHTML = `💍 飾品與配件`;
+                }
+            }
+
             document.getElementById('equip-armor-list').innerHTML = armorHtml || "<div>無資料</div>";
             document.getElementById('equip-accessory-list').innerHTML = accessoryHtml || "<div>無資料</div>";
-            renderSkills(data, boardSkillMap, cardSkillMap);
+            renderSkills(data, boardSkillMap, cardSkillMap, { getEntry });
             if (!skipWingRender) renderWingCollection(stats);
             renderStatTable(stats);
             renderCombatAnalysis(stats, data);
@@ -2489,20 +2505,94 @@
             localStorage.setItem('wingCollectionCollapsed', isNowCollapsed);
         }
 
-        function renderSkills(data, boardSkillMap, cardSkillMap) {
+        function renderSkills(data, boardSkillMap, cardSkillMap, stats) {
             let act = "", pas = "", sti = "";
+
+            // 🆕 輔助函數:解析技能效果文字並加入統計
+            const parseSkillEffect = (effectText, skillName, getEntry) => {
+                // 匹配格式: "屬性名稱增加數值" 或 "屬性名稱+數值" (支援百分比)
+                const match = effectText.match(/^(.+?)(?:增加|\s*\+)([0-9.]+)(%?)$/);
+
+                console.log(`[技能解析] 技能: ${skillName}, 效果: "${effectText}", 匹配結果:`, match);
+
+                if (match) {
+                    let statName = match[1].trim();
+                    let value = parseFloat(match[2]);
+                    let isPercent = match[3] === '%';
+
+                    // 標準化屬性名稱 - 使用系統中的格式
+                    // 百分比屬性格式: "屬性名稱增加%" (若原本沒有增加兩字則補上，若有+則去除)
+                    // 固定值屬性格式: "屬性名稱"
+
+                    let key = isPercent ? statName + '增加%' : statName;
+
+                    // 修正常見命名差異
+                    if (key === '敵對值增幅增加%') key = '敵對值增幅%';
+                    if (key === '最大生命力增加%') key = '生命力增加%';
+
+                    console.log(`[技能解析] 屬性: ${key}, 數值: ${value}, 百分比: ${isPercent}`);
+
+                    // 加入統計
+                    if (getEntry && typeof getEntry === 'function') {
+                        try {
+                            let entry = getEntry(key);
+                            entry.other += value;
+                            entry.subtotals.skill = (entry.subtotals.skill || 0) + value;
+
+                            // 添加詳細記錄
+                            if (!entry.detailGroups.skill) {
+                                entry.detailGroups.skill = [];
+                            }
+                            entry.detailGroups.skill.push(`<span style="color:var(--gold)">${skillName}</span>: <span style="color:#fff">+${value}${isPercent ? '%' : ''}</span>`);
+
+                            return true;
+                        } catch (error) {
+                            console.error(`[技能解析] ✗ 加入統計失敗:`, error);
+                        }
+                    }
+                }
+                return false;
+            };
+
             data.skill.skillList.forEach(s => {
                 let bLv = boardSkillMap[s.name] || 0;
                 let cLv = (cardSkillMap[s.name] || []).reduce((a, b) => a + b.lv, 0);
-                let tip = `<div class="tooltip"><b>${s.name}</b><br>基礎: Lv.${Math.max(0, s.skillLevel - bLv - cLv)}<br>板塊: +${bLv}<br>卡片: +${cLv}</div>`;
+
+                // 🆕 查詢技能效果
+                let effectsHtml = "";
+                let parsedCount = 0;
+
+                if (typeof findSkillByName !== 'undefined') {
+                    const skillInfo = findSkillByName(s.name);
+                    if (skillInfo && skillInfo.levels && skillInfo.levels[s.skillLevel]) {
+                        const effects = skillInfo.levels[s.skillLevel];
+                        effectsHtml = `<br><br><b style="color:var(--gold);">📋 技能效果 (Lv.${s.skillLevel}):</b><br>`;
+
+                        effects.forEach(effect => {
+                            // 嘗試解析並加入統計
+                            const parsed = parseSkillEffect(effect, s.name, stats ? stats.getEntry : null);
+                            if (parsed) parsedCount++;
+
+                            effectsHtml += `<span style="color:var(--green);">▹ ${effect}</span><br>`;
+                        });
+
+                        // 如果有成功解析的效果,顯示提示
+                        if (parsedCount > 0) {
+                            effectsHtml += `<span style="color:var(--blue); font-size:10px;">✓ 已加入屬性統計 (${parsedCount}項)</span>`;
+                        }
+                    } else {
+                        effectsHtml = `<br><span style="color:#8b949e; font-size:11px;">💡 此技能效果數據尚未收錄</span>`;
+                    }
+                }
+
+                let tip = `<div class="tooltip"><button class="tooltip-close-btn" onclick="this.parentElement.classList.remove('tooltip-pinned'); event.stopPropagation();">✕</button><b>${s.name}</b><br>基礎: Lv.${Math.max(0, s.skillLevel - bLv - cLv)}<br>板塊: +${bLv}<br>卡片: +${cLv}${effectsHtml}</div>`;
                 let h = `<div class="skill-card"><img src="${getCorrectIcon(s.icon)}"><div><span class="sk-name">${s.name}</span><span style="color:var(--blue);font-size:14px">Lv.${s.skillLevel}</span></div>${tip}</div>`;
                 if (s.category === "Active") act += h; else if (s.category === "Passive") pas += h; else sti += h;
             });
-            document.getElementById('sk-act').innerHTML = act; document.getElementById('sk-pas').innerHTML = pas; document.getElementById('sk-stigma').innerHTML = sti;
-        }
-
-
-        function renderCombatAnalysis(stats, data) {
+            document.getElementById('sk-act').innerHTML = act || "<div style='color:#8b949e; padding:10px;'>無主動技能</div>";
+            document.getElementById('sk-pas').innerHTML = pas || "<div style='color:#8b949e; padding:10px;'>無被動技能</div>";
+            document.getElementById('sk-stigma').innerHTML = sti || "<div style='color:#8b949e; padding:10px;'>無特殊技能</div>";
+        } function renderCombatAnalysis(stats, data) {
             const grid = document.getElementById('combat-stats-grid');
             if (!grid) return;
 
@@ -2583,14 +2673,14 @@
                 { title: "暴擊抵抗", baseKey: "暴擊抵抗", percKey: "暴擊抵抗增加%", icon: "🛡️", desc: "降低受到暴擊的機率與傷害。" },
                 { title: "異常狀態擊中", baseKey: "異常狀態擊中", percKey: null, icon: "🎯", desc: "成功對敵人施加狀態異常的機率。" },
                 { title: "異常狀態抵抗", baseKey: "異常狀態抵抗", percKey: null, icon: "🛡️", desc: "抵抗暈眩、擊倒等狀態異常的能力。" },
-                { title: "精神力", baseKey: "精神力", percKey: "精神力增加%", icon: "🔮", desc: "角色的最大法力資源。" },
+                // { title: "精神力", baseKey: "精神力", percKey: "精神力增加%", icon: "🔮", desc: "角色的最大法力資源。" },
                 { title: "移動速度", baseKey: "移動速度", percKey: "移動速度%", icon: "🏃", desc: "角色的移動快慢。" },
-                { title: "PVE攻擊力", baseKey: "PVE攻擊力", percKey: null, icon: "🐉", desc: "對一般怪物造成的額外攻擊力。" },
-                { title: "PVE防禦力", baseKey: "PVE防禦力", percKey: null, icon: "🛡️", desc: "受到一般怪物攻擊時的額外防禦力。" },
-                { title: "PVE傷害增幅", baseKey: "PVE傷害增幅", percKey: null, icon: "🔥", desc: "對一般怪物造成的傷害額外增幅。" },
-                { title: "首領攻擊力", baseKey: "首領攻擊力", percKey: null, icon: "👹", desc: "對首領怪物造成的額外攻擊力。" },
-                { title: "首領防禦力", baseKey: "首領防禦力", percKey: null, icon: "🛡️", desc: "受到首領怪物攻擊時的額外防禦力。" },
-                { title: "首領傷害增幅", baseKey: "首領傷害增幅", percKey: null, icon: "💥", desc: "對首領怪物造成的傷害額外增幅。" }
+                // { title: "PVE攻擊力", baseKey: "PVE攻擊力", percKey: null, icon: "🐉", desc: "對一般怪物造成的額外攻擊力。" },
+                // { title: "PVE防禦力", baseKey: "PVE防禦力", percKey: null, icon: "🛡️", desc: "受到一般怪物攻擊時的額外防禦力。" },
+                // { title: "PVE傷害增幅", baseKey: "PVE傷害增幅", percKey: null, icon: "🔥", desc: "對一般怪物造成的傷害額外增幅。" },
+                // { title: "首領攻擊力", baseKey: "首領攻擊力", percKey: null, icon: "👹", desc: "對首領怪物造成的額外攻擊力。" },
+                // { title: "首領防禦力", baseKey: "首領防禦力", percKey: null, icon: "🛡️", desc: "受到首領怪物攻擊時的額外防禦力。" },
+                // { title: "首領傷害增幅", baseKey: "首領傷害增幅", percKey: null, icon: "💥", desc: "對首領怪物造成的傷害額外增幅。" }
             ];
 
             let html = "";
@@ -2652,6 +2742,11 @@
                 let estimated = calculatedFlat;
                 if (item.percKey) {
                     estimated = calculatedFlat * (1 + (perc.total / 100));
+
+                    // 特殊處理：如果是生命力，且有官方數值，且計算值與官方值有差異
+                    // 這可能是因為基礎生命力(Base HP)沒有被正確計算到 calculatedFlat 中
+                    // AION 的生命力加成通常是：(基礎生命力 + 裝備/被動的固定值加成) * (1 + 百分比加成)
+                    // 但我們目前可能少抓了角色的「裸身基礎生命力」，導致乘數效應後的結果偏低
                 }
 
                 // 計算此屬性是否存在 (有官方數值 或 有計算數值)
@@ -2669,9 +2764,14 @@
                     let bHtml = `<div style="margin-bottom:12px; background:rgba(255,255,255,0.03); border-radius:6px; padding:10px; border:1px solid rgba(255,255,255,0.05);">
                                     <b style="color:var(--gold); display:block; padding-bottom:6px; border-bottom:1px solid rgba(230, 185, 103, 0.2); margin-bottom:8px; font-size:14px;">📍 ${title} 構成:</b>`;
 
-                    // 1. 主要能力值轉換 (已停用 statSecondList 解析後，這裡通常為 0，除非有其他來源)
+                    // 1. 主要能力值轉換
                     if (s.subtotals.mainStat !== 0) {
                         bHtml += `<div style="font-size:13px; color:#fff; font-weight:bold; margin-bottom:4px; display:flex; justify-content:space-between;"><span>▹ 主要能力值轉換:</span><span style="color:var(--blue);">+${fmt(s.subtotals.mainStat, isP)}</span></div>`;
+                        if (s.detailGroups.mainStat && s.detailGroups.mainStat.length > 0) {
+                            s.detailGroups.mainStat.forEach(d => {
+                                bHtml += `<div style="font-size:11px; color:#8b949e; padding-left:10px;">${d}</div>`;
+                            });
+                        }
                     }
 
                     // 2. 六大板塊加成
@@ -2687,9 +2787,18 @@
                     if (s.subtotals.arcana !== 0) bHtml += `<div style="font-size:13px; color:#58a6ff; margin-bottom:4px; display:flex; justify-content:space-between;"><span>▹ 🎴 魔力聖物:</span><span>+${fmt(s.subtotals.arcana, isP)}</span></div>`;
                     if (s.subtotals.wing !== 0) bHtml += `<div style="font-size:13px; color:#3fb950; margin-bottom:4px; display:flex; justify-content:space-between;"><span>▹ 🪽 翅膀裝備:</span><span>+${fmt(s.subtotals.wing, isP)}</span></div>`;
                     if (s.subtotals.wingHold !== 0) bHtml += `<div style="font-size:13px; color:#9d7cbf; margin-bottom:4px; display:flex; justify-content:space-between;"><span>▹ 🪽 翅膀持有:</span><span>+${fmt(s.subtotals.wingHold, isP)}</span></div>`;
+                    if (s.subtotals.skill !== 0) {
+                        bHtml += `<div style="font-size:13px; color:#ff6c6c; margin-bottom:4px; display:flex; justify-content:space-between;"><span>▹ ⚡ 技能效果:</span><span>+${fmt(s.subtotals.skill, isP)}</span></div>`;
+                        // 展開技能細項
+                        if (s.detailGroups.skill && s.detailGroups.skill.length > 0) {
+                            s.detailGroups.skill.forEach(detail => {
+                                bHtml += `<div style="font-size:11px; color:#aaa; margin-bottom:2px; padding-left:15px;">${detail}</div>`;
+                            });
+                        }
+                    }
 
                     // 5. 其他雜項
-                    const otherMisc = s.other - (s.subtotals.mainStat || 0) - (s.subtotals.wing || 0) - (s.subtotals.wingHold || 0) - (s.subtotals.arcana || 0) - (s.subtotals.title || 0);
+                    const otherMisc = s.other - (s.subtotals.mainStat || 0) - (s.subtotals.wing || 0) - (s.subtotals.wingHold || 0) - (s.subtotals.arcana || 0) - (s.subtotals.title || 0) - (s.subtotals.skill || 0);
                     if (Math.abs(otherMisc) > 0.01) {
                         bHtml += `<div style="font-size:13px; color:#8b949e; margin-top:4px; padding-top:4px; border-top:1px dashed rgba(255,255,255,0.1); display:flex; justify-content:space-between;"><span>▹ 其他加成:</span><span>+${fmt(otherMisc, isP)}</span></div>`;
                     }
@@ -2718,9 +2827,9 @@
 
                 // 渲染主數值顯示 (加入 isDisplayPercent 參數)
                 if (hasOfficial) {
-                    mainValueHtml = `<div style="font-size:28px; font-weight:bold; color:var(--gold);">${fmt(officialVal, isDisplayPercent)}</div>`;
+                    mainValueHtml = `<div style="font-size:28px; font-weight:bold; color:var(--gold); text-align:center; display:flex; align-items:center; justify-content:center;">${fmt(officialVal, isDisplayPercent)}</div>`;
                 } else {
-                    mainValueHtml = `<div style="font-size:28px; font-weight:bold; color:var(--gold);">${fmt(estimated, isDisplayPercent)}</div>`;
+                    mainValueHtml = `<div style="font-size:28px; font-weight:bold; color:var(--gold); text-align:center; display:flex; align-items:center; justify-content:center;">${fmt(estimated, isDisplayPercent)}</div>`;
                 }
 
                 // 恢復綠色計算介面 (顯示基礎 x 倍率的公式)
@@ -2761,8 +2870,8 @@
                 formulaHtml += `</div>`;
 
                 return `
-                    <div class="stat-mini-card hover-calc" style="height:auto; min-height:110px; cursor:help; padding:15px; background:rgba(255,255,255,0.02); text-align:center;">
-                        <div style="font-size:12px;color:#8b949e;display:flex;align-items:center;justify-content:center;gap:6px; margin-bottom:10px;">
+                    <div class="stat-mini-card hover-calc" style="height:auto; min-height:110px; cursor:help; padding:20px 15px; background:rgba(255,255,255,0.02); text-align:center; display:flex; flex-direction:column; justify-content:center;">
+                        <div style="font-size:12px;color:#8b949e;display:flex;align-items:center;justify-content:center;gap:6px; margin-bottom:12px;">
                             ${item.icon} ${item.title}
                         </div>
                         ${mainValueHtml}
@@ -2782,6 +2891,9 @@
         }
 
         function renderStatTable(stats) {
+            // 定義安全的格式化函數
+            const fmt = (v, isPerc) => (Number(parseFloat(v || 0).toFixed(2)) + (isPerc ? '%' : ''));
+
             // 定義屬性分類與順序
             const statOrder = {
                 '基本盤': ['攻擊力', '命中', '暴擊', '生命力', '戰鬥速度', '防禦力', '迴避', '暴擊抵抗', '精神力', '移動速度'],
@@ -2885,31 +2997,63 @@
                     return content;
                 };
 
-                let tooltip = `<b style="font-size:14px; color:var(--gold); border-bottom:2px solid var(--gold); display:block; margin-bottom:5px;">${k} 來源對帳表</b>`;
+                // 1. 武防強化 Tooltip
+                let equipContent = makeGroup("基礎屬性與強化", d.detailGroups.base, "var(--blue)", d.equipMain);
+                let tipEquip = equipContent ? `<b style="color:var(--gold);border-bottom:2px solid var(--gold);display:block;margin-bottom:5px;">🛡️ 武防強化細項</b>${equipContent}` : "";
 
-                // 計算板塊總和
-                const boardTotal = d.nezakan + d.zikel + d.baizel + d.triniel + d.ariel + d.asphel;
-                if (boardTotal > 0) {
-                    tooltip += `<div style="margin-top:10px; background:rgba(230, 185, 103, 0.05); padding:8px; border-radius:4px;"><b style="color:var(--gold); border-bottom:1px solid rgba(230, 185, 103, 0.2); display:block; margin-bottom:6px; font-size:14px;">🔱 板塊加成</b>`;
-                    if (d.nezakan > 0) tooltip += `<div style="font-size:13px; color:#eee; padding-left:5px; display:flex; justify-content:space-between;"><span>▹ 奈薩肯:</span><span>${fmt(d.nezakan)}</span></div>`;
-                    if (d.zikel > 0) tooltip += `<div style="font-size:13px; color:#eee; padding-left:5px; display:flex; justify-content:space-between;"><span>▹ 吉凱爾:</span><span>${fmt(d.zikel)}</span></div>`;
-                    if (d.baizel > 0) tooltip += `<div style="font-size:13px; color:#eee; padding-left:5px; display:flex; justify-content:space-between;"><span>▹ 白傑爾:</span><span>${fmt(d.baizel)}</span></div>`;
-                    if (d.triniel > 0) tooltip += `<div style="font-size:13px; color:#eee; padding-left:5px; display:flex; justify-content:space-between;"><span>▹ 崔妮爾:</span><span>${fmt(d.triniel)}</span></div>`;
-                    if (d.ariel > 0) tooltip += `<div style="font-size:13px; color:#eee; padding-left:5px; display:flex; justify-content:space-between;"><span>▹ 艾瑞爾:</span><span>${fmt(d.ariel)}</span></div>`;
-                    if (d.asphel > 0) tooltip += `<div style="font-size:13px; color:#eee; padding-left:5px; display:flex; justify-content:space-between;"><span>▹ 阿斯佩爾:</span><span>${fmt(d.asphel)}</span></div>`;
-                    tooltip += `<div style="font-size:13px; color:var(--gold); font-weight:bold; margin-top:6px; padding-left:5px; border-top:1px dashed rgba(230, 185, 103, 0.2); padding-top:4px; display:flex; justify-content:space-between;"><span>小計:</span><span>${fmt(boardTotal)}</span></div></div>`;
+                // 2. 刻印/磨石 Tooltip
+                let stoneContent = "";
+                stoneContent += makeGroup("💎 磨石鑲嵌", d.detailGroups.stone, "var(--gold)", d.subtotals.stone);
+                stoneContent += makeGroup("✨ 隨機刻印", d.detailGroups.random, "var(--green)", d.subtotals.random);
+                let tipStone = stoneContent ? `<b style="color:var(--gold);border-bottom:2px solid var(--gold);display:block;margin-bottom:5px;">💎 刻印磨石細項</b>${stoneContent}` : "";
+
+                // 3. 其他來源 Tooltip
+                let otherContent = "";
+                otherContent += makeGroup("🎖️ 稱號加成", d.detailGroups.title, "var(--nezakan)", d.subtotals.title);
+                otherContent += makeGroup("📊 主要能力值概覽", d.detailGroups.mainStat || [], "var(--blue)", d.subtotals.mainStat);
+                otherContent += makeGroup("🪽 翅膀裝備", d.detailGroups.wing || [], "var(--green)", d.subtotals.wing);
+                otherContent += makeGroup("🪽 翅膀持有", d.detailGroups.wingHold || [], "#9d7cbf", d.subtotals.wingHold);
+                otherContent += makeGroup("🎴 聖物/其他", d.detailGroups.arcana.concat(d.detailGroups.etc), "var(--arcana)", d.subtotals.arcana);
+
+                // 技能詳細
+                const skillVal = d.subtotals.skill || 0;
+                if (skillVal !== 0) {
+                    otherContent += `<div style="margin-top:10px; background:rgba(255,108,108,0.1); padding:8px; border-radius:4px;"><b style="color:#ff6c6c; border-bottom:1px solid rgba(255,108,108,0.2); display:block; margin-bottom:6px; font-size:14px;">⚡ 技能效果</b>`;
+                    otherContent += `<div style="font-size:13px; color:#ff6c6c; font-weight:bold; margin-bottom:4px; display:flex; justify-content:space-between;"><span>加總:</span><span>+${fmt(skillVal)}</span></div>`;
+                    if (d.detailGroups.skill && d.detailGroups.skill.length > 0) {
+                        d.detailGroups.skill.forEach(detail => {
+                            otherContent += `<div style="font-size:11px; color:#ddd; padding-left:5px;">${detail}</div>`;
+                        });
+                    }
+                    otherContent += `</div>`;
                 }
 
-                tooltip += makeGroup("🛡️ 基礎屬性與強化", d.detailGroups.base, "var(--blue)", d.equipMain);
-                tooltip += makeGroup("💎 磨石鑲嵌", d.detailGroups.stone, "var(--gold)", d.subtotals.stone);
-                tooltip += makeGroup("✨ 隨機刻印", d.detailGroups.random, "var(--green)", d.subtotals.random);
-                tooltip += makeGroup("🎖️ 稱號加成", d.detailGroups.title, "var(--nezakan)", d.subtotals.title);
-                tooltip += makeGroup("📊 主要能力值概覽", d.detailGroups.mainStat || [], "var(--blue)", d.subtotals.mainStat);
-                tooltip += makeGroup("🪽 翅膀裝備", d.detailGroups.wing || [], "var(--green)", d.subtotals.wing);
-                tooltip += makeGroup("🪽 翅膀持有", d.detailGroups.wingHold || [], "#9d7cbf", d.subtotals.wingHold);
-                tooltip += makeGroup("🎴 聖物/其他", d.detailGroups.arcana.concat(d.detailGroups.etc), "var(--arcana)", d.subtotals.arcana);
-                const cell = (val) => val === 0 ? '<td>--</td>' : `<td><div class="hover-calc"><div class="tooltip" style="width:320px;"><button class="tooltip-close-btn" onclick="this.parentElement.classList.remove('tooltip-pinned'); event.stopPropagation();">✕</button>${tooltip}</div>${fmt(val)}</div></td>`;
-                return categoryHeader + `<tr><td class="td-left">${k}</td><td>${fmt(d.nezakan)}</td><td>${fmt(d.zikel)}</td><td>${fmt(d.baizel)}</td><td>${fmt(d.triniel)}</td><td>${fmt(d.ariel)}</td><td>${fmt(d.asphel)}</td>${cell(d.equipMain)}${cell(d.equipSub)}${cell(d.other)}<td style="color:var(--green);font-weight:bold;">+${Math.round(sum * 100) / 100}${d.isPerc ? '%' : ''}</td></tr>`;
+                // 計算並顯示未分類的殘餘數值 (避免有數值但沒來源)
+                // 確保所有 subtotals 屬性都存在以免 NaN
+                const knownTotal = (d.subtotals.title || 0) + (d.subtotals.mainStat || 0) + (d.subtotals.wing || 0) + (d.subtotals.wingHold || 0) + (d.subtotals.arcana || 0) + (d.subtotals.skill || 0);
+                const remainder = d.other - knownTotal;
+
+                if (Math.abs(remainder) > 0.01) {
+                    otherContent += `<div style="margin-top:10px; background:rgba(255,255,255,0.05); padding:8px; border-radius:4px;"><b style="color:#888; border-bottom:1px solid #555; display:block; margin-bottom:6px; font-size:14px;">❓ 其他未分類</b>`;
+                    otherContent += `<div style="font-size:13px; color:#ccc; display:flex; justify-content:space-between;"><span>來源不明:</span><span>+${fmt(remainder)}</span></div></div>`;
+                }
+
+                let tipOther = otherContent ? `<b style="color:var(--gold);border-bottom:2px solid var(--gold);display:block;margin-bottom:5px;">🧩 其他來源細項</b>${otherContent}` : "";
+
+                const tooltipCell = (val, contentHTML) => {
+                    // 如果沒有詳細內容，且數值為0，顯示 --
+                    if (!contentHTML && val === 0) return '<td>--</td>';
+
+                    // 如果有詳細內容，顯示 Tooltip
+                    if (contentHTML) {
+                        return `<td><div class="hover-calc"><div class="tooltip" style="width:300px;"><button class="tooltip-close-btn" onclick="this.parentElement.classList.remove('tooltip-pinned'); event.stopPropagation();">✕</button>${contentHTML}</div>${fmt(val)}</div></td>`;
+                    }
+
+                    // 有數值但沒詳細內容 (例如殘餘數值顯示在 other 欄，但這裡我們已經把殘餘加到 contentHTML 了，所以理論上這行很少用到，除非是 equip/stone 欄位有殘餘)
+                    return `<td>${fmt(val)}</td>`;
+                };
+
+                return categoryHeader + `<tr><td class="td-left">${k}</td><td>${fmt(d.nezakan)}</td><td>${fmt(d.zikel)}</td><td>${fmt(d.baizel)}</td><td>${fmt(d.triniel)}</td><td>${fmt(d.ariel)}</td><td>${fmt(d.asphel)}</td>${tooltipCell(d.equipMain, tipEquip)}${tooltipCell(d.equipSub, tipStone)}${tooltipCell(d.other, tipOther)}<td style="color:var(--green);font-weight:bold;">+${Math.round(sum * 100) / 100}${d.isPerc ? '%' : ''}</td></tr>`;
             }).join('');
         }
 
@@ -2917,31 +3061,67 @@
 
         // Tooltip 點擊固定功能
         document.addEventListener('DOMContentLoaded', function () {
-            // 為所有 hover-calc 元素添加點擊事件
+            // Tooltip 點擊固定功能 - 修正版 (改為必須點 X 或切換其他項目才關閉)
             document.addEventListener('click', function (e) {
-                const hoverCalc = e.target.closest('.hover-calc');
-                if (hoverCalc) {
-                    const tooltip = hoverCalc.querySelector('.tooltip');
+                // 1. 如果點擊的是關閉按鈕 -> 關閉
+                if (e.target.classList.contains('tooltip-close-btn')) {
+                    const tooltip = e.target.closest('.tooltip');
+                    if (tooltip) tooltip.classList.remove('tooltip-pinned');
+                    return;
+                }
+
+                // 2. 如果點擊的是 tooltip 內部內容 -> 不做任何事 (保持開啟)
+                if (e.target.closest('.tooltip')) {
+                    return;
+                }
+
+                // 3. 如果點擊的是觸發區域 (.hover-calc 或 .skill-card 等有 tooltip 的容器)
+                const trigger = e.target.closest('.hover-calc, .skill-card, .stat-mini-card, th.th-hover');
+                if (trigger) {
+                    const tooltip = trigger.querySelector('.tooltip');
                     if (tooltip) {
-                        // 如果點擊的不是關閉按鈕,則切換固定狀態
-                        if (!e.target.classList.contains('tooltip-close-btn')) {
-                            // 先關閉所有其他固定的 tooltip
-                            document.querySelectorAll('.tooltip.tooltip-pinned').forEach(t => {
-                                if (t !== tooltip) {
-                                    t.classList.remove('tooltip-pinned');
-                                }
-                            });
-                            // 切換當前 tooltip 的固定狀態
-                            tooltip.classList.toggle('tooltip-pinned');
-                            e.stopPropagation();
-                        }
-                    }
-                } else {
-                    // 點擊其他地方時關閉所有固定的 tooltip
-                    if (!e.target.classList.contains('tooltip-close-btn')) {
+                        // 關閉其他已開啟的 tooltip (互斥)
                         document.querySelectorAll('.tooltip.tooltip-pinned').forEach(t => {
-                            t.classList.remove('tooltip-pinned');
+                            if (t !== tooltip) t.classList.remove('tooltip-pinned');
                         });
+
+                        // 強制開啟當前 tooltip (不使用 toggle，避免誤關)
+                        tooltip.classList.add('tooltip-pinned');
+                        e.stopPropagation();
+                    }
+                }
+
+                // 4. 點擊空白處 -> 依照使用者要求「要點x才能關閉」，這裡不再自動關閉
+                // 原本的 document.querySelectorAll(...).remove(...) 已移除
+            });
+
+            // 🛡️ 技能卡片 Tooltip 智能定位 (防止超出螢幕)
+            document.addEventListener('mouseover', function (e) {
+                const card = e.target.closest('.skill-card');
+                if (card) {
+                    const tooltip = card.querySelector('.tooltip');
+                    if (tooltip) {
+                        const cardRect = card.getBoundingClientRect();
+                        const parent = card.parentElement; // .skill-list or similar
+
+                        if (parent) {
+                            const parentRect = parent.getBoundingClientRect();
+                            // 計算卡片在容器內的相對中心點位置
+                            const relativeCenter = (cardRect.left - parentRect.left) + (cardRect.width / 2);
+                            const parentWidth = parentRect.width;
+
+                            // 如果在容器右半邊，則 Tooltip 靠右顯示
+                            if (relativeCenter > parentWidth * 0.5) {
+                                tooltip.style.left = 'auto';
+                                tooltip.style.right = '0';
+                                tooltip.style.transform = 'none';
+                            } else {
+                                // 在容器左半邊，Tooltip 靠左顯示
+                                tooltip.style.left = '0';
+                                tooltip.style.right = 'auto';
+                                tooltip.style.transform = 'none';
+                            }
+                        }
                     }
                 }
             });
