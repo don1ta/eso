@@ -1374,6 +1374,10 @@
                         <span>等級：<b id="p-lv" style="color:var(--gold)"></b></span>
                         <span>職業：<b id="p-class" style="color:var(--gold)"></b></span>
                         <span>道具等級：<b id="p-itemlv" style="color:#58a6ff"></b></span>
+                        <span id="p-abyss-container" style="display:none; align-items:center; gap:4px;">
+                            <img id="p-abyss-icon" src="" style="height:18px; width:auto; vertical-align:sub;">
+                            <b id="p-abyss-rank-name" style="color:#ff7b7b"></b>
+                        </span>
                         <span>官方數據更新時間：<b id="p-update" style="color:#3fb950"></b></span>
                     </div>
                     <div id="p-ranking-container" class="rank-container"></div>
@@ -1384,7 +1388,7 @@
                 <div class="left-column">
                     <div class="card">
                         <h3>📊 主要能力值概覽</h3>
-                        <h5>(此區官方沒有即時更新)</h5>
+                        <h5>(含:萬神殿+石柱)</h5>
                         <div id="stat-main-grid" class="stat-grid-main"></div>
                     </div>
                     <div class="card">
@@ -1407,6 +1411,7 @@
                     <!-- 戰鬥數據分析區塊 -->
                     <div class="card">
                         <h3>⚔️ 基礎數據分析</h3>
+                        <h5>(無法計算寵物理解與持有及外觀效果)</h5>
                         <div id="combat-stats-grid" class="grid-box-container"
                             style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;"></div>
                     </div>
@@ -1901,6 +1906,26 @@
             // 找出道具等級
             const itemLvObj = data.stat.statList.find(s => s.type === "ItemLevel");
             document.getElementById('p-itemlv').innerText = itemLvObj ? itemLvObj.value : "--";
+
+            // 顯示深淵階級 (位於道具等級後)
+            const abyssRanking = (data.ranking && data.ranking.rankingList)
+                ? data.ranking.rankingList.find(r => r.rankingContentsName === '深淵' || r.rankingContentsType === 1)
+                : null;
+
+            const abyssContainer = document.getElementById('p-abyss-container');
+            if (abyssRanking && abyssRanking.gradeName && abyssContainer) {
+                document.getElementById('p-abyss-rank-name').innerText = abyssRanking.gradeName;
+                const iconImg = document.getElementById('p-abyss-icon');
+                if (abyssRanking.gradeIcon) {
+                    iconImg.src = getCorrectIcon(abyssRanking.gradeIcon);
+                    iconImg.style.display = 'inline';
+                } else {
+                    iconImg.style.display = 'none';
+                }
+                abyssContainer.style.display = 'flex';
+            } else if (abyssContainer) {
+                abyssContainer.style.display = 'none';
+            }
 
             // 顯示更新時間
             if (apiUpdateTime) {
@@ -2674,7 +2699,7 @@
                 { title: "異常狀態擊中", baseKey: "異常狀態擊中", percKey: null, icon: "🎯", desc: "成功對敵人施加狀態異常的機率。" },
                 { title: "異常狀態抵抗", baseKey: "異常狀態抵抗", percKey: null, icon: "🛡️", desc: "抵抗暈眩、擊倒等狀態異常的能力。" },
                 // { title: "精神力", baseKey: "精神力", percKey: "精神力增加%", icon: "🔮", desc: "角色的最大法力資源。" },
-                { title: "移動速度", baseKey: "移動速度", percKey: "移動速度%", icon: "🏃", desc: "角色的移動快慢。" },
+                { title: "移動速度", baseKey: "移動速度%", percKey: null, icon: "🏃", desc: "角色的移動快慢。" },
                 // { title: "PVE攻擊力", baseKey: "PVE攻擊力", percKey: null, icon: "🐉", desc: "對一般怪物造成的額外攻擊力。" },
                 // { title: "PVE防禦力", baseKey: "PVE防禦力", percKey: null, icon: "🛡️", desc: "受到一般怪物攻擊時的額外防禦力。" },
                 // { title: "PVE傷害增幅", baseKey: "PVE傷害增幅", percKey: null, icon: "🔥", desc: "對一般怪物造成的傷害額外增幅。" },
