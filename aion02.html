@@ -1504,6 +1504,13 @@
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
         }
 
+        .charts-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
         /* RWD 調整 */
         @media (min-width: 1400px) {
             .main-layout-wrapper {
@@ -1595,6 +1602,10 @@
 
             .rank-badge {
                 width: 100%
+            }
+
+            .charts-row {
+                grid-template-columns: 1fr;
             }
 
         }
@@ -1725,7 +1736,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             margin-right: 0;
             width: auto;
-            white-space: nowrap;
+            white-space: normal;
             /* 強制一行不截斷 */
             box-sizing: border-box;
             line-height: 1.5;
@@ -1899,7 +1910,7 @@
                     </div>
 
                     <div class="card">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
+                        <div class="charts-row">
                             <div>
                                 <h3>📊 裝備來源比例</h3>
                                 <div id="equip-source-grid"></div>
@@ -2990,7 +3001,7 @@
             if (gridEl) {
                 gridEl.className = ''; // 移除原本的 skill-list 類別干擾
                 gridEl.style.display = 'grid';
-                gridEl.style.gridTemplateColumns = `repeat(${Math.max(1, insights.length)}, 1fr)`;
+                gridEl.style.gridTemplateColumns = `repeat(auto-fit, minmax(145px, 1fr))`;
                 gridEl.style.gap = '12px';
                 gridEl.style.marginBottom = '25px';
                 gridEl.innerHTML = petInsightHtml || "<div style='color:#8b949e; padding:10px;'>無寵物洞察力資料</div>";
@@ -3342,7 +3353,7 @@
             };
 
             let sourceAnalysisHtml = `
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:10px;">
                 ${generateSourceCard('⚔️ 武防', sourceStats.armor.total, sourceStats.armor, 'chart-source-armor', '#e67e22')}
                 ${generateSourceCard('💍 飾品', sourceStats.accessory.total, sourceStats.accessory, 'chart-source-accessory', '#9b59b6')}
             </div>`;
@@ -4102,7 +4113,7 @@
                 // 10秒後自動移除
                 setTimeout(() => {
                     toast.classList.remove('show');
-                }, 10000);
+                }, 20000);
             }
         }
 
